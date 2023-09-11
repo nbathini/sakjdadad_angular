@@ -1,0 +1,31 @@
+<div class="calendar current-month">
+    <div class="header">
+        <span>{{currentDate.format('MMMM').toUpperCase()}} {{currentDate.format('YYYY')}}</span>
+    </div>
+    <div class="week names">
+        <span class="day" *ngFor="let name of namesOfDays">{{name}}</span>
+    </div>
+    <div class="week" *ngFor="let week of currentMonthWeeks">
+        <ng-container *ngFor="let day of week">
+            <div class="calendar_date" (click)="selectDate(day)">
+                <span class="day"
+                    [ngClass]="{'today': day.today, 'selected': day.selected, 'disabled not-selected-month': !isSelectedMonth(day.mDate)}">{{day.mDate.date()}}</span>
+            </div>
+        </ng-container>
+    </div>
+</div>
+<div class="calendar next-month">
+    <div class="header">
+        <span>{{nextMonthDate.format('MMMM').toUpperCase()}} {{nextMonthDate.format('YYYY')}}</span>
+    </div>
+    <div class="week names">
+        <span class="day" *ngFor="let name of namesOfDays">{{name}}</span>
+    </div>
+    <div class="week" *ngFor="let week of nextMonthWeeks">
+        <ng-container *ngFor="let day of week">
+            <div class="calendar_date" >
+                <span class="day disabled-dates"  [ngClass]="{'not-same-month': !isSelectedNextMonth(day.mDate)}">{{day.mDate.date()}}</span>
+            </div>
+        </ng-container>
+    </div>
+</div>

@@ -1,0 +1,153 @@
+
+.manage-dcouments{
+    width: 100%;
+    padding-top: 219px;
+    background-color: #ffffff;
+    h2{
+        padding-bottom: 29px;
+        margin-bottom: 0px;
+    }
+    .edit-btn-block{
+      position: fixed;
+      top:45px;
+      text-align: right;
+      width: calc(100% - 100px);
+      z-index: 999;
+      right: 30px;
+    }
+    .questions-content {
+        width: 100%;
+    
+        .question-header {
+            width: calc(100% - 64px);
+          padding: 3px 32px;
+          position: relative;
+          background-color: #f2f2f2;
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          margin-bottom: 17px;
+    
+          h3 {
+            font-size: 18px;
+            font-weight: 600;
+            margin: 0px 0px 0px 0px;
+            line-height: 2;
+            width: auto;
+          }
+    
+          p-checkbox-wrapper {
+            width: auto;
+          }
+    
+          .delivery-question-heading {
+            font-size: 18px;
+            margin: 0px 0px 0px 7px;
+            line-height: 1.4;
+          }
+    
+        }
+    
+        .answers-content {
+          width: calc(100% - 64px);
+          padding: 0px 32px 18px 32px;
+          &:first-child{
+            padding-top: 17px;
+          }
+    
+          .answers {
+            width: 100%;
+            display: flex;
+            justify-content: space-between;
+            margin: 0px 0px 10px 0px;
+            padding: 0px 0px 0px 0px;
+            border-bottom: 0px;
+    
+            &:last-child {
+              border-bottom: none;
+              padding-bottom: 0px;
+            }
+    
+            &:last-child {
+              margin-bottom: 0px;
+            }
+    
+            .left-part {
+              width: auto;
+    
+              p {
+                margin: 0px 0px 0px 0px;
+              }
+    
+    
+              .link-box {
+                width: 100%;
+                margin: 0px 0px 0px 0px;
+                list-style: none;
+                padding: 0px 0px 0px 0px;
+                max-width: calc(100% - 300px);
+                li{
+                    width: auto;
+                    display: inline-block;
+                    margin: 0px 14px 4px 0px;
+                    position: relative;
+                    padding: 0px 8px 0px 0px;
+                    p,a {
+                        width: 100%;
+                        font-size: 16px;
+                        font-weight: normal;
+                        font-stretch: normal;
+                        margin: 0px 0px 0px 0px;
+                        // word-break: break-all;
+                        display: block;
+                        line-height: 1.5;
+                        letter-spacing: normal;
+                        color: #c9cacb;
+                        font-style: italic;
+                        a{
+                          text-decoration: none;
+                          &:hover{
+                            text-decoration: none;
+                          }
+                        }
+                      }
+                      button{
+                        position: absolute;
+                        top: -2px;
+                        right: 0px;
+                        padding: 0px;
+                        border: none;
+                        background-color: transparent;
+                        cursor: pointer;
+                        &:focus{
+                            outline: none;
+                        }
+                      }
+                }
+    
+            
+              }
+            }
+    
+            .right-part {
+              width: auto;
+              display: flex;
+              min-width: 300px;
+              justify-content: flex-end;
+              position: relative;
+              padding-top: 2px;
+              input {
+                display: none;
+              }
+              p-button-pure {
+                  &:first-child{
+                    margin-right: 20px;
+                  }
+
+    
+              }
+            }
+          }
+        }
+      }
+}

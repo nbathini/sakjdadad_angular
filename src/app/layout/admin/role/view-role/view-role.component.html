@@ -1,0 +1,60 @@
+<section class="add-dealer">
+    <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+        <p-grid>
+            <p-grid-item [size]="12">
+                <div class="dealer-content">
+                    <a href="javascript:void(0);" (click)="backToListing()" class="back-btn"><img
+                            src="assets/images/arrow-left.svg" alt="arrow" /> {{'Back' | translate}}</a>
+                    <div class="dealer-header">
+                        <h2> {{'View Role' | translate}}</h2>
+                    </div>
+                    <p-flex class="form-grid-item-container p-flex hydrated">
+                        <p-flex-item [width]="'full'"
+                            class="form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                            <span slot="label" class="text-bold">{{'Role Name' | translate}} </span>
+                            <div>
+                                {{editResult?.roleName}}
+                            </div>
+                        </p-flex-item>
+                    </p-flex>
+                    <p-flex class="form-grid-item-container p-flex hydrated">
+                        <p-flex-item [width]="'full'"
+                            class="form-grid-item form-row-spacing p-flex__item p-flex__item--width-full hydrated">
+                            <span slot="label" class="text-bold">{{'Role Description' | translate}} </span>
+                            <div>
+                                {{editResult?.roleDescription}}
+                            </div>
+                        </p-flex-item>
+                    </p-flex>
+                    <p-flex class="form-grid-item-container p-flex hydrated">
+                        <p-flex-item [width]="'full'"
+                            class="form-grid-item form-row-spacing p-flex__item p-flex__item--width-full hydrated">
+                            <span slot="label" class="text-bold">{{'Assign Permissions' | translate}}</span>
+                            <table width="100%">
+                                <tr>
+                                    <th align="left" width="30%">Module</th>
+                                    <th align="left" width="20%">Create</th>
+                                    <th align="left" width="20%">Edit</th>
+                                    <th align="left" width="20%">View</th>
+                                    <th align="left" width="20%">Inactive</th>
+                                </tr>
+                                <tr>
+                                    <td>{{editResult?.modules?.moduleName}}</td>
+                                    <td>{{editResult?.isCreate?'Yes':'No'}} </td>
+                                    <td>{{editResult?.isEdit?'Yes':'No'}} </td>
+                                    <td>{{editResult?.isView?'Yes':'No'}} </td>
+                                    <td>{{editResult?.isDelete?'Yes':'No'}} </td>
+                                </tr>
+                            </table>
+                        </p-flex-item>
+                    </p-flex>
+
+                    <div class="btn-box mt-2">
+                        <p-button type="button" (click)="editTab(roleId)" *ngIf="rolePermissions?.isEdit">{{'Edit Role' | translate}}
+                        </p-button>
+                    </div>
+                </div>
+            </p-grid-item>
+        </p-grid>
+    </p-content-wrapper>
+</section>

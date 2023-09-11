@@ -1,0 +1,30 @@
+<app-header></app-header>
+<section class="delivery-dashboard">
+  <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+    <p-grid>
+      <p-grid-item [size]="12">
+        <form novalidate="novalidate" class="forgot-form" [formGroup]="forgotForm" (ngSubmit)="onSubmit()">
+          <h2>{{'Forgot password' | translate}}</h2>
+          <p>{{'Please enter your registered email address to receive a password reset link.'| translate}}</p>
+          <p class="last">{{'Mandatory fields are marked with an asterisk'|translate}} ().
+          </p>
+          <p-flex class="form-grid-item-container p-flex hydrated">
+            <p-flex-item [width]="'full'" class="form-grid-item p-flex__item p-flex__item--width-full hydrated">
+              <p-text-field-wrapper class="hydrated"
+                [message]="isSubmitted && forgotForm.controls.email.errors?.pattern ? ('Please enter a valid email.'| translate) : ('Please enter your email address or Porsche ID'|translate)"
+                [state]="isSubmitted && forgotForm.controls.email.errors? 'error' : 'none'">
+                <span slot="label">{{'Porsche ID (email address)'|translate}}  </span>
+                <input type="email" name="email" formControlName="email" required
+                  (keyup)="$event.keyCode === 13 && onSubmit()" (blur)="trim('email')" />
+              </p-text-field-wrapper>
+            </p-flex-item>
+          </p-flex>
+          <div class="btn-box">
+            <p-button [icon]="'close'" [variant]="'tertiary'" (click)="backToLogin()">{{'Cancel'|translate}}</p-button>
+            <p-button type="submit" variant="primary" [loading]="isLoading">{{'Submit'|translate}}</p-button>
+          </div>
+        </form>
+      </p-grid-item>
+    </p-grid>
+  </p-content-wrapper>
+</section>

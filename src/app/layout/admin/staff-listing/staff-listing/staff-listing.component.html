@@ -1,0 +1,120 @@
+<section class="dealer-listing">
+  <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+    <p-grid class="example-grid">
+      <p-grid-item [size]="12">
+        <div class="dealer">
+          <div class="breadcrumbs">
+            <p routerLink="/admin/all-dealers">{{'Dashboard' | translate}}</p>
+            <span>></span>
+            <p>{{'Centres' | translate}}</p>
+          </div>
+          <div class="dealer-header">
+            <div class="left-side" *ngIf="dealerData">
+              <h2>{{dealerData?.name}}</h2>
+              <div class="info">
+                <p>{{dealerData?.email}}</p>
+                <span> | </span>
+                <p *ngIf="dealerData?.contactNumber">{{dealerData.contactNumber  | phoneNumberFormat}}</p>
+              </div>
+            </div>
+            <div class="btn-container">
+              <div class="search-box">
+                <button type="button" class="search-btn">
+                  <div class="search-container" [ngClass]="status ? 'show' : ''">
+                    <form>
+                      <input class="search expandright" id="searchright" type="search" name="q"
+                        [(ngModel)]="searchStaff"  autocomplete="one-time-code"  (keyup)="applyFilter()" placeholder="{{'Search' | translate}}">
+                      <label class="button searchbutton" for="searchright"><span class="mglass">
+                          <p-icon name="search" aria-label="Search icon" (click)="clickEvent()" class="search-icon">
+                          </p-icon>
+                          <p-icon name="close" aria-label="Close icon" (click)="clickEvent()" class="close-icon">
+                          </p-icon>
+                        </span></label>
+                    </form>
+                  </div>
+                </button>
+              </div>
+              <div class="divider" *ngIf="rolePermissions?.isCreate"></div>
+              <p-button (click)="editDealer(dealerId)" *ngIf="rolePermissions?.isEdit">{{'Edit Details' | translate}}</p-button>
+            <!--   <p-button variant="primary" [routerLink]="['/admin/add-staff',dealerId]">{{'Add' | translate}} {{'Staff' |
+                translate}}
+              </p-button> -->
+            </div>
+          </div>
+          <h3> {{'Staff Members' | translate}}</h3>
+
+          <div class="table-container scrollbar staff-container" infiniteScroll [infiniteScrollDistance]="2"
+            [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [infiniteScrollDisabled]="isFullListDisplayed"
+            [scrollWindow]="false" *ngIf="tableLoad">
+
+
+            <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 staff-table">
+              <!-- Name Column -->
+              <ng-container matColumnDef="name">
+                <th mat-header-cell *matHeaderCellDef> {{'Name'| translate}} </th>
+                <td mat-cell *matCellDef="let element">
+                  <p>{{element?.name}}</p>
+                </td>
+              </ng-container>
+
+              <!-- Designation Column -->
+              <ng-container matColumnDef="designation">
+                <th mat-header-cell *matHeaderCellDef> {{'Job Role' | translate}} </th>
+                <td mat-cell *matCellDef="let element">
+                  <p>{{element?.designation}}</p>
+                </td>
+              </ng-container>
+
+              <!-- Contact Column -->
+              <ng-container matColumnDef="contactNumber">
+                <th mat-header-cell *matHeaderCellDef> {{'Contact Number' | translate}}
+                </th>
+                <td mat-cell *matCellDef="let element">
+                  <p>{{element?.contactNumber | phoneNumberFormat }}</p>
+                </td>
+              </ng-container>
+
+              <!-- Email Column -->
+              <ng-container matColumnDef="email">
+                <th mat-header-cell *matHeaderCellDef> {{'Email' | translate}} </th>
+                <td mat-cell *matCellDef="let element">
+                  <p>{{element?.email}}</p>
+                </td>
+              </ng-container>
+
+
+              <!-- Actions Column -->
+              <ng-container matColumnDef="actions" *ngIf="rolePermissions?.isDelete">
+                <th mat-header-cell *matHeaderCellDef> {{'Actions'| translate}} </th>
+                <td mat-cell *matCellDef="let element">
+
+                  <div class="btn-container">
+                   <!--  <p-button-pure (click)="editStaff(element?.id)">
+                      {{'Edit' | translate}}</p-button-pure> -->
+                    <p-button-pure (click)="confirmActivate(element.id, !element.isActive)" 
+                    *ngIf="!element.isActive && rolePermissions?.isDelete">{{'Activate' | translate}}</p-button-pure>
+                    
+                      <p-button-pure (click)="confirmActivate(element.id, !element.isActive)"
+                      *ngIf="element.isActive && rolePermissions?.isDelete">{{'Inactivate' | translate}}</p-button-pure>
+
+                  </div>
+
+                </td>
+              </ng-container>
+              <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;">
+              </tr>
+            </table>
+            <div *ngIf="isLoading" class="loading-block">
+              <p-button-pure [loading]="true">{{'Loading..' | translate}}</p-button-pure>
+            </div>
+            <div *ngIf="!isLoading && !dataSource?.length">
+              <p class="text-center">{{'No record found!' | translate}}</p>
+            </div>
+          </div>
+        </div>
+
+      </p-grid-item>
+    </p-grid>
+  </p-content-wrapper>
+</section>

@@ -1,0 +1,66 @@
+<section class="add-dealer">
+  <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+    <p-grid>
+      <p-grid-item [size]="12">
+        <div class="dealer-content">
+          <a href="javascript:void(0);" (click)="backToListing()" class="back-btn"><img
+              src="assets/images/arrow-left.svg" alt="arrow" /> {{'Back' | translate}}</a>
+          <div class="dealer-header">
+            <h2>{{(dealerId ? 'Edit':'Add') | translate}} {{'Tab/Section' | translate}}</h2>
+            <p>{{(dealerId ? 'Edit Tab/Section details in the following fields.':'Please enter Tab/Section details
+              in the following fields.') | translate}}</p>
+          </div>
+          <form class="dealer-form" novalidate="novalidate" [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+            <p-flex class="form-grid-item-container p-flex hydrated">
+              <p-flex-item [width]="'full'"
+                class="form-grid-item form-row-spacing p-flex__item p-flex__item--width-full hydrated">
+                <p-select-wrapper label="{{'Type'| translate}}" hide-label="false"
+                  [message]="isSubmitted && roleForm.controls.type.errors ? ('Please enter type' | translate):''"
+                  [state]="isSubmitted && roleForm.controls.type.errors ? 'error' : 'none'">
+                  <select name="type" formControlName="type" required>
+                    <option value='' disabled>{{'Choose'| translate}}</option>
+                    <option *ngFor="let option of subSectionsArray" [ngValue]="option.id" >{{option.name}}
+                    </option>
+                  </select>
+                </p-select-wrapper>
+              </p-flex-item>
+            </p-flex> 
+            <p-flex class="form-grid-item-container p-flex hydrated" *ngIf="roleForm.value.type === 2">
+              <p-flex-item [width]="'full'"
+                class="form-grid-item form-row-spacing p-flex__item p-flex__item--width-full hydrated">
+                <p-select-wrapper label="{{'Parent Section'| translate}}" hide-label="false"
+                  [message]="isSubmitted && roleForm.controls.parent.errors ? ('Please enter Parent Section name' | translate):''"
+                  [state]="isSubmitted && roleForm.controls.parent.errors ? 'error' : 'none'">
+                  <select name="parent" formControlName="parent" required>
+                    <option value='' disabled>{{'Choose'| translate}}</option>
+                    <option *ngFor="let option of subSectionsArray" [ngValue]="option.id">{{option.name}}
+                    </option>
+                  </select>
+                </p-select-wrapper>
+              </p-flex-item>
+            </p-flex>
+            <p-flex class="form-grid-item-container p-flex hydrated">
+              <p-flex-item [width]="'full'" class="form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                <p-text-field-wrapper class="hydrated"
+                  [message]="isSubmitted && roleForm.controls.name.errors ? ('Please enter name'|translate) : ''"
+                  [state]="isSubmitted && roleForm.controls.name.errors? 'error' : 'none'">
+                  <span slot="label">{{'Tab/Section' | translate}} {{'Name' | translate}}</span>
+                  <input type="text" name="name" formControlName="name" required (blur)="trim('name')"
+                    (keyup)="$event.keyCode === 13 && onSubmit()" />
+                </p-text-field-wrapper>
+              </p-flex-item>
+            </p-flex>
+
+            <div class="btn-box">
+              <p-button [icon]="'close'" type="button" [variant]="'tertiary'" (click)="backToListing()">{{'Cancel' |
+                translate}}
+              </p-button>
+              <p-button type="submit">{{(dealerId ? 'Update Tab/Section':'Add Tab/Section') | translate}}
+              </p-button>
+            </div>
+          </form>
+        </div>
+      </p-grid-item>
+    </p-grid>
+  </p-content-wrapper>
+</section>

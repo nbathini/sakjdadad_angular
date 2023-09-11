@@ -1,0 +1,41 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="189" height="156" viewBox="0 0 189 156">
+    <defs>
+        <linearGradient id="ts5c3p87ma" x1="50%" x2="50%" y1="0%" y2="100%">
+            <stop offset="0%" stop-color="#EC003C"/>
+            <stop offset="100%" stop-color="#D5001C"/>
+        </linearGradient>
+    </defs>
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g transform="translate(-30 -252) translate(30 252) translate(12 14.64)">
+                    <path fill="#C9CACB" fill-rule="nonzero" d="M24.704 24.733c31.897-31.897 83.614-31.897 115.511 0 31.58 31.578 31.895 82.581.949 114.549l-.947.963-22.275-22.274c19.596-19.596 19.596-51.368 0-70.964-19.597-19.596-51.368-19.596-70.965 0-19.4 19.4-19.594 50.733-.582 70.373l.582.591-22.275 22.274c-31.897-31.898-31.896-83.615.002-115.512z"/>
+                    <path fill="url(#ts5c3p87ma)" fill-rule="nonzero" d="M7.384 50.26l28.85 12.67c-7.617 18.019-4.23 39.584 10.16 54.45l.583.591-22.275 22.274C.375 115.916-5.398 80.06 7.384 50.26z"/>
+                    <circle cx="83.115" cy="83.945" r="11.46" fill="#EFEFEF" fill-rule="nonzero"/>
+                    <g fill="#000" opacity=".191">
+                        <path d="M145.02 126.688l6.262 4.236c-.24.36-.483.72-.728 1.076l-6.202-4.336c.226-.324.448-.649.668-.976zm-126.52-.663c.217.33.437.658.66.984l-6.472 4.426c-.244-.36-.485-.723-.723-1.088zM158.503 51.65c.168.394.334.79.497 1.186l-6.33 2.516c-.145-.366-.293-.73-.443-1.094zm-152.99-.894l6.522 2.787c-.155.363-.306.727-.455 1.092L5 51.943c.168-.397.34-.793.514-1.187zM81.814 1c.419 0 .836.003 1.252.01l-.08 6.128c-.393-.005-.786-.007-1.179-.006L81.792 1z" transform="translate(.344)"/>
+                    </g>
+                    <path fill="#515151" fill-rule="nonzero" d="M10.886 32.118c-.92-.114 60.253 69.3 60.253 69.3l.303.315c.589.576 1.284 1.032 2.047 1.342 3.313 1.348 7.092-.234 8.455-3.54.116-.287.209-.582.277-.883.529-2.108-.034-4.341-1.5-5.947l-.686-.63S13.179 32.4 10.886 32.118z" transform="rotate(-21 46.646 67.837)"/>
+                    <circle cx="83.65" cy="83.901" r="3.314" fill="#FFF" fill-rule="nonzero"/>
+                </g>
+                <g fill="#4A4E51" fill-rule="nonzero" font-family="PorscheNext-Bold, Porsche Next" font-size="10" font-weight="bold">
+                    <text transform="translate(-30 -252) translate(30 252)">
+                        <tspan x="15.4" y="150">1</tspan>
+                    </text>
+                    <text transform="translate(-30 -252) translate(30 252)">
+                        <tspan x="169" y="150">5</tspan>
+                    </text>
+                    <text transform="translate(-30 -252) translate(30 252)">
+                        <tspan x="177" y="65">4</tspan>
+                    </text>
+                    <text transform="translate(-30 -252) translate(30 252)">
+                        <tspan x="6.4" y="65">2</tspan>
+                    </text>
+                    <text transform="translate(-30 -252) translate(30 252)">
+                        <tspan x="93.2" y="10">3</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

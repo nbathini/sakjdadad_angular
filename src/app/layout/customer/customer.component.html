@@ -1,0 +1,165 @@
+<section class="customer-survey">
+  <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+    <p-grid class="example-grid">
+      <p-grid-item [size]="12">
+
+
+        <!--STEP 0-->
+        <div class="customer-box" [ngClass]="{' delivery-setup last':isLast,' delivery-setup':!stepActive || isLast}">
+          <!--/STEP 0-->
+
+          <!--STEP LAST-->
+          <!-- <div class="customer-box delivery-setup last"> -->
+          <!--/STEP LAST-->
+
+          <!--STEP 1 TO STEP 10-->
+          <!-- <div class="customer-box"> -->
+
+          <div class="content-header">
+            <a href="javascript:void(0);">
+              <img src="assets/images/porsche-logo-small.svg" alt="logo" />
+            </a>
+          </div>
+          <div class="content-body scrollbar">
+            <div class="content" *ngIf="!stepActive && !isLast">
+              <h2 class="congratulations-text">Congratulations {{customerName}}!</h2>
+              <p>We are excited to welcome you to {{centreName}} for the delivery of your new {{model}}!</p>
+              <p class="second">Click on the button below to start a short survey to customize your delivery experience.
+              </p>
+              <div class="img-box">
+                <img src="assets/images/taycan-customer-banner.png" alt="taycan-banner" />
+              </div>
+              <div class="delivery-info">
+                <h2> {{model}}</h2>
+                <p>Delivery on {{deliveryDate}} at {{deliveryTime |
+                  date:'h:mm a'}}</p>
+              </div>
+            </div>
+            <ng-template ngFor let-input let-i="index" [ngForOf]="customerSurveyJson">
+              <ng-container [ngSwitch]="input?.Type">
+                <div class="content" [hidden]="stepActive != i+1 || isLast">
+                  <h2>Customize your delivery</h2>
+                  <p class="sub-content" *ngIf="stepActive == 1">We recommend a {{input?.Max}} hour  timeframe for the delivery of your
+                    {{model}} to ensure you have a
+                    good understanding of the vehicle. However, we do understand that time is precious and you may not
+                    be
+                    able to allocate that much time on {{deliveryDate}}.</p>
+                  <div class="q-info">
+                    <h2>{{ i<9 ? '0' :''}}{{i+1}} of {{customerSurveyJson.length}}</h2>
+                        <p>{{input?.Question}}</p>
+                  </div>
+                  <ng-template [ngSwitchCase]="'slider'">
+                    <div class="range-selector">
+                      <mat-slider [min]="input?.Min" [max]="input?.Max" [name]="input.Name" [step]="input?.Step"
+                        thumbLabel [(ngModel)]="customerSurveyJson[i].Answer">
+                      </mat-slider>
+                      <div class="range-values">
+                        <span class="min">{{input?.MinLabel}}</span>
+                        <span class="max">{{input?.MaxLabel}}</span>
+                      </div>
+                    </div>
+                  </ng-template>
+                  <ng-template [ngSwitchCase]="'text'">
+                    <form class="customer-form">
+                      <p-flex class="form-grid-item-container p-flex hydrated" justify-content="center">
+                        <p-flex-item [width]="'full'"
+                          class="form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                          <p-text-field-wrapper class="hydrated">
+                            <input type="text" [name]="input.Name" [(ngModel)]="customerSurveyJson[i].Answer">
+                          </p-text-field-wrapper>
+                        </p-flex-item>
+                      </p-flex>
+                    </form>
+                  </ng-template>
+                  <ng-template [ngSwitchCase]="'radio'">
+                    <form class="customer-form">
+                      <p-flex class="form-grid-item-container p-flex hydrated" justify-content="center">
+                        <p-flex-item [width]="'full'"
+                          class="form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                          <ul class="radio-list">
+                            <li *ngFor="let opt of input?.Options">
+                              <p-radio-button-wrapper [label]="opt" [hideLabel]="false">
+                                <input type="radio" [name]="input.Name" [(ngModel)]="customerSurveyJson[i].Answer"
+                                  [value]="opt" (change)="checkAnswer(input.Name,customerSurveyJson[i].Answer)" />
+                              </p-radio-button-wrapper>
+                            </li>
+                          </ul>
+                        </p-flex-item>
+                      </p-flex>
+                    </form>
+                  </ng-template>
+                  <ng-template [ngSwitchCase]="'checkbox'">
+                    <form class="customer-form">
+                      <p-flex class="form-grid-item-container p-flex hydrated" justify-content="center">
+                        <p-flex-item [width]="'full'"
+                          class="form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                          <ul class="radio-list check-list">
+                            <li *ngFor="let opt of input?.Options">
+                              <p-checkbox-wrapper [label]="opt" [hideLabel]="false">
+                                <input type="checkbox" [name]="input.Name"
+                                  (change)="updateCheckBox(i,opt,$event.target)" />
+                              </p-checkbox-wrapper>
+                            </li>
+                          </ul>
+                        </p-flex-item>
+                      </p-flex>
+                      <p class="small-text">Please select up to 3 areas and we will ensure to allocate enough time
+                        during the
+                        delivery.</p>
+                    </form>
+                  </ng-template>
+                </div>
+              </ng-container>
+            </ng-template>
+
+            <div class="content" *ngIf="isLast">
+              <h2>Thank you!</h2>
+              <p class="second">You have successfully submitted your delivery customizations.</p>
+              <div class="img-box">
+                <img src="assets/images/taycan-customer-banner.png" alt="taycan-banner" />
+              </div>
+              <div class="final-info">
+                <p>We are looking forward to welcoming you at {{centreName}} on
+                  {{deliveryDate}} at
+                  {{deliveryTime |
+                  date:'h:mm a'}}.</p>
+                <p class="second" *ngIf="isLast && !isSubmitted">Unsure about any of your responses? Click the button
+                  below to start again.</p>
+              </div>
+            </div>
+
+          </div>
+          <div class="content-footer">
+            <div class="btn-container">
+              <ul class="btn-list">
+                <li class="delivery-li" *ngIf="!stepActive && !isLast">
+                  <p-button class="delivery-btn" (click)="goToStep('next')">Customize Your Delivery</p-button>
+                </li>
+                <li *ngIf="stepActive > 1 && !isLast">
+                  <p-button [variant]="'tertiary'" (click)="goToStep('prev')">Previous</p-button>
+                </li>
+                <li *ngIf="stepActive && !isLast && stepActive < customerSurveyJson.length">
+                  <p-button (click)="goToStep('next')">Next</p-button>
+                </li>
+                <li *ngIf="stepActive == customerSurveyJson.length && !isLast">
+                  <p-button [variant]="'primary'" (click)="complete()">Complete</p-button>
+                </li>
+               <!--  <li class="later-li" *ngIf="stepActive && !isLast">
+                  <p-button-pure (click)="submitLater()">I'll Do It Later</p-button-pure>
+                </li> 
+                <li class="good-btn-li" *ngIf="isLast && !isSubmitted">
+                  <p-button [variant]="'tertiary'" class="delivery-btn" (click)="submitSurvey()"
+                    [disabled]="isSubmitted">No, I'm Good</p-button>
+                </li>
+                <li class="start-again-li" *ngIf="isLast && !isSubmitted">
+                  <p-button class="delivery-btn" (click)="startAgain()" [disabled]="isSubmitted">Start Again</p-button>
+                </li> -->
+              </ul>
+            </div>
+          </div>
+        </div>
+        <!--/STEP 1 TO STEP 10-->
+      </p-grid-item>
+    </p-grid>
+  </p-content-wrapper>
+</section>

@@ -1,0 +1,81 @@
+@import "../../../variables.scss";
+
+.header {
+  width: 100%;
+  background-color: $grey-bg;
+  .header_logo {
+  }
+  .header-box {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    justify-items: center;
+    padding: 7px 0px 6px 0px;
+
+    .logo {
+      position: relative;
+      top: 1px;
+    }
+
+    .right-part {
+      width: auto;
+      display: flex;
+      align-items: center;
+      justify-content: flex-end;
+      .manage-documents-info {
+        padding: 0px 2px 0px 20px;
+        min-width: 60px;
+        font-size: 14px;
+        margin-top: -4px;
+        text-align: right;
+        a {
+          text-decoration: none;
+          color: #323232;
+          font-weight: bold;
+        }
+        img {
+          margin-bottom: -5px;
+        }
+      }
+      .logout-box {
+        .logout {
+          @extend %heading-font;
+          font-size: 14px;
+          font-weight: bold;
+          margin: 0px 0px 0px 0px;
+          text-decoration: none;
+
+          &:focus,
+          &:hover {
+            text-decoration: none;
+            outline: none;
+          }
+        }
+      }
+
+      p {
+        @extend %heading-font;
+        margin: 0px 0px 0px 0px;
+        text-align: right;
+
+        &.bold {
+          font-size: 14px;
+          font-weight: bold;
+          margin-bottom: -1px;
+        }
+      }
+    }
+  }
+}
+
+.logout-box {
+  display: flex;
+  a.mat-menu-trigger {
+    width: 20px;
+    margin-left: 10px;
+    img {
+      margin-top: 2px;
+      width: 18px;
+    }
+  }
+}

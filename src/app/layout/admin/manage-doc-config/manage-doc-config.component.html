@@ -1,0 +1,193 @@
+<section class="delivery-dashboard scrollbar">
+    <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+        <p-grid>
+            <p-grid-item [size]="12">
+                <form novalidate="novalidate" class="delivery-form" [formGroup]="configForm" (ngSubmit)="onSubmit()">
+                    <h2>{{(deliveryId ? 'Manage Config' :'Manage Config') | translate}}</h2>
+                    <p>{{'Please define the document configuration structure below.' | translate}}</p>
+                    <p class="last">{{'Mandatory fields are marked with an asterisk' | translate}} (<span
+                            class="star">*</span>).
+                    </p>
+                    <div class="example-action-buttons">
+                        <p-button variant="tertiary" type="button" (click)="openAll()">{{'Expand All' |
+                            translate}}
+                        </p-button>
+                        <p-button variant="tertiary" class="ml-2" type="button" (click)="closeAll()">
+                            {{'Collapse All' | translate}}
+                        </p-button>
+                    </div>
+                    <div class="manage-tabs-block">
+
+                        <div formArrayName="tabsList">
+                            <div
+                                *ngFor="let tform of getTablist().controls; let i = index; let first = first; let last = last;">
+                                <p-accordion [tag]="'h3'" [open]="tform.value.isOpen"
+                                    (accordionChange)="onAccordionChange($event, i)">
+                                    <p-text class="tab-heading" slot="heading">{{'Tab' | translate}} {{i+1}} - {{tform.value.Label}}
+                                        <p-button-pure type="button" [icon]="'delete'" class="tab-close inside-row"
+                                            [hideLabel]="true" (click)="removeTab(i)" [size]="'small'">
+                                        </p-button-pure>
+                                    </p-text>
+                                    <p-text>
+
+                                        <div [formGroupName]="i">
+
+                                            <p-flex class="form-grid-item-container p-flex hydrated">
+                                                <p-flex-item [width]="'full'"
+                                                    class="form-row-spacing form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                                                    <p-text-field-wrapper class="hydrated"
+                                                        [message]="isSubmitted && tform.get('Label')?.errors ? ('Please enter tab name' | translate):''"
+                                                        [state]="isSubmitted && tform.get('Label')?.errors ? 'error' : 'none'">
+                                                        <span slot="label">{{'Tab Name' | translate}}
+                                                        </span>
+                                                        <input type="text" name="Label" required="required"
+                                                            formControlName="Label" aria-label="Sales Consultant"
+                                                            (keyup)="$event.keyCode === 13 && onSubmit()" />
+                                                    </p-text-field-wrapper>
+                                                </p-flex-item>
+
+                                            </p-flex>
+                                            <p-flex class="form-grid-item-container p-flex hydrated">
+                                                <p-flex-item [width]="'full'"
+                                                    class="form-row-spacing form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                                                    <p-text-field-wrapper class="hydrated"
+                                                        [message]="isSubmitted && tform.get('Info')?.errors ? ('Please enter service tab info' | translate):''"
+                                                        [state]="isSubmitted && tform.get('Info')?.errors ? 'error' : 'none'">
+                                                        <span slot="label">{{'Tab Info' | translate}}
+                                                        </span>
+                                                        <input type="text" name="Info" required="required"
+                                                            formControlName="Info" aria-label="Sales Consultant"
+                                                            (keyup)="$event.keyCode === 13 && onSubmit()" />
+                                                    </p-text-field-wrapper>
+                                                </p-flex-item>
+                                            </p-flex>
+                                            <div class="section-block" formArrayName="Fields"
+                                                *ngFor="let sform of getFields(i).controls; let j = index; let first = first; let last = last;">
+                                                <div [formGroupName]="j">
+                                                    <span slot="label">{{'Section' | translate}} {{j+1}} <span
+                                                            class="star">*</span>
+                                                    </span>
+                                                    <div class="section-row">
+                                                        <div class="section-row-block">
+                                                            <p-flex class="form-grid-item-container p-flex hydrated">
+                                                                <p-flex-item [width]="'full'"
+                                                                    class="form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                                                                    <p-text-field-wrapper class="hydrated"
+                                                                        [message]="isSubmitted && sform.get('Label')?.errors ? ('Please enter section name' | translate):''"
+                                                                        [state]="isSubmitted && sform.get('Label')?.errors ? 'error' : 'none'">
+
+                                                                        <input type="text" name="Label"
+                                                                            required="required" formControlName="Label"
+                                                                            aria-label="Sales Consultant"
+                                                                            (keyup)="$event.keyCode === 13 && onSubmit()" />
+                                                                    </p-text-field-wrapper>
+                                                                </p-flex-item>
+                                                            </p-flex>
+                                                        </div>
+                                                        <div>
+                                                            <ul class="section-box-list">
+                                                                <li *ngIf="!first" class="ml-0">
+                                                                    <p-button-pure type="button" [icon]="'delete'"
+                                                                        class="btn-close inside-row" [hideLabel]="true"
+                                                                        (click)="removeSection(i,j)" [size]="'small'">
+                                                                    </p-button-pure>
+                                                                </li>
+                                                                <li *ngIf="last" class="ml-0">
+                                                                    <p-button-pure type="button" [icon]="'add'"
+                                                                        class="tab-add-button inside-row"
+                                                                        [hideLabel]="true" (click)="addSectionItem(i,true)"
+                                                                        [size]="'small'"></p-button-pure>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+
+                                                    <p-flex class="form-grid-item-container p-flex hydrated mt-3">
+
+                                                        <p-flex-item [width]="'full'"
+                                                            class="form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                                                            <span slot="label">{{'Checklist' | translate}} {{j + 1}}
+                                                                <span class="star">*</span>
+                                                            </span>
+                                                            <div class="sub-section-block" formArrayName="Questions"
+                                                                *ngFor="let cform of getChecklist(i,j).controls; let k = index; let first = first; let last = last;">
+                                                                <div [formGroupName]="k" class="check-block">
+                                                                    <p-flex class="question-block">
+                                                                        <p-flex-item [width]="'full'"
+                                                                            class="form-row-spacing form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                                                                            <p-text-field-wrapper class="hydrated"
+                                                                                [message]="isSubmitted && cform.get('Label')?.errors ? ('Please enter check point name' | translate):''"
+                                                                                [state]="isSubmitted && cform.get('Label')?.errors ? 'error' : 'none'">
+                                                                                <input type="text" name="Label"
+                                                                                    required="required"
+                                                                                    formControlName="Label"
+                                                                                    aria-label="Label" />
+                                                                            </p-text-field-wrapper>
+                                                                        </p-flex-item>
+
+                                                                    </p-flex>
+                                                                    <div>
+                                                                        <ul class="check-box-list">
+                                                                            <li>
+                                                                                <p-checkbox-wrapper
+                                                                                    [label]="'Add Link' | translate">
+                                                                                    <input type="checkbox"
+                                                                                        formControlName="IsAddLink" />
+                                                                                </p-checkbox-wrapper>
+                                                                            </li>
+                                                                            <li>
+                                                                                <p-checkbox-wrapper
+                                                                                    [label]="'Add Document' | translate">
+                                                                                    <input type="checkbox"
+                                                                                        formControlName="IsAddDoc" />
+                                                                                </p-checkbox-wrapper>
+                                                                            </li>
+                                                                            <li *ngIf="!first" class="mr-0">
+                                                                                <p-button-pure [icon]="'delete'"
+                                                                                    type="button"
+                                                                                    class="btn-close inside-row"
+                                                                                    [hideLabel]="true"
+                                                                                    (click)="removeCheckItem(i,j,k)"
+                                                                                    [size]="'small'"></p-button-pure>
+                                                                            </li>
+                                                                            <li *ngIf="last" class="mr-0">
+                                                                                <p-button-pure [icon]="'add'"
+                                                                                    type="button"
+                                                                                    class="tab-add-button inside-row"
+                                                                                    [hideLabel]="true"
+                                                                                    (click)="addCheckItem(i,j,true)"
+                                                                                    [size]="'small'"></p-button-pure>
+                                                                            </li>
+                                                                        </ul>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </p-flex-item>
+                                                    </p-flex>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                    </p-text>
+                                </p-accordion>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="text-right position-relative">
+                        <p-button-pure type="button" [icon]="'add'" class="tab-add-button" [hideLabel]="true"
+                            (click)="addTabItem(true)" [size]="'small'"></p-button-pure>
+                    </div>
+                    <div class="btn-box">
+                        <p-button variant="secondary" type="submit" [loading]="isLoading"
+                            [disabled]="deliveryId && !configForm.valid">{{(deliveryId ? 'Update Config' :'Submit
+                            Config') | translate}}
+                        </p-button>
+                    </div>
+                </form>
+
+            </p-grid-item>
+        </p-grid>
+    </p-content-wrapper>
+</section>

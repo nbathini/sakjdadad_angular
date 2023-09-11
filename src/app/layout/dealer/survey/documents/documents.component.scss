@@ -1,0 +1,185 @@
+@import "../delivery-checklist/delivery-checklist.component.scss";
+
+
+.outer-box{
+    .send-documents.last{
+        margin-top: 44px;
+    }
+    .questions-content{
+        .question-header {
+            padding: 8px 34px;
+        }
+        .answers-content{
+            padding-bottom: 7px;
+            .answers{
+                flex-direction: column;
+                padding-bottom: 0px;
+                .info-btn{
+                    padding: 0px;
+                    margin: 0px 0px 0px 12px;
+                    background-color: transparent;
+                    border: none;
+                    &:focus{
+                        outline: none;
+                    }
+                }
+                .right-part{
+                    width: 100%;
+                    min-width: 100%;
+                    position: relative;
+                    right: 0px;
+                    justify-content: flex-start;
+                    padding-top: 0px;
+                    margin-top: 25px;
+                    flex-direction: column;
+                    p-checkbox-wrapper{
+                        margin-bottom: 22px;
+                    }
+                    .sub-checklist ,.italics{
+                        font-size: 14px;
+                        font-weight: normal;
+                        font-stretch: normal;
+                        font-style: italic;
+                        line-height: 1;
+                        letter-spacing: normal;
+                        color: $black;
+                        padding-left: 3px;
+                    }
+                    .italics{
+                        margin-bottom: 22px;
+                        padding-left: 32px;
+                        &:last-child{
+                            margin-bottom: 0px;
+                        }
+                    }
+                }
+            }
+        } 
+    } 
+        
+} 
+
+
+/*Tooltip*/
+.tooltip {
+    display:inline-block;
+    position:relative;
+    text-align:left;
+    cursor: pointer;
+}
+
+
+.tooltip .right{
+    top:50%;
+    left:100%;
+    margin-left:11px;
+    transform:translate(0, -50%);
+    border-radius:0px;
+    position:absolute;
+    z-index:99999999;
+    box-sizing:border-box;
+    padding: 15px 23px 15px 22px;
+    box-shadow: 0 2px 10px 0 rgb(0 0 0 / 20%);
+    background-color: #ffffff;
+    display:none;
+    min-width: 380px;
+    .tooltip-heading{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+        border-bottom: 1px solid #c9cacb;
+        margin: 0px 0px 14px 0px;
+        padding: 0px 0px 0px 0px;
+        h3{
+            font-size: 14px;
+            line-height: 1.43;
+            margin: 0px 0px 8px 0px;
+            width: auto;
+        }
+    }
+    .tooltip-list{
+        width: 100%;
+        margin: 0px 0px 0px 0px;
+        list-style: none;
+        padding: 0px 14px 0px 9px;
+        li{
+            width: 100%;
+            margin: 0px 0px 16px 0px;
+            &:last-child{
+                margin: 0px 0px 0px 0px;
+            }
+        }
+    }
+    .tooltip-content{
+        width: 100%;
+        display: flex;
+        justify-content: space-between;
+
+        .left-part{
+            width: auto;
+            display: flex;
+            align-items: center;
+            .img-box{
+                width: auto;
+                margin: 0px 9px 0px 0px;
+                position: relative;
+                top: 2px;
+            }
+            p{
+                font-size: 14px;
+                font-weight: normal;
+                font-stretch: normal;
+                font-style: normal;
+                line-height: 1.43;
+                letter-spacing: normal;
+                color: $black;
+                margin: 0px 0px 0px 0px;
+            }
+        }
+        .right-part{
+            width: auto !important;
+            min-width: auto !important;
+            margin: 0px 0px 0px 0px !important;
+            padding: 0px 0px 0px 10px !important;
+            p{
+                font-size: 14px;
+                font-weight: normal;
+                font-stretch: normal;
+                font-style: italic;
+                line-height: 1.43;
+                letter-spacing: normal;
+                text-align: right;
+                color: #b0b1b2;
+                margin: 0px 0px 0px 0px;
+            }
+        }
+    }
+} 
+
+
+.tooltip:hover .right {
+    display:block;
+}
+
+.tooltip .right i {
+    position:absolute;
+    top:50%;
+    right:100%;
+    margin-top:-12px;
+    width:12px;
+    height:24px;
+    overflow:hidden;
+}
+
+.tooltip .right i::after {
+    content:'';
+    position:absolute;
+    width:12px;
+    height:12px;
+    left:0;
+    top:50%;
+    transform:translate(50%,-50%) rotate(-45deg);
+    box-shadow: 0 2px 10px 0 rgb(0 0 0 / 20%);
+    background-color: #ffffff;
+}
+/*Tooltip*/

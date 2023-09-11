@@ -1,0 +1,56 @@
+<section class="login">
+  <p-content-wrapper class="hydrated p-content-wrapper login-wrapper" width="extended">
+    <p-grid class="example-grid">
+      <p-grid-item [size]="6">
+        <div class="black-bg">
+          <div class="img-box">
+            <img src="assets/images/porsche-login.png" alt="prosche" />
+          </div>
+        </div>
+      </p-grid-item>
+      <p-grid-item [size]="6">
+        <div class="form-box">
+          <img src="assets/images/Porsche_wordmark_black_rgb.svg" alt="logo" class="header_logo" width="200"/>
+          <h2>{{'Welcome'|translate}}</h2>
+          <form novalidate="novalidate" class="login-form" [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+            <p-flex class="form-grid-item-container p-flex hydrated" justify-content="center">
+              <p-flex-item [width]="'full'" class="form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                <p-text-field-wrapper label="{{'Porsche ID (email address)' | translate}}"
+                  [message]="isSubmitted && userForm.userEmail.errors?.pattern ? ('Please enter a valid email.' | translate ) : (isSubmitted && userForm.userEmail.errors?.required ? ('Please enter your email address or Porsche ID'|translate) : '')"
+                  [state]="isSubmitted && userForm.userEmail.errors? 'error' : 'none'" class="hydrated">
+                  <input type="email" name="userEmail" required="required" formControlName="userEmail"
+                    (keyup)="$event.keyCode === 13 && onSubmit()" (blur)="trim('userEmail')">
+                </p-text-field-wrapper>
+              </p-flex-item>
+            </p-flex>
+            <p-flex class="form-grid-item-container p-flex hydrated">
+              <p-flex-item [width]="'full'"
+                class="form-row-spacing form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                <p-text-field-wrapper label="{{'Password' | translate}}"
+                  [message]="isSubmitted && userForm.password.errors ? ('Please enter your password.' | translate) : ''"
+                  [state]="isSubmitted && userForm.password.errors? 'error' : 'none'" class="hydrated">
+                  <input type="password" name="password" required="required" formControlName="password"
+                    aria-label="Password" (keyup)="$event.keyCode === 13 && onSubmit()">
+                </p-text-field-wrapper>
+              </p-flex-item>
+            </p-flex>
+            <p-flex class="form-section-spacing p-flex hydrated">
+              <p-flex-item [width]="'full'"
+                class="p-flex__item p-flex__item--width-full form-row-spacing hydrated">
+                <p-button type="submit" class="submit-btn" variant="primary" [loading]="isLoading">{{'Log
+                  in'|translate}}</p-button>
+              </p-flex-item>
+            </p-flex>
+            <p-flex class="form-section-spacing p-flex hydrated">
+              <p-flex-item [width]="'full'"
+                class="p-flex__item p-flex__item--width-full form-row-spacing hydrated">
+                <p-button-pure class="submit-btn forget" (click)="forgotPassword()">{{'Forgot password'|translate}}?
+                </p-button-pure>
+              </p-flex-item>
+            </p-flex>
+          </form>
+        </div>
+      </p-grid-item>
+    </p-grid>
+  </p-content-wrapper>
+</section>

@@ -1,0 +1,49 @@
+<section class="add-dealer">
+    <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+        <p-grid>
+            <p-grid-item [size]="12">
+                <div class="dealer-content">
+                    <a href="javascript:void(0);" (click)="backToListing()" class="back-btn"><img
+                            src="assets/images/arrow-left.svg" alt="arrow" /> {{'Back' | translate}}</a>
+                    <div class="dealer-header">
+                        <h2>{{'View Car Model' | translate}}</h2>
+                    </div>
+                    <form class="dealer-form" novalidate="novalidate" [formGroup]="roleForm" (ngSubmit)="onSubmit()">
+                        <p-flex class="form-grid-item-container p-flex hydrated">
+                            <p-flex-item [width]="'full'"
+                                class="form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                                <span slot="label" class="text-bold">{{'Model' | translate}} {{'Name' |
+                                    translate}}</span>
+                                <div>
+                                    {{editResult?.name}}
+                                </div>
+                            </p-flex-item>
+                        </p-flex>
+                        <p-flex class="form-grid-item-container p-flex hydrated">
+                            <p-flex-item [width]="'full'"
+                                class="form-grid-item form-row-spacing p-flex__item p-flex__item--width-full hydrated">
+                                <span slot="label" class="text-bold">{{'Model Image' | translate}}</span>
+                                <div class="image-box">
+                                    <img src="{{editResult?.imagePath}}" class="img-responsive" />
+                                </div>
+                            </p-flex-item>
+                        </p-flex>
+                        <p-flex class="form-grid-item-container p-flex hydrated">
+                            <p-flex-item [width]="'full'"
+                                class="form-grid-item form-row-spacing p-flex__item p-flex__item--width-full hydrated">
+                                <span slot="label" class="text-bold">{{'Description' | translate}}</span>
+                                <div>
+                                    {{editResult?.description}}
+                                </div>
+                            </p-flex-item>
+                        </p-flex>
+                        <div class="btn-box">
+                            <p-button type="button" (click)="editTab(modelId)" *ngIf="rolePermissions?.isEdit">{{'Edit Car Model' | translate}}
+                            </p-button>
+                        </div>
+                    </form>
+                </div>
+            </p-grid-item>
+        </p-grid>
+    </p-content-wrapper>
+</section>

@@ -1,0 +1,285 @@
+@import '~@porsche-design-system/utilities/scss';
+
+
+$login-bg: #313639;
+$black:#000000;
+$black-header:#323232;
+$grey-bg:#eff0f1;
+$active-link:#d5001c;
+$border-color:#c9cacb;
+$week-day:#959899;
+$white:#ffffff;
+$calendar-black:#39393a;
+$grey-heading: #96989a;
+
+%heading-font {
+  font-size: 12px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: normal;
+  letter-spacing: normal;
+  color: $black-header;
+}
+%table-heading{
+  font-size: 16px;
+  font-weight: bold;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: $black;
+}
+%td-font{
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.88;
+  letter-spacing: normal;
+  color: $black;
+}
+
+
+/*Breakpoints*/
+@mixin bp($point) {
+
+  @if $point==big-screen {
+    @media (min-width: 1400px) {
+      @content;
+    }
+  }
+  @if $point==laptop {
+    @media (min-width: 1360px) {
+      @content;
+    }
+  }
+  @if $point==small-latop {
+    @media (max-width: 1370px) {
+      @content;
+    }
+  }
+
+
+  @if $point==xl {
+    @media (min-width: 1100px) {
+      @content;
+    }
+  }
+  @if $point==lg {
+    @media (max-width: 1200px) {
+      @content;
+    }
+  }
+  @if $point==ipadpro {
+    @media (max-width: 1024px) {
+      @content;
+    }
+  }
+
+  @if $point==ipad-l {
+    @media (max-width: 991px) {
+      @content;
+    }
+  }
+
+  @if $point==ipad {
+    @media (max-width: 768px) {
+      @content;
+    }
+  }
+
+  @if $point==mobile {
+    @media (max-width: 767px) {
+      @content;
+    }
+  }
+
+  @if $point==mobile-p {
+    @media (max-width: 430px) {
+      @content;
+    }
+  }
+
+  @if $point==small-device {
+    @media (max-width: 350px) {
+      @content;
+    }
+  }
+}
+
+/*Breakpoints*/
+
+
+
+/*Common text elements*/
+h2 {
+  @include p-generate-font-definition($p-font-size-30, $p-font-weight-semibold);
+  margin: 0px 0px 28px;
+  width: 100%;
+  text-align: left;
+}
+
+h3,.delivery-question-heading {
+  @include p-generate-font-definition($p-font-size-22, $p-font-weight-semibold);
+  margin: 0px 0px 0px 0px;
+  width: 100%;
+  text-align: left;
+  line-height: 1.09;
+  color: $black-header;
+
+  span {
+    font-weight: normal;
+  }
+}
+
+p {
+  @include p-generate-font-definition($p-font-size-18, $p-font-weight-regular);
+  line-height: 1.67;
+  letter-spacing: normal;
+  color: $black;
+
+  &.bold {
+    @include p-generate-font-definition($p-font-size-18, $p-font-weight-semibold);
+  }
+  span{
+    &.bold {
+      @include p-generate-font-definition($p-font-size-18, $p-font-weight-bold);
+    }
+  }
+
+  &.mandatory {
+    width: 100%;
+    margin: 32px 0px 26px 0px;
+    font-size: 12px;
+
+    &.white {
+      color: $white;
+    }
+  }
+
+  .highlighted {
+    font-size: 24px;
+    color: $active-link;
+  }
+}
+
+.watt {
+  @include p-generate-font-definition($p-font-size-18, $p-font-weight-semibold);
+  font-size: 12px;
+  font-weight: 600;
+  color: $white;
+  padding: 5px 0px 4px;
+  border-radius: 14px;
+  background-color: #313639;
+  text-decoration: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  max-width: 70px;
+  margin-top: -18px;
+
+  &:hover {
+    text-decoration: none;
+  }
+}
+
+.sub-text {
+  @include p-generate-font-definition($p-font-size-12, $p-font-weight-regular);
+  line-height: 2;
+  letter-spacing: normal;
+  color: $black;
+  margin: 0px 0px 0px 0px;
+}
+
+.label-text {
+  @include p-generate-font-definition($p-font-size-16, $p-font-weight-regular);
+  line-height: normal;
+  letter-spacing: normal;
+  color: $black;
+}
+
+.info-content {
+  .label {
+    font-size: 14px;
+    font-weight: normal;
+    font-stretch: normal;
+    font-style: normal;
+    line-height: normal;
+    letter-spacing: normal;
+    color: #959899;
+    margin: 0px 0px 0px 0px;
+  }
+
+  .customer {
+    @include p-generate-font-definition($p-font-size-16, $p-font-weight-regular);
+    line-height: normal;
+    letter-spacing: normal;
+    color: $black;
+    margin: 0px 0px 0px 0px;
+  }
+}
+
+.car-detail-box {
+  .info-box {
+    p {
+      @include p-generate-font-definition($p-font-size-16, $p-font-weight-regular);
+      letter-spacing: normal;
+      color: $black-header;
+      margin: 0px 0px 0px 0px;
+    }
+  }
+
+  .customer-info {
+    li {
+      &:last-child {
+        p {
+          text-transform: none;
+        }
+      }
+    }
+
+    .heading {
+      @include p-generate-font-definition($p-font-size-12, $p-font-weight-semibold);
+      line-height: normal;
+      letter-spacing: normal;
+      color: $grey-heading;
+      margin: 0px 0px 1px 0px;
+      text-transform: uppercase !important;
+    }
+
+    p {
+      font-size: 14px;
+      font-weight: normal;
+      font-stretch: normal;
+      font-style: normal;
+      line-height: normal;
+      letter-spacing: normal;
+      color: $black;
+      margin: 0px 0px 0px 0px;
+      text-transform: capitalize;
+    }
+  }
+}
+
+.back-btn{
+  width: auto;
+  display: flex;
+  align-items: center;
+  font-size: 16px;
+  font-weight: normal;
+  font-stretch: normal;
+  font-style: normal;
+  line-height: 1.5;
+  letter-spacing: normal;
+  color: $black;
+  margin-bottom: 10px;
+  text-decoration: none;
+  img{
+    margin-right: 4px;
+  }
+  &:hover{
+    text-decoration: none;
+  }
+}
+/*Common text elements*/

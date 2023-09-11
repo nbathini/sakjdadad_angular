@@ -1,0 +1,34 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="189" height="164" viewBox="0 0 189 164">
+    <g fill="none" fill-rule="evenodd">
+        <g>
+            <g>
+                <g transform="translate(-256 -60) translate(256 60) translate(12 14.64)">
+                    <path fill="#C9CACB" fill-rule="nonzero" d="M24.704 24.733c31.897-31.897 83.614-31.897 115.511 0 31.58 31.578 31.895 82.581.949 114.549l-.947.963-22.275-22.274c19.596-19.596 19.596-51.368 0-70.964-19.597-19.596-51.368-19.596-70.965 0-19.4 19.4-19.594 50.733-.582 70.373l.582.591-22.275 22.274c-31.897-31.898-31.896-83.615.002-115.512z"/>
+                    <circle cx="83.115" cy="83.945" r="11.46" fill="#EFEFEF" fill-rule="nonzero"/>
+                    <g fill="#000" opacity=".191">
+                        <path d="M145.02 126.688l6.262 4.236c-.24.36-.483.72-.728 1.076l-6.202-4.336c.226-.324.448-.649.668-.976zm-126.52-.663c.217.33.437.658.66.984l-6.472 4.426c-.244-.36-.485-.723-.723-1.088zM158.503 51.65c.168.394.334.79.497 1.186l-6.33 2.516c-.145-.366-.293-.73-.443-1.094zm-152.99-.894l6.522 2.787c-.155.363-.306.727-.455 1.092L5 51.943c.168-.397.34-.793.514-1.187zM81.814 1c.419 0 .836.003 1.252.01l-.08 6.128c-.393-.005-.786-.007-1.179-.006L81.792 1z" transform="translate(.344)"/>
+                    </g>
+                    <path fill="#515151" fill-rule="nonzero" d="M13.01 70.36c-.92-.113 60.253 69.3 60.253 69.3l.303.315c.589.576 1.284 1.032 2.047 1.342 3.313 1.349 7.092-.234 8.455-3.54.116-.287.209-.582.277-.883.53-2.108-.034-4.341-1.5-5.947l-.686-.63S15.303 70.644 13.01 70.36z" transform="rotate(-77 48.77 106.08)"/>
+                    <circle cx="83.65" cy="83.901" r="3.314" fill="#FFF" fill-rule="nonzero"/>
+                </g>
+                <g fill="#4A4E51" fill-rule="nonzero" font-family="PorscheNext-Bold, Porsche Next" font-size="10" font-weight="bold">
+                    <text transform="translate(-256 -60) translate(256 60)">
+                        <tspan x="15.4" y="150">1</tspan>
+                    </text>
+                    <text transform="translate(-256 -60) translate(256 60)">
+                        <tspan x="169" y="150">5</tspan>
+                    </text>
+                    <text transform="translate(-256 -60) translate(256 60)">
+                        <tspan x="177" y="65">4</tspan>
+                    </text>
+                    <text transform="translate(-256 -60) translate(256 60)">
+                        <tspan x="6.4" y="65">2</tspan>
+                    </text>
+                    <text transform="translate(-256 -60) translate(256 60)">
+                        <tspan x="93.2" y="10">3</tspan>
+                    </text>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

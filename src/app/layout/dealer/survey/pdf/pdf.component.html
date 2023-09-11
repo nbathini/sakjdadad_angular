@@ -1,0 +1,926 @@
+<div class="table-container" style="width:100%;max-width:100%;margin:0px 10px 0px 23px;" #contentPdf>
+  <table width="595" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+    <tr>
+      <td width="32"></td>
+      <td width="531" height="23">&nbsp;</td>
+      <td width="32"></td>
+    </tr>
+    <tr>
+      <td width="32"></td>
+      <td width="531">
+        <table width="531" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+          <tr>
+            <td width="231">
+              <img src="assets/images/Porsche_wordmark_black_rgb.png" alt="header-logo" class="header_logo"
+                width="200" />
+            </td>
+            <td width="300">
+              <table width="300" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td
+                    style=" font-family:Arial, sans-serif; font-weight:bold;text-align: right;color: #323232; font-size:8.2px; line-height:2">
+                    {{deliverData?.centreName}}
+                  </td>
+                </tr>
+                <tr>
+                  <td
+                    style=" font-family:Arial, sans-serif; font-weight:normal;text-align: right;color: #323232; font-size:7.2px; line-height:1.3">
+                    <!-- 68 Parliament Street, Toronto, Ontario M5A 0B2 -->
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td width="32"></td>
+    </tr>
+    <tr>
+      <td width="32"></td>
+      <td width="531" height="20">&nbsp;</td>
+      <td width="32"></td>
+    </tr>
+    <tr>
+      <td width="32"></td>
+      <td width="531">
+        <table width="531" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+          <tr>
+            <td width="405">
+              <table width="405" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td width="105" *ngIf="base64dCarModel">
+                    <img [src]="base64dCarModel" alt="taycan" width="97" />
+                  </td>
+                  <td width="195"
+                    style=" font-family:Arial, sans-serif; font-weight:bold;text-align: left;color: #323232; font-size:11.5px; line-height:2;">
+                    Porsche <span
+                      style=" font-family:Arial, sans-serif; font-weight:normal;text-align: left;color: #323232; font-size:11.5px; line-height:2;">{{deliverData?.model?.name}}</span>
+                  </td>
+                  <td width="85">
+                    <table width="85" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                      <tr>
+                        <td width="85"
+                          style=" font-family:Arial,sans-serif; font-weight:normal;text-align: left;color: #96989a; font-size:7.2px; line-height:2; text-transform:uppercase;">
+                          {{'Delivery Type' | translate}}
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="85"
+                          style=" font-family:Arial, sans-serif; font-weight:normal;text-align: left;color: #000000; font-size:8.2px; line-height:1.3; text-transform:capitalise;">
+                          {{deliverData?.deliveryType?.name}}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td width="17"></td>
+                </tr>
+              </table>
+
+            </td>
+            <td width="126">
+              <table width="126" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td width="126"
+                    style=" font-family:Arial, sans-serif; font-weight:normal;text-align: left;color: #96989a; font-size:7.2px; line-height:2; text-transform:uppercase;">
+                    Delivery Date & Time
+                  </td>
+                </tr>
+                <tr>
+                  <td width="126"
+                    style=" font-family:Arial, sans-serif; font-weight:normal;text-align: left;color: #000000; font-size:8.2px; line-height:1.3; text-transform:uppercase;">
+                    {{deliverData?.deliveryDate | date: 'dd-MMM-YY'}} | {{deliverData?.deliveryTime | date:
+                    'shortTime'}} {{appConfig.common.timeZone}}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td width="32"></td>
+    </tr>
+
+    <tr>
+      <td width="32"></td>
+      <td width="531" height="10"></td>
+      <td width="32"></td>
+    </tr>
+    <tr>
+      <td width="32"></td>
+      <td width="531">
+        <table width="531" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+          <tr>
+            <td width="405">
+              <table width="405" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <td width="85">
+                  <table width="85" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+
+                    <tr>
+                      <td width="85"
+                        style=" font-family:Arial, sans-serif; font-weight:bold;text-align: left;color: #96989a; font-size:7.2px; line-height:2; text-transform:uppercase;">
+                        Porsche Pro
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="85"
+                        style=" font-family:Arial, sans-serif; font-weight:normal;text-align: left;color: #000000; font-size:8.2px; line-height:1.3;">
+                        {{deliverData?.porschePro?.name}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td width="16"></td>
+                <td width="85">
+                  <table width="85" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+
+                    <tr>
+                      <td width="85"
+                        style=" font-family:Arial, sans-serif; font-weight:bold;text-align: left;color: #96989a; font-size:7.2px; line-height:2; text-transform:uppercase;">
+                        Service Advisor
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="85"
+                        style=" font-family:Arial, sans-serif; font-weight:normal;text-align: left;color: #000000; font-size:8.2px; line-height:1.3;">
+                        {{deliverData?.serviceAdvisor?.name}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td width="16"></td>
+                <td width="85">
+                  <table width="85" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+
+                    <tr>
+                      <td width="85"
+                        style=" font-family:Arial, sans-serif; font-weight:bold;text-align: left;color: #96989a; font-size:7.2px; line-height:2; text-transform:uppercase;">
+                        Sales Consultant
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="85"
+                        style=" font-family:Arial, sans-serif; font-weight:normal;text-align: left;color: #000000; font-size:8.2px; line-height:1.3;">
+                        {{deliverData?.salesConsultant?.name}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td width="16"></td>
+                <td width="85">
+                  <table width="85" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+
+                    <tr>
+                      <td width="85"
+                        style=" font-family:Arial, sans-serif; font-weight:bold;text-align: left;color: #96989a; font-size:7.2px; line-height:2; text-transform:uppercase;">
+                        Customer Name
+                      </td>
+                    </tr>
+                    <tr>
+                      <td width="85"
+                        style=" font-family:Arial, sans-serif; font-weight:normal;text-align: left;color: #000000; font-size:8.2px; line-height:1.3;">
+                        {{deliverData?.customerName}}
+                      </td>
+                    </tr>
+                  </table>
+                </td>
+                <td width="16"></td>
+              </table>
+            </td>
+            <td width="126">
+              <table width="126" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td width="126"
+                    style=" font-family:Arial, sans-serif; font-weight:normal;text-align: left;color: #96989a; font-size:7.2px; line-height:2; text-transform:uppercase;">
+                    Customer Email
+                  </td>
+                </tr>
+                <tr>
+                  <td width="126"
+                    style=" font-family:Arial, sans-serif; font-weight:normal;text-align: left;color: #000000; font-size:8.2px; line-height:1.3;">
+                    {{deliverData?.customerEmail}}
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td width="32"></td>
+    </tr>
+
+    <tr>
+      <td width="32"></td>
+      <td width="531" height="21">&nbsp;</td>
+      <td width="32"></td>
+    </tr>
+    <tr>
+      <td width="32"></td>
+      <td width="531">
+        <table width="531" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+          <tr>
+            <td width="265.5">
+              <table width="265.5" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td width="265.5"
+                    style=" font-family:Arial, sans-serif; font-weight:bold;text-align: left;color: #000000; font-size:16.8px; line-height:1.6;">
+                    {{customerSurveyJson?.deliveryTime}}mins
+                  </td>
+                </tr>
+                <tr>
+                  <td width="265.5"
+                    style=" font-family:Arial, sans-serif; font-weight:normal;text-align: left;color: #000000; font-size:8.2px; line-height:1.3;">
+                    {{'Time allocated by customer' | translate}}
+                  </td>
+                </tr>
+                <tr>
+                  <td width="265.5" height="17.4"></td>
+                </tr>
+                <tr>
+                  <td width="265.5">
+                    <table width="265.5" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+
+                      <tr *ngFor="let survey of surveyPreparationJson1;index as i">
+                        <td width="200.5" colspan="3"
+                          style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                          <span
+                            style=" font-size: 8.2px;font-weight: bold;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">{{
+                            i < 9 ? '0' :''}}{{i+1}}.</span>
+                              {{survey.question | translate}}
+                        </td>
+                        <td width="60" valign="top"
+                          style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px;  padding-right:15px;">
+                          <span *ngIf="survey.answer == 'No'"></span>
+                          <span *ngIf="survey.answer != 'No' && survey.answer != 'Yes'">
+                            {{survey.answer | translate}}
+                          </span>
+                          <span *ngIf="survey.answer == 'Yes'">
+                            <img src="assets/images/pdf-tick.png" style="width:10px;" alt="tick" />
+                          </span>
+                        </td>
+                      </tr>
+
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td width="265.5" valign="top">
+              <table width="265.5" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td width="265.5"
+                    style=" font-family:Arial, sans-serif; font-weight:bold;text-align: left;color: #000000; font-size:16.8px; line-height:1.6;">
+                    {{vehicleName ? vehicleName : '-'}}
+                  </td>
+                </tr>
+                <tr>
+                  <td width="265.5"
+                    style=" font-family:Arial, sans-serif; font-weight:normal;text-align: left;color: #000000; font-size:8.2px; line-height:1.3;">
+                    {{"Customer's current vehicle" | translate}}
+                  </td>
+                </tr>
+                <tr>
+                  <td width="265.5" height="17.4"></td>
+                </tr>
+                <tr>
+                  <td width="265.5">
+                    <table width="265.5" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                      <tr *ngFor="let survey of surveyPreparationJson2;index as i">
+                        <td width="200.5" colspan="3"
+                          style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                          <span
+                            style=" font-size: 8.2px;font-weight: bold;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000;">
+                            {{ i < 9 ? '0' :''}}{{i+6}}.</span>
+                              {{survey.question | translate}}
+                        </td>
+                        <td width="60" valign="top"
+                          style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;  padding-right:15px;">
+                          <span *ngIf="survey.answer == 'No'"></span>
+                          <span *ngIf="survey.answer != 'No' && survey.answer != 'Yes'">{{survey.answer | translate}}
+                          </span>
+                          <span *ngIf="survey.answer == 'Yes'">
+                            <img src="assets/images/pdf-tick.png" style="width:10px;" alt="tick" />
+                          </span>
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td width="32"></td>
+    </tr>
+
+    <tr>
+      <td width="32"></td>
+      <td width="531" height="19">&nbsp;</td>
+      <td width="32"></td>
+    </tr>
+    <tr>
+      <td width="32" bgcolor="#f2f2f2"></td>
+      <td width="531" bgcolor="#f2f2f2">
+        <table width="531" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+          <tr>
+            <td width="531" bgcolor="#f2f2f2" height="12"></td>
+          </tr>
+          <tr>
+            <td width="531" bgcolor="#f2f2f2"
+              style="font-size: 14.4px;font-weight: bold;font-stretch: normal;font-style: normal;line-height: normal;letter-spacing: normal;color: #000000;">
+              {{'Knowledge levels' | translate}}</td>
+          </tr>
+          <tr>
+            <td width="531" bgcolor="#f2f2f2" height="8"></td>
+          </tr>
+          <tr>
+            <td width="531" bgcolor="#f2f2f2">
+              <table width="531" border="0" cellpadding="0" cellspacing="0" bgcolor="#f2f2f2">
+                <tr>
+                  <td width="127px" bgcolor="#f2f2f2">
+                    <table width="127" border="0" cellpadding="0" cellspacing="0" bgcolor="#f2f2f2">
+                      <tr>
+                        <td width="8"></td>
+                        <td width="84" align="center"
+                          style="font-size: 9.6px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: normal;letter-spacing: normal;color: #000000;">
+                          {{'Electric Vehicles' | translate}}
+                        </td>
+                        <td width="35"></td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td width="75px" bgcolor="#f2f2f2">
+
+                  </td>
+                  <td width="127px" bgcolor="#f2f2f2">
+                    <table width="127" border="0" cellpadding="0" cellspacing="0" bgcolor="#f2f2f2">
+                      <tr>
+                        <td width="8"></td>
+                        <td width="111" align="center"
+                          style="font-size: 9.6px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: normal;letter-spacing: normal;color: #000000;">
+                          {{'Technical Features' | translate}}
+                        </td>
+                        <td width="8"></td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td width="75px" bgcolor="#f2f2f2">
+
+                  </td>
+                  <td width="127px" bgcolor="#f2f2f2">
+                    <table width="127" border="0" cellpadding="0" cellspacing="0" bgcolor="#f2f2f2">
+                      <tr>
+                        <td width="45"></td>
+                        <td width="74" align="center"
+                          style="font-size: 9.6px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: normal;letter-spacing: normal;color: #000000;">
+                          {{'Porsche Connect' | translate}}
+                        </td>
+                        <td width="8"></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+
+          </tr>
+          <tr height="77">
+            <td width="531" bgcolor="#f2f2f2" height="77" valign="bottom">
+              <table width="531" border="0" cellpadding="0" cellspacing="0" bgcolor="#f2f2f2" height="77">
+                <tr>
+                  <td width="127px" bgcolor="#f2f2f2" height="77" valign="bottom"
+                    [ngSwitch]="customerSurveyJson?.electricVehicle">
+                    <img src="assets/images/gauge-01.svg" width="89" alt="gauge" *ngSwitchCase="'1'" />
+                    <img src="assets/images/gauge-02.svg" width="89" alt="gauge" *ngSwitchCase="'2'" />
+                    <img src="assets/images/gauge-03.svg" width="89" alt="gauge" *ngSwitchCase="'3'" />
+                    <img src="assets/images/gauge-04.svg" width="89" alt="gauge" *ngSwitchCase="'4'" />
+                    <img src="assets/images/gauge-05.svg" width="89" alt="gauge" *ngSwitchCase="'5'" />
+                    <img src="assets/images/gauge-01.svg" width="89" alt="gauge" *ngSwitchDefault />
+                  </td>
+                  <td width="127px" bgcolor="#f2f2f2" height="77" valign="bottom" align="center"
+                    [ngSwitch]="customerSurveyJson?.technicalFeature">
+                    <img src="assets/images/gauge-01.svg" width="89" alt="gauge" *ngSwitchCase="'1'" />
+                    <img src="assets/images/gauge-02.svg" width="89" alt="gauge" *ngSwitchCase="'2'" />
+                    <img src="assets/images/gauge-03.svg" width="89" alt="gauge" *ngSwitchCase="'3'" />
+                    <img src="assets/images/gauge-04.svg" width="89" alt="gauge" *ngSwitchCase="'4'" />
+                    <img src="assets/images/gauge-05.svg" width="89" alt="gauge" *ngSwitchCase="'5'" />
+                    <img src="assets/images/gauge-01.svg" width="89" alt="gauge" *ngSwitchDefault />
+                  </td>
+                  <td width="127px" bgcolor="#f2f2f2" height="77" valign="bottom" align="right"
+                    [ngSwitch]="customerSurveyJson?.porscheConnect">
+                    <img src="assets/images/gauge-01.svg" width="89" alt="gauge" *ngSwitchCase="'1'" />
+                    <img src="assets/images/gauge-02.svg" width="89" alt="gauge" *ngSwitchCase="'2'" />
+                    <img src="assets/images/gauge-03.svg" width="89" alt="gauge" *ngSwitchCase="'3'" />
+                    <img src="assets/images/gauge-04.svg" width="89" alt="gauge" *ngSwitchCase="'4'" />
+                    <img src="assets/images/gauge-05.svg" width="89" alt="gauge" *ngSwitchCase="'5'" />
+                    <img src="assets/images/gauge-01.svg" width="89" alt="gauge" *ngSwitchDefault />
+                  </td>
+                </tr>
+              </table>
+            </td>
+
+          </tr>
+
+          <tr>
+            <td width="531" bgcolor="#f2f2f2">
+              <table width="531" border="0" cellpadding="0" cellspacing="0" bgcolor="#f2f2f2">
+                <tr>
+                  <td width="127px" bgcolor="#f2f2f2">
+                    <table width="127" border="0" cellpadding="0" cellspacing="0" bgcolor="#f2f2f2">
+                      <tr>
+                        <td width="10"></td>
+                        <td width="70" align="center"
+                          style="font-size: 8.2px;font-weight: bold;font-stretch: normal;font-style: normal;line-height: normal;letter-spacing: normal;color: #000000;"
+                          [ngSwitch]="customerSurveyJson?.electricVehicle">
+                          <span *ngSwitchCase="'1'">{{'Poor' | translate}} </span>
+                          <span *ngSwitchCase="'2'">{{'Good' | translate}}</span>
+                          <span *ngSwitchCase="'3'">{{'Average' | translate}}</span>
+                          <span *ngSwitchCase="'4'">{{'Moderate' | translate}}</span>
+                          <span *ngSwitchCase="'5'">{{'Expert' | translate}}</span>
+                          <span *ngSwitchDefault>{{'Poor' | translate}}</span>
+                        </td>
+                        <td width="48"></td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td width="75px" bgcolor="#f2f2f2">
+
+                  </td>
+                  <td width="127px" bgcolor="#f2f2f2">
+                    <table width="127" border="0" cellpadding="0" cellspacing="0" bgcolor="#f2f2f2">
+                      <tr>
+                        <td width="8"></td>
+                        <td width="70" align="center"
+                          style="font-size: 8.2px;font-weight: bold;font-stretch: normal;font-style: normal;line-height: normal;letter-spacing: normal;color: #000000;"
+                          [ngSwitch]="customerSurveyJson?.technicalFeature">
+                          <span *ngSwitchCase="'1'">{{'Poor' | translate}} </span>
+                          <span *ngSwitchCase="'2'">{{'Good' | translate}}</span>
+                          <span *ngSwitchCase="'3'">{{'Average' | translate}}</span>
+                          <span *ngSwitchCase="'4'">{{'Moderate' | translate}}</span>
+                          <span *ngSwitchCase="'5'">{{'Expert' | translate}}</span>
+                          <span *ngSwitchDefault>{{'Poor' | translate}}</span>
+                        </td>
+                        <td width="10"></td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td width="75px" bgcolor="#f2f2f2">
+
+                  </td>
+                  <td width="127px" bgcolor="#f2f2f2">
+                    <table width="127" border="0" cellpadding="0" cellspacing="0" bgcolor="#f2f2f2">
+                      <tr>
+                        <td width="48"></td>
+                        <td width="70" align="center"
+                          style="font-size: 8.2px;font-weight: bold;font-stretch: normal;font-style: normal;line-height: normal;letter-spacing: normal;color: #000000;"
+                          [ngSwitch]="customerSurveyJson?.porscheConnect">
+                          <span *ngSwitchCase="'1'">{{'Poor' | translate}} </span>
+                          <span *ngSwitchCase="'2'">{{'Good' | translate}}</span>
+                          <span *ngSwitchCase="'3'">{{'Average' | translate}}</span>
+                          <span *ngSwitchCase="'4'">{{'Moderate' | translate}}</span>
+                          <span *ngSwitchCase="'5'">{{'Expert' | translate}}</span>
+                          <span *ngSwitchDefault>{{'Poor' | translate}}</span>
+                        </td>
+                        <td width="10"></td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+
+          </tr>
+          <tr>
+            <td width="531" bgcolor="#f2f2f2" height="24"></td>
+          </tr>
+          <tr>
+            <td width="531" bgcolor="#f2f2f2"
+              style="font-size: 14.4px;font-weight: bold;font-stretch: normal;font-style: normal;line-height: normal;letter-spacing: normal;color: #000000;">
+              {{'Vehicle usage' | translate}}</td>
+          </tr>
+          <tr>
+            <td width="531" bgcolor="#f2f2f2" height="18"></td>
+          </tr>
+          <tr>
+            <td width="531" bgcolor="#f2f2f2">
+              <table width="531" border="0" cellpadding="0" cellspacing="0" bgcolor="#f2f2f2">
+                <tr>
+                  <td width="127px" bgcolor="#f2f2f2">
+                    <table width="127" border="0" cellpadding="0" cellspacing="0" bgcolor="#f2f2f2">
+                      <tr>
+                        <td width="55"
+                          style="font-size: 16.8px;font-weight: bold;font-stretch: normal;font-style: normal;line-height: normal;letter-spacing: normal;color: #000000;">
+                          {{customerSurveyJson?.dailyCommute ? customerSurveyJson?.dailyCommute : '-'}}
+                        </td>
+                        <td width="72" valign="bottom" style="padding-top:2px; padding-left:10px;">
+                          <img *ngIf="customerSurveyJson?.dailyCommute" src="assets/images/yes-complete-icon.png"
+                            alt="complete-icon" width="23px" />
+                          <img *ngIf="!customerSurveyJson?.dailyCommute" src="assets/images/not-complete.png"
+                            alt="complete-icon" width="23px" />
+
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="120" colspan="2"
+                          style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: normal;letter-spacing: normal;color: #000000;">
+                          {{'Used for daily commute' | translate}}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td width="75px" bgcolor="#f2f2f2">
+
+                  </td>
+                  <td width="127px" bgcolor="#f2f2f2">
+                    <table width="127" border="0" cellpadding="0" cellspacing="0" bgcolor="#f2f2f2">
+                      <tr>
+                        <td width="47"
+                          style="font-size: 16.8px;font-weight: bold;font-stretch: normal;font-style: normal;line-height: normal;letter-spacing: normal;color: #000000;">
+                          {{customerSurveyJson?.farDailyCommute ? customerSurveyJson?.farDailyCommute +'km' : '-'}}
+                        </td>
+                        <td width="80" valign="middle" style="padding-top:2px; padding-left:7px;">
+                          <div class="range-box" style=" width: 37px;height: 3px;background-color: #d8d8d8;">
+                            <span [style.width.%]="customerSurveyJson?.farDailyCommute*0.5"
+                              style="background-color: #d5001c;height: 3px;display: block;"></span>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="120" colspan="2"
+                          style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: normal;letter-spacing: normal;color: #000000;">
+                          {{'Daily commuting distance' | translate}}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                  <td width="75px" bgcolor="#f2f2f2">
+
+                  </td>
+                  <td width="127px" bgcolor="#f2f2f2">
+                    <table width="127" border="0" cellpadding="0" cellspacing="0" bgcolor="#f2f2f2">
+                      <tr>
+                        <td width="80"
+                          style="font-size: 16.8px;font-weight: bold;font-stretch: normal;font-style: normal;line-height: normal;letter-spacing: normal;color: #000000;">
+                          {{customerSurveyJson?.trips ? ('Frequently' | translate) :'-'}}
+                        </td>
+                        <td width="47" valign="middle" style="padding-top:2px;">
+                          <div class="range-box" style=" width: 37px;height: 3px;background-color: #d8d8d8;">
+                            <span style="background-color: #d5001c;height: 3px;display: block;"
+                              [style.width.%]="customerSurveyJson?.trips*20"></span>
+                          </div>
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="120" colspan="2"
+                          style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: normal;letter-spacing: normal;color: #000000;">
+                          {{'Frequency of trips over 150 km' | translate}}
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+
+          </tr>
+          <tr>
+            <td width="531" bgcolor="#f2f2f2" height="20"></td>
+          </tr>
+          <tr>
+            <td width="531" bgcolor="#f2f2f2"
+              style="font-size: 14.4px;font-weight: bold;font-stretch: normal;font-style: normal;line-height: 1.6;letter-spacing: normal;color: #000000;">
+              {{'Favourite radio stations' | translate}}</td>
+          </tr>
+          <tr>
+            <td width="531" bgcolor="#f2f2f2"
+              style="font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: normal;letter-spacing: normal;color: #000000;">
+              {{customerSurveyJson?.favouriteRadio ?customerSurveyJson?.favouriteRadio : '-'}}</td>
+          </tr>
+          <tr>
+            <td width="531" bgcolor="#f2f2f2" height="15"></td>
+          </tr>
+        </table>
+      </td>
+      <td width="32" bgcolor="#f2f2f2"></td>
+    </tr>
+
+
+    <tr>
+      <td width="32"></td>
+      <td width="531" height="22"></td>
+      <td width="32"></td>
+    </tr>
+    <tr>
+      <td width="32"></td>
+      <td width="531"
+        style="font-size: 14.4px;font-weight: bold;line-height: normal;letter-spacing: normal;color: #000000;">{{'Home
+        Charger' | translate}}</td>
+      <td width="32"></td>
+    </tr>
+    <tr>
+      <td width="32"></td>
+      <td width="531" height="6"></td>
+      <td width="32"></td>
+    </tr>
+
+
+    <tr>
+      <td width="32"></td>
+      <td width="531">
+        <table width="531" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+          <tr>
+            <td width="265.5">
+              <table width="265.5" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td width="200.5" colspan="3"
+                    style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                    <span
+                      style=" font-size: 8.2px;font-weight: bold;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                      01.</span>
+                    {{'Access to a charger at home?' | translate}}
+                  </td>
+                  <td width="60" valign="top"
+                    style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px;  padding-right:15px;"
+                    [ngSwitch]="customerSurveyJson?.chargerHome">
+                    <span *ngSwitchCase="'Yes'">
+                      <img src="assets/images/pdf-tick.png" style="width: 16px;" alt="tick" />
+                    </span>
+                    <span *ngSwitchCase="'No'">
+                      <img src="/assets/images/pdf-close.png" style="width: 16px;" alt="close" />
+                    </span>
+                    <span *ngSwitchDefault>
+                      N/A
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td width="265.5">
+              <table width="265.5" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td width="200.5" colspan="3"
+                    style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                    <span
+                      style=" font-size: 8.2px;font-weight: bold;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                      02.</span>
+                    {{'Requested more information?' | translate}}
+                  </td>
+                  <td width="60" valign="top"
+                    style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px;  padding-right:15px;"
+                    [ngSwitch]="customerSurveyJson?.porscheHome">
+                    <span *ngSwitchCase="'Yes'">
+                      <img src="assets/images/pdf-tick.png" style="width: 16px;" alt="tick" />
+                    </span>
+                    <span *ngSwitchCase="'No'">
+                      <img src="/assets/images/pdf-close.png" style="width: 16px;" alt="close" />
+                    </span>
+                    <span *ngSwitchDefault>
+                      N/A
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td width="32"></td>
+    </tr>
+    <tr>
+      <td width="32"></td>
+      <td width="531">
+        <table width="531" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+          <tr>
+            <td width="265.5">
+              <table width="265.5" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td width="200.5" colspan="3"
+                    style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                    <span
+                      style=" font-size: 8.2px;font-weight: bold;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                      03.</span>
+                    {{'Aware of home check offer?' | translate}}
+                  </td>
+                  <td width="60" valign="top"
+                    style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px;  padding-right:15px;"
+                    [ngSwitch]="customerSurveyJson?.recieveInfoHome">
+                    <span *ngSwitchCase="'Yes'">
+                      <img src="assets/images/pdf-tick.png" style="width: 16px;" alt="tick" />
+                    </span>
+                    <span *ngSwitchCase="'No'">
+                      <img src="/assets/images/pdf-close.png" style="width: 16px;" alt="close" />
+                    </span>
+                    <span *ngSwitchDefault>
+                      N/A
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td width="265.5">
+              <table width="265.5" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td width="200.5" colspan="3"
+                    style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                    <span
+                      style=" font-size: 8.2px;font-weight: bold;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                      04.</span>
+                    {{'Satisfied with home check?' | translate}}
+                  </td>
+                  <td width="60" valign="top"
+                    style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px;  padding-right:15px;"
+                    [ngSwitch]="customerSurveyJson?.satisfiedHomeCheck">
+                    <span *ngSwitchCase="'1'">
+                      <img src="assets/images/gauge-01.svg" style="width: 16px;" alt="graph-1" />
+                    </span>
+                    <span *ngSwitchCase="'2'">
+                      <img src="assets/images/gauge-02.svg" style="width: 16px;" alt="graph-1" />
+                    </span>
+                    <span *ngSwitchCase="'3'">
+                      <img src="assets/images/gauge-03.svg" style="width: 16px;" alt="graph-1" />
+                    </span>
+                    <span *ngSwitchCase="'4'">
+                      <img src="assets/images/gauge-04.svg" style="width: 16px;" alt="graph-1" />
+                    </span>
+                    <span *ngSwitchCase="'5'">
+                      <img src="assets/images/gauge-05.svg" style="width: 16px;" alt="graph-1" />
+                    </span>
+                    <span *ngSwitchDefault>
+                      N/A
+                    </span>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td width="32"></td>
+    </tr>
+
+
+
+    <tr>
+      <td width="32"></td>
+      <td width="531" height="26"></td>
+      <td width="32"></td>
+    </tr>
+    <tr>
+      <td width="32"></td>
+      <td width="531">
+        <table width="531" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+          <tr>
+            <td width="265.5" valign="top">
+              <table width="265.5" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td width="265.5"
+                    style=" font-family:Arial, sans-serif; font-weight:bold;text-align: left;color: #000000; font-size:14.4px; line-height:1.6;">
+                    {{'Customer selected focus areas' | translate}}
+                  </td>
+                </tr>
+                <tr>
+                  <td width="265.5" height="6.4"></td>
+                </tr>
+                <tr>
+                  <td width="265.5">
+                    <table width="265.5" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                      <ng-container *ngIf="customerSurveyJson?.areasToFocus?.length">
+                        <tr *ngFor="let area of customerSurveyJson?.areasToFocus?.split('|')">
+                          <td width="200.5" colspan="3"
+                            style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                            {{area}}
+                          </td>
+                          <td width="60" valign="top"
+                            style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;  padding-right:15px;">
+                            <img src="assets/images/pdf-tick.png" />
+                          </td>
+                        </tr>
+
+                        <tr *ngIf="customerSurveyJson?.areasToFocus?.split('|')?.length < 2">
+                          <td width="200.5" colspan="3"
+                            style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top; ">
+                            &nbsp;
+
+
+                          </td>
+                          <td width="60" valign="top"
+                            style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;  padding-right:15px;">
+                            &nbsp;
+
+
+                          </td>
+                        </tr>
+
+                        <tr *ngIf="customerSurveyJson?.areasToFocus?.split('|')?.length < 3">
+                          <td width="200.5" colspan="3"
+                            style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+
+                          </td>
+                          <td width="60" valign="top"
+                            style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;  padding-right:15px;">
+
+                          </td>
+                        </tr>
+                      </ng-container>
+                      <ng-container *ngIf="!customerSurveyJson?.areasToFocus?.length">
+                        <tr>
+                          <td width="200.5" colspan="3"
+                            style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                            -
+                          </td>
+                          <td width="60" valign="top"
+                            style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;  padding-right:15px;">
+
+                          </td>
+                        </tr>
+                        <tr>
+                          <td width="200.5" colspan="3"
+                            style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                            &nbsp;
+
+
+                          </td>
+                          <td width="60" valign="top"
+                            style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;  padding-right:15px;">
+
+                          </td>
+                        </tr>
+                        <tr>
+                          <td width="200.5" colspan="3"
+                            style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                            &nbsp;
+
+
+                          </td>
+                          <td width="60" valign="top"
+                            style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;  padding-right:15px;">
+
+                          </td>
+                        </tr>
+                      </ng-container>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+            <td width="265.5" valign="top">
+              <table width="265.5" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                <tr>
+                  <td width="265.5"
+                    style=" font-family:Arial, sans-serif; font-weight:bold;text-align: left;color: #000000; font-size:14.4px; line-height:1.6;">
+                    {{'Customer comments' |translate}}
+                  </td>
+                </tr>
+                <tr>
+                  <td width="265.5" height="6.4"></td>
+                </tr>
+                <tr>
+                  <td width="265.5">
+                    <table width="265.5" border="0" cellpadding="0" cellspacing="0" bgcolor="#ffffff">
+                      <tr>
+                        <td width="200.5" colspan="3"
+                          style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.5;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                          {{!customerSurveyJson?.receiveInfo ? '-':"Are you interested in receiving information about
+                          your Taycan's features and functions in advance?" | translate}}
+                        </td>
+                        <td width="60" valign="top"
+                          style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; padding-bottom:10px;  padding-right:15px;  padding-right:15px;">
+                          <img *ngIf="customerSurveyJson?.receiveInfo" src="assets/images/pdf-tick.png" />
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="200.5" colspan="3" height="10" style="padding-bottom:10px; vertical-align:top;">
+                        </td>
+                        <td width="60" valign="top"
+                          style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; vertical-align:top; padding-bottom:10px;  padding-right:15px;">
+                        </td>
+                      </tr>
+                      <tr>
+                        <td width="200.5" colspan="3"
+                          style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.5;letter-spacing: normal;color: #000000; padding-bottom:10px; vertical-align:top;">
+                          {{customerSurveyJson?.customerComment ? customerSurveyJson?.customerComment :
+                          '&nbsp;'}}
+                        </td>
+                        <td width="60" valign="top"
+                          style=" font-size: 8.2px;font-weight: normal;font-stretch: normal;font-style: normal;line-height: 1.1;letter-spacing: normal;color: #000000; text-align:right; padding-bottom:10px; vertical-align:top;  padding-right:15px; padding-right:15px;">
+
+                        </td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+        </table>
+      </td>
+      <td width="32"></td>
+    </tr>
+    <tr>
+      <td width="32"></td>
+      <td width="531" height="22"></td>
+      <td width="32"></td>
+    </tr>
+
+  </table>
+</div>

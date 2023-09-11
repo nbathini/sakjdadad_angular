@@ -1,0 +1,103 @@
+<div class="outer-box delivery-checklist">
+  <mat-tab-group animationDuration="0ms" class="sub-tab-group">
+    <mat-tab [label]="tab?.Label | translate" *ngFor="let tab of documentsData; index as i">
+      <div class="info-header-detail">
+        <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+          <p-grid class="example-grid">
+            <p-grid-item [size]="12">
+              <form class="delivery-checklist-form">
+
+                <div class="send-documents last">
+                  <h2>{{tab?.Info | translate}}</h2>
+                  <p-button variant="tertiary" (click)="submitDocumets()" *ngIf="rolePermissions?.isCreate || rolePermissions?.isEdit">{{'Send Documents' | translate}}</p-button>
+                </div>
+                <ng-container *ngFor="let field of tab.Fields; index as j">
+                  <div class="questions-content documents" *ngIf="checkFieldDocumentsNLinks(field)">
+                    <div class="question-header">
+                      <p-checkbox-wrapper hide-label="false" [ngClass]="disableMode?'disable-all':''">
+                        <span slot="label" id="some-label-id" class="delivery-question-heading">{{field?.Label |
+                          translate}}</span>
+                        <input type="checkbox" name="some-name" aria-labelledby="some-label-id"
+                          aria-describedby="some-message-id" (click)="selectAll($event.target,i,j)" />
+                      </p-checkbox-wrapper>
+                    </div>
+                    <ng-container *ngFor="let ques of field.Questions; index as k">
+                      <div class="answers-content" *ngIf="ques?.Documents.length || ques?.Links.length">
+                        <div class="answers">
+                          <div class="left-part">
+                            <p>{{ques.Label | translate}}
+                              <button type="button" class="info-btn tooltip">
+                                <img src="assets/images/info-icon.svg" alt="info" />
+                                <div class="right">
+                                  <div class="tooltip-heading">
+                                    <h3>{{'Media' | translate}}</h3>
+                                    <h3>{{'Sent to customer' | translate}}</h3>
+                                  </div>
+                                  <ul class="tooltip-list">
+                                    <li *ngFor="let doc of ques?.Documents;">
+                                      <div class="tooltip-content">
+                                        <div class="left-part">
+                                          <div class="img-box">
+                                            <img src="assets/images/tooltip-tick.svg" alt="tick" *ngIf="doc?.IsSent" />
+                                          </div>
+                                          <p>{{doc?.FileName}}</p> 
+                                        </div>
+                                        <div class="right-part" *ngIf="doc?.IsSent">
+                                          <p>{{doc?.SentOn | date: 'dd-MMM-YY'}}</p>
+                                        </div>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                  <i></i>
+                                </div>
+                              </button>
+                            </p>
+                          </div>
+                          <div class="right-part">
+                            <ng-container *ngFor="let doc of ques?.Documents;">
+                              <p-checkbox-wrapper hide-label="false" [ngClass]="disableMode?'disable-all':''">
+                                <span slot="label" id="some-label-id1" class="sub-checklist">{{doc?.FileName}}</span>
+                                <input type="checkbox" name="some-name" aria-labelledby="some-label-id1"
+                                  aria-describedby="some-message-id1" [checked]="selectedDocs.includes(doc?.Id)"
+                                  (click)="selectDocument($event.target,doc?.Id)" />
+                              </p-checkbox-wrapper>
+                            </ng-container>
+                            <ng-container *ngFor="let link of ques?.Links;">
+                              <p-checkbox-wrapper hide-label="false" [ngClass]="disableMode?'disable-all':''">
+                                <span slot="label" id="some-label-id1" class="sub-checklist">{{link?.Link}}</span>
+                                <input type="checkbox" name="some-name" aria-labelledby="some-label-id1"
+                                  aria-describedby="some-message-id1" [checked]="selectedLinks.includes(link?.Id)"
+                                  (click)="selectLink($event.target,link?.Id)" />
+                              </p-checkbox-wrapper>
+                            </ng-container>
+                          </div>
+                        </div>
+                      </div>
+                    </ng-container>
+
+                  </div>
+                </ng-container>
+              </form>
+
+            </p-grid-item>
+          </p-grid>
+        </p-content-wrapper>
+      </div>
+
+
+    </mat-tab>
+  </mat-tab-group>
+  <div class="btn-container">
+    <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+      <p-grid class="example-grid">
+        <p-grid-item [size]="12">
+          <div class="content-part">
+            <p-button [icon]="'close'" [variant]="'tertiary'" routerLink="/">{{'Cancel' | translate}}
+            </p-button>
+            <p-button (click)="submitDocumets()"  class="ml-3" *ngIf="rolePermissions?.isCreate || rolePermissions?.isEdit">{{'Move To Next Step' | translate}}</p-button>
+          </div>
+        </p-grid-item>
+      </p-grid>
+    </p-content-wrapper>
+  </div>
+</div>

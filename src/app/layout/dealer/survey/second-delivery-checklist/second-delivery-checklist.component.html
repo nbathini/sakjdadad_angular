@@ -1,0 +1,99 @@
+<div class="outer-box delivery-checklist">
+  <mat-tab-group animationDuration="0ms" class="sub-tab-group" [selectedIndex]="selectedIndex"
+    *ngIf="followUpData.length">
+    <ng-container *ngFor="let tab of checklistData; index as i">
+      <mat-tab [label]="tab?.Label | translate"  *ngIf="checkTabQuestion(tab)">
+        <ng-template matTabContent>
+          <div class="info-header-detail">
+            <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+              <p-grid class="example-grid">
+                <p-grid-item [size]="12">
+                  <form class="delivery-checklist-form">
+                    <div class="info-header">
+                      <h2></h2>
+                      <p></p>
+                    </div>
+                    <div class="send-documents">
+                      <h2>{{tab?.Info | translate}}</h2>
+                    </div>
+                    <ng-container *ngFor="let field of tab.Fields; index as j">
+                      <div class="questions-content" *ngIf="checkFieldQuestion(field)">
+                        <div class="question-header">
+                          <h3>{{field?.Label | translate}}</h3>
+                          <p (click)="markAllComplete(i,j)" *ngIf="rolePermissions?.isCreate || rolePermissions?.isEdit">{{'Mark As Complete'| translate}}</p>
+                        </div>
+                        <ng-container *ngFor="let ques of field.Questions; index as k">
+                          <div class="answers-content" *ngIf="ques?.MoveToFollowUp">
+                            <div class="answers">
+                              <div class="left-part">
+                                <p>{{ques?.Label | translate}}</p>
+                                <div class="download-icons" *ngIf="ques?.Documents?.length">
+                                  <ng-container *ngFor="let doc of ques?.Documents;">
+                                    <button type="button" class="download-btn" (click)="openDocument(doc)">
+                                      <img src="assets/images/photo-icon.svg" alt="document"
+                                        *ngIf="doc?.FileType?.includes('image')" />
+                                      <img src="assets/images/video-icon.svg" alt="document"
+                                        *ngIf="doc?.FileType?.includes('video')" />
+                                      <img src="assets/images/document-icon.svg" alt="document"
+                                        *ngIf="!doc?.FileType?.includes('video') && !doc?.FileType?.includes('image')" />
+                                      {{doc?.FileName}}
+                                    </button>
+                                  </ng-container>
+                                </div>
+                                <div class="link-box" *ngIf="ques?.Links?.length">
+                                  <a href="javascript:void(0);" *ngFor="let link of ques.Links;" href="{{link?.Link}}"
+                                    target="_blank">{{link?.Link}}</a>
+                                </div>
+                              </div>
+                              <div class="right-part">
+                                <p-checkbox-wrapper hide-label="false" *ngIf="rolePermissions?.isCreate || rolePermissions?.isEdit">
+                                  <span slot="label" id="some-label-id" class="delivery-question-heading"></span>
+                                  <input type="checkbox" name="some-name" aria-labelledby="some-label-id"
+                                    aria-describedby="some-message-id" [checked]="ques?.Answer == 'true'"
+                                    (click)="markComplete($event.target,i,j,k)">
+                                </p-checkbox-wrapper>
+                              </div>
+                            </div>
+                          </div>
+                        </ng-container>
+                      </div>
+                    </ng-container>
+                  </form>
+                </p-grid-item>
+              </p-grid>
+            </p-content-wrapper>
+          </div>
+        </ng-template>
+      </mat-tab>
+    </ng-container>
+
+  </mat-tab-group>
+  <p-content-wrapper class="hydrated p-content-wrapper" width="extended" *ngIf="!followUpData.length">
+    <p-grid class="example-grid">
+      <p-grid-item [size]="12">
+        <div class="main-box">
+          <div class="box second">
+            <div class="info-header">
+              <h2>{{'Nothing, for now.' | translate}}</h2>
+
+            </div>
+          </div>
+        </div>
+      </p-grid-item>
+    </p-grid>
+  </p-content-wrapper>
+
+  <div class="btn-container" *ngIf="followUpData.length">
+    <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+      <p-grid class="example-grid">
+        <p-grid-item [size]="12">
+          <div class="content-part">
+            <p-button [icon]="'close'" [variant]="'tertiary'" routerLink="/">{{'Cancel' | translate}}
+            </p-button>
+            <p-button (click)="submitChecklist()"  class="ml-3" *ngIf="rolePermissions?.isCreate || rolePermissions?.isEdit">{{'Move To Next Step' | translate}}</p-button>
+          </div>
+        </p-grid-item>
+      </p-grid>
+    </p-content-wrapper>
+  </div>
+</div>

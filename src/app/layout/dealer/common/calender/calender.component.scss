@@ -1,0 +1,133 @@
+
+@import "../../../../../variables.scss";
+.border-box {
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+}
+
+.calendar {
+  float: left;
+  display: block;
+  box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  background: white;
+  width: 300px;
+  border: solid 1px #cccccc;
+  margin-bottom: 10px;
+
+  div.header {
+    float: left;
+    width: 100%;
+    height: 40px;
+    color: white;
+
+    * {
+      height: 40px;
+      line-height: 38px;
+      display: inline-block;
+      vertical-align: middle;
+    }
+
+    i {
+      float: left;
+      width: 40px;
+      font-size: 1.125em;
+      font-weight: bold;
+      position: relative;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      padding: 0 10px;
+      cursor: pointer;
+    }
+
+    i.fa-angle-left {
+      text-align: left;
+    }
+
+    i.fa-angle-right {
+      text-align: right;
+      margin-left: -40px;
+    }
+
+    span {
+      float: left;
+      width: 100%;
+      font-weight: bold;
+      text-transform: uppercase;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      padding-left: 50px;
+      margin-left: -40px;
+      text-align: center;
+      padding-right: 40px;
+      color: inherit;
+    }
+  }
+
+  div.week {
+    float: left;
+    width: 100%;
+    border-top: none;
+
+    &:first-child {
+      border-top: none;
+    }
+
+    span.day {
+      float: left;
+      width: 14.28571429%;
+      box-sizing: border-box;
+      -moz-box-sizing: border-box;
+      border-left: none;
+      text-align: center;
+      height: 30px;
+      display: inline-block;
+      vertical-align: middle;
+      background: white;
+      cursor: pointer;
+      font-size: 9.8px;
+      font-weight: normal;
+      font-style: normal;
+      line-height: 30px;
+      letter-spacing: normal;
+      text-align: center;
+      color: #323232;
+
+      &:first-child {
+        border-left: none;
+      }
+    }
+
+    span.day.today {
+      background: $grey-bg;
+      // background: #d5001c;
+      // color: #fff;
+    }
+
+    span.day.disabled {
+      color: #C0C0C0;
+    }
+
+    span.day.selected {
+      background: #d5001c;
+      color: white;
+    }
+  }
+
+  div.week.names {
+    span {
+      color: #959899;
+      font-weight: bold;
+    }
+  }
+}
+
+.calendar.next-month {
+  box-shadow: none !important;
+  cursor: initial !important;
+
+  span.day {
+    cursor: initial !important;
+  }
+
+}

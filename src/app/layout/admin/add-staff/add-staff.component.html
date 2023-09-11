@@ -1,0 +1,81 @@
+<section class="add-dealer">
+  <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+    <p-grid>
+      <p-grid-item [size]="12">
+        <div class="dealer-content">
+          <a href="javascript:void(0);" class="back-btn" (click)="backToListing()"><img
+              src="assets/images/arrow-left.svg" alt="arrow" /> {{'Back' | translate}}</a>
+          <div class="dealer-header">
+            <h2>{{(staffId ? 'Edit':'Add') | translate}} {{'Staff Member' | translate}}</h2>
+            <div class="info" *ngIf="dealerData">
+              <p>{{dealerData?.name}}</p>
+              <span>-</span>
+              <p>{{dealerData?.email}}</p>
+              <span>|</span>
+              <p *ngIf="dealerData?.contactNumber">{{dealerData.contactNumber  | phoneNumberFormat}}</p>
+            </div>
+          </div>
+          <form class="dealer-form" novalidate="novalidate" [formGroup]="staffForm" (ngSubmit)="onSubmit()">
+            <p-flex class="form-grid-item-container p-flex hydrated">
+              <p-flex-item [width]="'full'" class="form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                <p-text-field-wrapper class="hydrated"
+                  [message]="isSubmitted && staffForm.controls.name.errors ? ('Please enter name'|translate) : ''"
+                  [state]="isSubmitted && staffForm.controls.name.errors? 'error' : 'none'">
+                  <span slot="label">{{'Name' |translate}} </span>
+                  <input type="text" name="name" formControlName="name" required (blur)="trim('name')"
+                    (keyup)="$event.keyCode === 13 && onSubmit()" maxlength="30" />
+                </p-text-field-wrapper>
+              </p-flex-item>
+            </p-flex>
+            <p-flex class="form-grid-item-container p-flex hydrated">
+              <p-flex-item [width]="'full'"
+                class="form-grid-item form-row-spacing p-flex__item p-flex__item--width-full hydrated">
+                <p-text-field-wrapper class="hydrated"
+                  [message]="isSubmitted && staffForm.controls.email.errors?.pattern ? ('Please enter a valid email.' | translate ) : (isSubmitted && staffForm.controls.email.errors?.required ? ('Please enter email.'|translate) : '')"
+                  [state]="isSubmitted && staffForm.controls.email.errors? 'error' : 'none'">
+                  <span slot="label">{{'Email' | translate}} </span>
+                  <input type="email" name="email" formControlName="email" required [attr.disabled]="staffId"
+                    (keyup)="$event.keyCode === 13 && onSubmit()" (blur)="trim('email')" />
+                </p-text-field-wrapper>
+              </p-flex-item>
+            </p-flex>
+            <p-flex class="form-grid-item-container p-flex hydrated">
+              <p-flex-item [width]="'full'"
+                class="form-grid-item form-row-spacing p-flex__item p-flex__item--width-full hydrated">
+                <p-select-wrapper label="" hide-label="false"
+                  [message]="isSubmitted && staffForm.controls.designation.errors ? ('Please select role'|translate) : ''"
+                  [state]="isSubmitted && staffForm.controls.designation.errors? 'error' : 'none'">
+                  <span slot="label">{{'Job Role'| translate}}  </span>
+                  <select name="designation" formControlName="designation" required>
+                    <option value='' disabled>{{'Choose'| translate}}</option>
+                    <option [ngValue]="desg" *ngFor="let desg of designations"
+                      [selected]="desg?.id == staffData?.designation?.id">{{desg.name}}</option>
+                  </select>
+                </p-select-wrapper>
+              </p-flex-item>
+            </p-flex>
+            <p-flex class="form-grid-item-container p-flex hydrated">
+              <p-flex-item [width]="'full'"
+                class="form-grid-item form-row-spacing p-flex__item p-flex__item--width-full hydrated">
+                <p-text-field-wrapper class="hydrated"
+                  [message]="isSubmitted && staffForm.controls.contactNumber.errors ? ( 'Please enter a valid number' | translate) : ''"
+                  [state]="isSubmitted && staffForm.controls.contactNumber.errors ? 'error' : 'none'">
+                  <span slot="label">{{'Contact Number' | translate}}</span>
+                  <input type="tel" name="contactNumber" formControlName="contactNumber"
+                    (keyup)="$event.keyCode === 13 && onSubmit()" maxlength="20" />
+                </p-text-field-wrapper>
+              </p-flex-item>
+            </p-flex>
+
+            <div class="btn-box">
+              <p-button [icon]="'close'" [variant]="'tertiary'" (click)="backToListing()">Cancel</p-button>
+              <p-button type="submit" [disabled]="staffId && !staffForm.valid">{{staffId ? 'Update Staff Info':'Add
+                Staff'}}
+              </p-button>
+            </div>
+          </form>
+        </div>
+      </p-grid-item>
+    </p-grid>
+  </p-content-wrapper>
+</section>

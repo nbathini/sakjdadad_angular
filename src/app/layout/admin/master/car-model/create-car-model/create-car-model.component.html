@@ -1,0 +1,87 @@
+<section class="add-dealer">
+  <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+    <p-grid>
+      <p-grid-item [size]="12">
+        <div class="dealer-content">
+          <a href="javascript:void(0);" (click)="backToListing()" class="back-btn"><img
+              src="assets/images/arrow-left.svg" alt="arrow" /> {{'Back' | translate}}</a>
+          <div class="dealer-header">
+            <h2>{{(modelId ? 'Edit':'Add') | translate}} {{'Car Model' | translate}}</h2>
+            <p>{{(modelId ? 'Please provide the details to edit the car model.':'Please provide the details to add a new
+              car model.') | translate}}</p>
+            <p class="last">{{'Mandatory fields are marked with an asterisk' | translate}} (<span
+                class="star">*</span>).
+          </div>
+          <form class="dealer-form" novalidate="novalidate" [formGroup]="modelForm" (ngSubmit)="onSubmit()">
+            <p-flex class="form-grid-item-container p-flex hydrated">
+              <p-flex-item [width]="'full'" class="form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                <p-text-field-wrapper class="hydrated"
+                  [message]="isSubmitted && modelForm.controls.name.errors ? ('Please enter name'|translate) : ''"
+                  [state]="isSubmitted && modelForm.controls.name.errors? 'error' : 'none'">
+                  <span slot="label">{{'Model' | translate}} {{'Name' | translate}} </span>
+                  <input type="text" name="name" formControlName="name" required (blur)="trim('name')"
+                    (keyup)="$event.keyCode === 13 && onSubmit()" />
+                </p-text-field-wrapper>
+              </p-flex-item>
+            </p-flex>
+            <div class="mt-4">
+              <span slot="label">{{'Model Image' | translate}} <span class="star">*</span>
+                <p class="note-text"> Please upload the image in JPG,
+                  JPEG and PNG formats only. To ensure maximum viewability, the image aspect ratio should be maintained
+                  at 3:2 (900px X 600px). </p>
+              </span>
+            </div>
+
+            <div class="display-flex ">
+
+              <div class="file-type">
+                <p-flex class="form-grid-item-container p-flex hydrated">
+
+                  <p-flex-item [width]="'full'"
+                    class="form-grid-item mt-1 p-flex__item p-flex__item--width-full hydrated">
+
+
+                    <input type="file" #fileInput name="imagePath" required (change)="onFileSelect($event)" />
+
+                  </p-flex-item>
+                </p-flex>
+              </div>
+              <div *ngIf="imagePreview" class="img-box">
+                <button type="button" (click)="clearImage()">x</button>
+                <img [src]="imagePreview" *ngIf="imagePreview" width="190">
+              </div>
+
+              <div *ngIf="modelId && !imagePreview" class="img-box">
+                <img src="{{modelData?.imagePath}}" width="190" />
+              </div>
+            </div>
+            <p class="custom-error-wrapper" role="alert" *ngIf="isSubmitted && modelForm.controls.imagePath.errors">
+              <p-icon [name]="'exclamation'" [color]="'brand'"></p-icon>
+              {{'Please upload car model image' | translate}}
+            </p>
+
+            <p-flex class="form-grid-item-container p-flex hydrated" [ngClass]="modelId?'':'mt-4'">
+              <p-flex-item [width]="'full'" class="form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                <p-textarea-wrapper class="hydrated"
+                  [message]="isSubmitted && modelForm.controls.description.errors?.pattern ? ('Please enter a valid description.' | translate ) : (isSubmitted && modelForm.controls.description.errors?.required ? ('Please enter description.'|translate) : '')"
+                  [state]="isSubmitted && modelForm.controls.description.errors? 'error' : 'none'">
+                  <span slot="label">{{'Description' | translate}}</span>
+                  <textarea class="custom-height" name="description" formControlName="description"></textarea>
+                </p-textarea-wrapper>
+              </p-flex-item>
+            </p-flex>
+
+            <div class="btn-box">
+              <p-button [icon]="'close'" type="button" [variant]="'tertiary'" (click)="backToListing()">{{'Cancel' |
+                translate}}
+              </p-button>
+              <p-button type="submit" [disabled]="modelId && !modelForm.valid">{{(modelId ? 'Update Car Model':'Add Car
+                Model') | translate}}
+              </p-button>
+            </div>
+          </form>
+        </div>
+      </p-grid-item>
+    </p-grid>
+  </p-content-wrapper>
+</section>

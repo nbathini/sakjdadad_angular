@@ -1,0 +1,41 @@
+.add-dealer{
+    width: 100%;
+    padding-top: 40px;
+    .dealer-content{
+        width: 100%;
+        max-width: 733px;
+        margin: 0px auto 0px auto;
+        .dealer-header{
+            width: 100%;
+            margin: 0px 0px 20px 0px;
+            h2{
+                font-size: 32px;
+                margin: 0px 0px 0px 0px;
+            }
+            p{
+                font-size: 16px;
+                margin: 0px 0px 0px 0px;
+            }
+        }
+    }
+}
+.image-box{
+    max-width: 310px;
+}
+
+.dealer-form{
+    width: 100%;
+    .form-row-spacing{
+        margin: 16px 0px 0px 0px;
+    }
+    .btn-box{
+        width: 100%;
+        display: flex;
+        margin: 39px 0px;
+        p-button{
+            &:first-child{
+                margin-right: 16px;
+            }
+        }
+    }
+}

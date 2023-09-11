@@ -1,0 +1,94 @@
+<section class="header" [ngClass]="{'document-header':documentScreen}">
+  <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+    <p-grid>
+      <p-grid-item [size]="12">
+        <div class="header-box">
+          <a href="javascript:void(0);" class="logo" routerLink="/admin/all-dealers">
+            <img src="assets/images/Porsche_wordmark_black_rgb.svg" alt="header-logo" class="header_logo" width="200"/>
+          </a>
+          <div class="right-part logout-box">
+
+            <div class="manage-documents-info">
+              <a href="javascript:void:(0);" [matMenuTriggerFor]="configMenu">
+                {{'Administration' | translate}}
+                <img src="assets/images/down-arrow.svg" alt="down-arrow">
+              </a>
+              <mat-menu #configMenu="matMenu" class="header-menu admin">
+                
+                <button mat-menu-item routerLink="/admin/all-dealers">
+                  {{'Manage Porsche Centre' | translate}}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"
+                    focusable="false">
+                    <path d="M16.75 12l-6 8h1.26L18 12l-5.99-8h-1.26l6 8z"></path>
+                    <path d="M12.75 12l-6 8h1.26L14 12 8.01 4H6.75l6 8z"></path>
+                  </svg>
+                </button>
+                
+                <button mat-menu-item routerLink="/admin/master/car-model">
+                  {{' Manage Master Data' | translate}}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"
+                    focusable="false">
+                    <path d="M16.75 12l-6 8h1.26L18 12l-5.99-8h-1.26l6 8z"></path>
+                    <path d="M12.75 12l-6 8h1.26L14 12 8.01 4H6.75l6 8z"></path>
+                  </svg>
+                </button>
+                
+                <button mat-menu-item routerLink="/admin/manage-config">
+                  {{'Manage Configuration' | translate}}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"
+                    focusable="false">
+                    <path d="M16.75 12l-6 8h1.26L18 12l-5.99-8h-1.26l6 8z"></path>
+                    <path d="M12.75 12l-6 8h1.26L14 12 8.01 4H6.75l6 8z"></path>
+                  </svg>
+                </button>
+                <button mat-menu-item routerLink="/admin/manage-documents">
+                  {{'Manage Documents' | translate}}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"
+                    focusable="false">
+                    <path d="M16.75 12l-6 8h1.26L18 12l-5.99-8h-1.26l6 8z"></path>
+                    <path d="M12.75 12l-6 8h1.26L14 12 8.01 4H6.75l6 8z"></path>
+                  </svg>
+                </button>
+                <!--    <button mat-menu-item routerLink="/admin/manage-config/check-list">
+                  {{'Check List' | translate}}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"
+                    focusable="false">
+                    <path d="M16.75 12l-6 8h1.26L18 12l-5.99-8h-1.26l6 8z"></path>
+                    <path d="M12.75 12l-6 8h1.26L14 12 8.01 4H6.75l6 8z"></path>
+                  </svg>
+                </button> -->
+              </mat-menu>
+            </div>
+            <div class="manage-documents-info text-center">
+              <a href="javascript:void:(0);" routerLink="/admin/roles"> {{'Roles' | translate}}</a>
+            </div>
+            <div class="manage-documents-info">
+              <a href="javascript:void:(0);" routerLink="/admin/audit-logs">
+                {{'Audit' | translate}}
+              </a>
+               
+            </div>
+           <!--  <div class="logout-box">
+              <a href="javascript:void:(0);" class="logout" (click)="logOut()">{{'Logout' | translate}}</a>
+              <a href="javascript:void:(0);" [matMenuTriggerFor]="menu">
+
+                <img src="assets/images/down-arrow.svg" alt="down-arrow">
+              </a>
+              <mat-menu #menu="matMenu" class="header-menu admin">
+                <button mat-menu-item routerLink="/admin/change-password">
+                  {{'Change Password' | translate}}
+                  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="100%" height="100%"
+                    focusable="false">
+                    <path d="M16.75 12l-6 8h1.26L18 12l-5.99-8h-1.26l6 8z"></path>
+                    <path d="M12.75 12l-6 8h1.26L14 12 8.01 4H6.75l6 8z"></path>
+                  </svg>
+                </button>
+              </mat-menu>
+            </div> -->
+          </div>
+        </div>
+      </p-grid-item>
+    </p-grid>
+  </p-content-wrapper>
+</section>
+<router-outlet></router-outlet>

@@ -1,0 +1,22 @@
+@import "../add-dealer/add-dealer.component.scss";
+
+.add-dealer{
+    .dealer-content{
+        .dealer-header{
+
+            .info{
+                width: 100%;
+                display: flex;
+                p,span{
+                    font-size: 16px;
+                    line-height: normal;
+                    margin: 0px 0px 0px 0px;
+                    color: #d5001c;
+                } 
+                span{
+                    margin: 0px 4px;
+                }
+            }
+        }
+    }
+}

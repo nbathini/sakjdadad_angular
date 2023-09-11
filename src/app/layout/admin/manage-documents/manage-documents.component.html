@@ -1,0 +1,67 @@
+<section class="manage-dcouments">
+  <p class="text-right edit-btn-block">
+    <p-button variant="primary" type="submit" (click)="editConfig()">{{'Edit Config'| translate}} </p-button>
+  </p>
+  <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+    <p-grid>
+      <p-grid-item [size]="12">
+        <h2>{{'Manage Documents' | translate}} </h2>
+
+        <mat-tab-group animationDuration="0ms" [disableRipple]="true" [selectedIndex]="selectedTab">
+          <mat-tab *ngFor="let tab of docJson; index as i" [label]="tab.Label | translate">
+            <ng-template matTabContent>
+              <h3>{{tab?.Info | translate}}</h3>
+              <div class="questions-content" *ngFor="let field of tab.Fields; index as j">
+                <div class="question-header">
+                  <h3>{{field.Label | translate}}</h3>
+                </div>
+                <div class="answers-content" *ngFor="let question of field.Questions; index as k">
+                  <div class="answers">
+                    <div class="left-part">
+                      <p>{{question.Label | translate}}</p>
+                    </div>
+                    <div class="right-part">
+                      <p-button-pure (click)="addLink(question.Name,field.Name,tab.Name)" *ngIf="question.IsAddLink">
+                        {{'Add Link' | translate}}
+                      </p-button-pure>
+                      <input type="file"
+                        accept="text/plain, application/pdf, application/vnd.ms-word, application/vnd.ms-word, application/vnd.ms-excel, application/vnd.openxmlformatsofficedocument.spreadsheetml.sheet, image/png, image/jpeg, image/jpeg, image/gif, text/csv, video/mp4,.xlsx,.xls,.doc, .docx,.ppt, .pptx,.txt,.pdf"
+                        #file (change)="onFileSelect($event)" multiple>
+                      <p-button-pure (click)="file.click();setPath(question.Name,field.Name,tab.Name)"
+                        *ngIf="question.IsAddDoc">{{'Add Document'
+                        | translate}}
+                      </p-button-pure>
+                    </div>
+                  </div>
+                  <div class="answers" *ngIf="question.Documents.length || question.Links.length">
+                    <div class="left-part">
+                      <ul class="link-box">
+                        <ng-container *ngFor="let doc of question.Documents;">
+                          <li>
+                            <p>
+                              {{doc?.FileName}}
+                            </p>
+                            <button type="button" (click)="removeDocument(doc?.Id)"><img
+                                src="assets/images/cross-icon.svg" alt="cross" /></button>
+                          </li>
+                        </ng-container>
+                        <ng-container *ngFor="let link of question.Links;">
+                          <li>
+                            <p><a href="{{link.Link}}" target="_blank">{{link?.Link}}</a> </p>
+                            <button type="button" (click)="removeLink(link?.Id)"><img src="assets/images/cross-icon.svg"
+                                alt="cross" /></button>
+                          </li>
+                        </ng-container>
+                      </ul>
+                    </div>
+
+                  </div>
+                </div>
+              </div>
+            </ng-template>
+          </mat-tab>
+        </mat-tab-group>
+      </p-grid-item>
+    </p-grid>
+  </p-content-wrapper>
+</section>

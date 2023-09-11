@@ -1,0 +1,76 @@
+<section class="add-dealer">
+  <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+    <p-grid>
+      <p-grid-item [size]="12">
+        <div class="dealer-content">
+          <a href="javascript:void(0);" (click)="backToListing()" class="back-btn"><img
+              src="assets/images/arrow-left.svg" alt="arrow" /> {{'Back' | translate}}</a>
+          <div class="dealer-header">
+            <h2>{{(dealerId ? 'Edit':'Add') | translate}} {{'Porsche Centre' | translate}}</h2>
+            <p>{{(dealerId ? 'Edit Porsche Centre details in the following fields.':'Please enter Porsche Centre details
+              in the following fields.') | translate}}</p>
+          </div>
+          <form class="dealer-form" novalidate="novalidate" [formGroup]="dealerForm" (ngSubmit)="onSubmit()">
+            <p-flex class="form-grid-item-container p-flex hydrated">
+              <p-flex-item [width]="'full'" class="form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                <p-text-field-wrapper class="hydrated"
+                  [message]="isSubmitted && dealerForm.controls.name.errors ? ('Please enter name'|translate) : ''"
+                  [state]="isSubmitted && dealerForm.controls.name.errors? 'error' : 'none'">
+                  <span slot="label">{{'Porsche Centre' | translate}} {{'Name' | translate}}  </span>
+                  <input type="text" name="name" formControlName="name" required (blur)="trim('name')"
+                    (keyup)="$event.keyCode === 13 && onSubmit()" />
+                </p-text-field-wrapper>
+              </p-flex-item>
+            </p-flex>
+            <p-flex class="form-grid-item-container p-flex hydrated">
+              <p-flex-item [width]="'full'"
+                class="form-grid-item form-row-spacing p-flex__item p-flex__item--width-full hydrated">
+                <p-text-field-wrapper class="hydrated"
+                  [message]="isSubmitted && dealerForm.controls.email.errors?.pattern ? ('Please enter a valid email.' | translate ) : (isSubmitted && dealerForm.controls.email.errors?.required ? ('Please enter email.'|translate) : '')"
+                  [state]="isSubmitted && dealerForm.controls.email.errors? 'error' : 'none'">
+                  <span slot="label">{{'Email' | translate}}  </span>
+                  <input type="email" name="email" formControlName="email" required [attr.disabled]="dealerId"
+                    (keyup)="$event.keyCode === 13 && onSubmit()" (blur)="trim('email')" />
+                </p-text-field-wrapper>
+              </p-flex-item>
+            </p-flex> 
+         <!--    <p-flex class="form-grid-item-container p-flex hydrated">
+              <p-flex-item [width]="'full'"
+                class="form-grid-item form-row-spacing p-flex__item p-flex__item--width-full hydrated">
+                <p-text-field-wrapper class="hydrated"
+                  [message]="isSubmitted && dealerForm.controls.contactNumber.errors ? (dealerForm.controls.contactNumber.errors?.pattern ?( 'Please enter a valid number' | translate) : ('Please enter contact number' |translate)):''"
+                  [state]="isSubmitted && dealerForm.controls.contactNumber.errors ? 'error' : 'none'">
+                     <input type="tel"  id="phoneNumberInput" name="contactNumber" formControlName="contactNumber" required
+                    [attr.disabled]="dealerId" (keyup)="$event.keyCode === 13 && onSubmit()" maxlength="20" (blur)="formatPhoneNumber()"/>
+                </p-text-field-wrapper>
+              </p-flex-item>
+            </p-flex> --> 
+            <p-flex class="form-grid-item-container p-flex hydrated contact-input">
+  
+              <p-flex-item [width]="'full'"
+                class="form-grid-item form-row-spacing p-flex__item p-flex__item--width-full hydrated">
+               
+                <p-text-field-wrapper class="hydrated"
+                  [message]="isSubmitted && dealerForm.controls.contactNumber.errors ? (dealerForm.controls.contactNumber.errors?.pattern ?( 'Please enter a valid number' | translate) : ('Please enter contact number' |translate)):''"
+                  [state]="isSubmitted && dealerForm.controls.contactNumber.errors ? 'error' : 'none'">
+                   <span slot="label" class="label-block">{{'Contact Number' | translate}}  </span>
+                   <span class="input-number"> + 1 </span>    
+                   <input type="tel"  id="phoneNumberInput" class="phone-input" name="contactNumber" formControlName="contactNumber" required
+                    [attr.disabled]="dealerId" (keyup)="$event.keyCode === 13 && onSubmit()" maxlength="20" (blur)="formatPhoneNumber()"/>
+                </p-text-field-wrapper>
+              </p-flex-item>
+  
+            </p-flex>
+
+            <div class="btn-box">
+              <p-button [icon]="'close'" type="button" [variant]="'tertiary'" (click)="backToListing()">{{'Cancel' | translate}}
+              </p-button>
+              <p-button type="submit">{{(dealerId ? 'Update Porsche Centre Info':'Add Porsche Centre') | translate}}
+              </p-button>
+            </div>
+          </form>
+        </div>
+      </p-grid-item>
+    </p-grid>
+  </p-content-wrapper>
+</section>

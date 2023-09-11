@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="13px" height="13px" viewBox="0 0 13 13" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>Check</title>
+    <g id="Sales-Dashboard" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="SD_06.02.01_Info_Sheet_Filled" transform="translate(-32.000000, -271.000000)" fill-rule="nonzero">
+            <g id="Navigation_Bar" transform="translate(0.000000, 255.000000)">
+                <g id="Check" transform="translate(32.000000, 16.000000)">
+                    <path d="M6.468,0 C2.89582224,0 0,2.89582224 0,6.468 C0,10.0401778 2.89582224,12.936 6.468,12.936 C10.0401778,12.936 12.936,10.0401778 12.936,6.468 C12.9318069,2.89756053 10.0384395,0.00419312174 6.468,0 Z" id="Path" fill="#7C7F81"></path>
+                    <polygon id="Path" stroke="#FFFFFF" stroke-width="0.3" fill="#FFFFFF" points="5.36666667 9.8 2.8 6.65 3.44166667 6.65 5.36238889 9.062 9.85833333 3.5 10.5 3.5"></polygon>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>

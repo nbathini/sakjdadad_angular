@@ -1,0 +1,748 @@
+<section class="survey">
+  <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+    <p-grid class="example-grid">
+      <p-grid-item [size]="12">
+        <div class="car-detail-box">
+          <div class="car-info-box">
+            <div class="img-box">
+              <!--  <img src="/assets/images/{{deliverData?.model?.name}}-survey.jpg" alt="porsche" /> -->
+              <img src="{{ deliverData?.model?.imagePath }}" class="img-responsive"
+                alt="{{deliverData?.model?.name}}" />
+            </div>
+            <div class="info-box">
+              <h2>Porsche {{modelName[0] || ''}}</h2>
+              <p>{{modelName[1] || ''}} {{modelName[2] ||
+                ''}}</p>
+            </div>
+          </div>
+          <ul class="customer-info">
+            <li>
+              <p class="heading">{{'Porsche Pro' | translate}}</p>
+              <p>{{deliverData?.porschePro?.name}}</p>
+            </li>
+            <li>
+              <p class="heading">{{'Service Advisor' | translate}}</p>
+              <p>{{deliverData?.serviceAdvisor?.name}}</p>
+            </li>
+            <li>
+              <p class="heading">{{'Sales Consultant' | translate}}</p>
+              <p>{{deliverData?.salesConsultant?.name}}</p>
+            </li>
+            <li>
+              <p class="heading">{{'Customer Name' | translate}}</p>
+              <p>{{deliverData.customerName}}</p>
+            </li>
+            <li>
+              <p class="heading">{{'Delivery Date'| translate}}</p>
+              <p>{{deliverData.deliveryDate | date: 'dd-MMM-YY'}}</p>
+            </li>
+            <li>
+              <p class="heading">{{'Delivery Time' | translate}}</p>
+              <p>{{deliverData.deliveryTime | date: 'shortTime'}} {{appConfig.common.timeZone}}</p>
+            </li>
+            <li>
+              <p class="heading">{{'Customer Email' | translate}}</p>
+              <p class="email-text">{{deliverData.customerEmail}}</p>
+            </li>
+            <li>
+              <p class="heading">{{'Delivery Type' | translate}}</p>
+              <p>{{(deliverData?.deliveryType?.name ||'') | translate}}</p>
+            </li>
+          </ul>
+        </div>
+
+      </p-grid-item>
+
+    </p-grid>
+  </p-content-wrapper>
+</section>
+<section class="survey-tabs">
+
+
+  <mat-tab-group animationDuration="0ms" [disableRipple]="true" (selectedTabChange)="tabChanged($event)"
+    [selectedIndex]="selectedIndex">
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [ngClass]="{'completed-tick':((surveySent && vehicleName)||(skipSurvey && vehicleName))}">{{(skipSurvey ?
+          'Preparation'
+          :'Delivery Preparation') |
+          translate}}</span>
+      </ng-template>
+      <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+        <p-grid class="example-grid">
+          <p-grid-item [size]="12">
+            <form class="survey-form" name="surevyForm">
+              <div class="outer-box scrollbar first">
+                <div class="box" *ngFor="let survey of surveyPrepration; index as i"
+                  [ngClass]="{'column-second':i == 1}">
+                  <h2>{{survey.info | translate}}</h2>
+                  <ng-container *ngFor="let field of survey.fields; index as j" [ngSwitch]="field.type">
+                    <p-flex class="form-grid-item-container p-flex hydrated" *ngSwitchCase="'text'">
+                      <p-flex-item [width]="'full'">
+                        <p-text-field-wrapper [hideLabel]="false"
+                          [ngClass]="(disableMode || surveySent)?'disable-all':''"
+                          [message]="isSubmitted && field.is_required && !surveyPrepration[i]['fields'][j].answer? (field.question | translate) : ''"
+                          [state]="isSubmitted && field.is_required && !surveyPrepration[i]['fields'][j].answer? 'error' : 'none'">
+                          <span slot="label" class="label-text">{{field.question | translate}} <span class="star"
+                              *ngIf="field.is_required">*</span>
+                          </span>
+                          <input type="text" [name]="field.name" required="required"
+                            [(ngModel)]="surveyPrepration[i]['fields'][j].answer" [required]="field.is_required">
+                        </p-text-field-wrapper>
+                      </p-flex-item>
+                    </p-flex>
+                    <p-flex class="form-grid-item-container p-flex hydrated" *ngSwitchCase="'checkbox'">
+                      <p-flex-item [width]="'full'" class="form-row-spacing">
+                        <p-text>{{field.question | translate}} <span class="star" *ngIf="field.is_required">*</span>
+                        </p-text>
+                        <!-- <p slot="label" class="label-text">{{field.question | translate}} <span class="star"
+                            *ngIf="field.is_required">*</span> </p> -->
+                        <ul class="checkbox-list">
+                          <li *ngFor="let option of field.options">
+                            <p-checkbox-wrapper [label]="option | translate" [hideLabel]="false"
+                              [ngClass]="(disableMode || surveySent)?'disable-all':''"
+                              [state]="isSubmitted && field.is_required && !checkedFields.length? 'error' : 'none'">
+                              <input [type]="'checkbox'" [name]="field.name[j]"
+                                (change)="updateCheckBox(i,j,option,$event.target)"
+                                [checked]="checkedFields.includes(option)"
+                                [(ngModel)]="surveyPrepration[i]['fields'][j].answer" />
+                            </p-checkbox-wrapper>
+                          </li>
+                        </ul>
+
+                        <p class="custom-error-wrapper" role="alert"
+                          *ngIf="isSubmitted && field.is_required && !checkedFields.length">
+                          {{'Please select any one option' | translate}}
+                        </p>
+                      </p-flex-item>
+                    </p-flex>
+                    <p-flex class="form-grid-item-container p-flex hydrated" *ngSwitchCase="'select'">
+                      <p-flex-item [width]="'full'" [ngClass]="{'form-row-spacing':i < 2}">
+                        <p-select-wrapper [hideLabel]="false" [ngClass]="(disableMode || surveySent)?'disable-all':''"
+                          [message]="isSubmitted && field.is_required && !surveyPrepration[i]['fields'][j].answer? (field.question | translate) : ''"
+                          [state]="isSubmitted && field.is_required && !surveyPrepration[i]['fields'][j].answer? 'error' : 'none'">
+                          <span slot="label" class="label-text">{{field.question | translate}} </span>
+                          <select [name]="field.name" [(ngModel)]="surveyPrepration[i]['fields'][j].answer"
+                            [required]="field.is_required">
+                            <option [value]="option" *ngFor="let option of field.options">{{option | translate}}
+                            </option>
+                          </select>
+                        </p-select-wrapper>
+                      </p-flex-item>
+                    </p-flex>
+
+                    <p-flex class="form-grid-item-container p-flex hydrated" *ngSwitchCase="'radio'">
+                      <p-flex-item [width]="'full'" class="form-row-spacing radio-row">
+                        <!--  <span slot="label" class="label-text">{{field.question | translate}} <span
+                            *ngIf="field.is_required" class="star">*</span></span> -->
+                        <p-text>{{field.question | translate}} <span class="star" *ngIf="field.is_required">*</span>
+                        </p-text>
+                        <ul class="radiobox-list">
+                          <li *ngFor="let option of field.options">
+                            <p-radio-button-wrapper [label]="option | translate" [hideLabel]="false"
+                              [ngClass]="(disableMode || surveySent)?'disable-all':''"
+                              [state]="isSubmitted && field.is_required && !surveyPrepration[i]['fields'][j].answer? 'error' : 'none'">
+                              <input type="radio" [name]="field.name"
+                                [(ngModel)]="surveyPrepration[i]['fields'][j].answer" [value]="option" />
+                            </p-radio-button-wrapper>
+                          </li>
+                        </ul>
+                        <p class="custom-error-wrapper" role="alert"
+                          *ngIf="isSubmitted && field.is_required && !surveyPrepration[i]['fields'][j].answer">
+                          {{'Please select any one option' | translate}}</p>
+                      </p-flex-item>
+                    </p-flex>
+
+                    <p-flex class="form-grid-item-container p-flex hydrated" *ngSwitchCase="'textarea'">
+                      <p-flex-item [width]="'full'" class="form-row-spacing radio-row">
+                        <p-textarea-wrapper [hideLabel]="false" [ngClass]="(disableMode || surveySent)?'disable-all':''"
+                          [message]="isSubmitted && field.is_required && !surveyPrepration[i]['fields'][j].answer? (field.question | translate) : ''"
+                          [state]="isSubmitted && field.is_required && !surveyPrepration[i]['fields'][j].answer? 'error' : 'none'">
+                          <span slot="label" class="label-text">{{field.question | translate}} <span
+                              *ngIf="field.is_required" class="star">*</span> </span>
+                          <textarea class="custom-height" [name]="field.name"
+                            [(ngModel)]="surveyPrepration[i]['fields'][j].answer"
+                            [required]="field.is_required"></textarea>
+                        </p-textarea-wrapper>
+                      </p-flex-item>
+                    </p-flex>
+                  </ng-container>
+                </div>
+              </div>
+              <div class="btn-container">
+                <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+                  <p-grid class="example-grid">
+                    <p-grid-item [size]="12">
+                      <div class="content-box">
+                        <div class="left-part">
+                          <p><span class="highlighted">{{attemptCount}}</span> {{'of' | translate}}
+                            <span>{{questionCount}}</span> {{'options
+                            filled' | translate}}
+                          </p>
+                        </div>
+                        <div class="right-part">
+                          <p-button [icon]="'close'" [variant]="'tertiary'" routerLink="/">{{'Cancel' | translate}}
+                          </p-button>
+                          <p-button type="button" (click)="submitSurveyForm()"
+                            *ngIf="rolePermissions?.isCreate || rolePermissions?.isEdit">{{(skipSurvey ? 'Submit':'Send
+                            Customer
+                            Survey') | translate}}</p-button>
+                        </div>
+                      </div>
+                    </p-grid-item>
+                  </p-grid>
+                </p-content-wrapper>
+              </div>
+            </form>
+          </p-grid-item>
+        </p-grid>
+      </p-content-wrapper>
+    </mat-tab>
+    <mat-tab [active]="surveySent">
+      <ng-template mat-tab-label>
+        <span [ngClass]="{'completed-tick':((surveySent && vehicleName)||(skipSurvey && vehicleName))}">{{'Info Sheet' |
+          translate}}</span>
+      </ng-template>
+      <div class="outer-box scrollbar other second-step">
+        <div class="info-header-detail">
+          <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+            <p-grid class="example-grid">
+              <p-grid-item [size]="12">
+                <div class="main-box">
+                  <div class="box second">
+                    <div class="info-header">
+                      <h2>{{customerSurveyJson?.deliveryTime ? customerSurveyJson?.deliveryTime+'mins' : '-'}}</h2>
+                      <p>{{'Time allocated by the customer' | translate}}</p>
+                    </div>
+                  </div>
+                  <div class="box second right-align">
+                    <div class="info-header">
+                      <h2>{{surveyFilled ? vehicleName:'-'}}</h2>
+                      <p>{{'Customer’s current vehicle' | translate}}</p>
+                    </div>
+                  </div>
+                </div>
+                <div class="main-box">
+                  <div class="box listing">
+                    <ul class="questions right-align">
+                      <ng-container *ngFor="let survey of surveyPreparationJson;index as i">
+                        <li *ngIf="survey.answer">
+                          <div class="answer-box">
+                            <p><span class="bold">{{ i < 9 ? '0' :''}}{{i+1}}. </span>{{survey.question | translate}}
+                            </p>
+                            <p class="answer" *ngIf="surveyFilled"><span *ngIf="survey.answer == 'No'"></span>
+                              <span *ngIf="survey.answer != 'No' && survey.answer != 'Yes'">{{survey.answer ?
+                                (survey.answer | translate): '-'}}
+                              </span>
+                              <span *ngIf="survey.answer == 'Yes'"><img src="assets/images/question-tick.svg"
+                                  alt="tick" /></span>
+                              <span *ngIf="survey.answer == 'No'"> No </span>
+                            </p>
+                            <p class="answer" *ngIf="!surveyFilled">
+                              <span>-</span>
+                            </p>
+                          </div>
+                        </li>
+                      </ng-container>
+                    </ul>
+                  </div>
+                </div>
+              </p-grid-item>
+            </p-grid>
+          </p-content-wrapper>
+        </div>
+
+        <div class="bg-grey">
+          <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+            <p-grid class="example-grid">
+              <p-grid-item [size]="12">
+                <div class="main-box customer knowledge">
+                  <div class="box second">
+                    <div class="info-header">
+                      <h2>{{'Knowledge levels' | translate}}</h2>
+                    </div>
+                    <ul class="graph-list">
+                      <li>
+                        <p class="graph-heading">{{'Electric Vehicles' | translate}}</p>
+                        <div class="img-box" *ngIf="surveyFilled && surveySent"
+                          [ngSwitch]="customerSurveyJson?.electricVehicle">
+                          <ng-container *ngSwitchCase="'1'">
+                            <img src="assets/images/gauge-01.svg" alt="graph-1" />
+                            <p class="bold">{{'Poor' | translate}}</p>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'2'">
+                            <img src="assets/images/gauge-02.svg" alt="graph-2" />
+                            <p class="bold">{{'Good' | translate}}</p>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'3'">
+                            <img src="assets/images/gauge-03.svg" alt="graph-3" />
+                            <p class="bold">{{'Average' | translate}}</p>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'4'">
+                            <img src="assets/images/gauge-04.svg" alt="graph-4" />
+                            <p class="bold">{{'Moderate' | translate}}</p>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'5'">
+                            <img src="assets/images/gauge-05.svg" alt="graph-5" />
+                            <p class="bold">{{'Expert' | translate}}</p>
+                          </ng-container>
+                          <ng-container *ngSwitchDefault>
+                            <img src="assets/images/gauge-01.svg" alt="graph-1" />
+                            <p class="bold">{{'N/A' | translate}}</p>
+                          </ng-container>
+                        </div>
+                        <div class="img-box" *ngIf="!surveyFilled||!surveySent"
+                          [ngSwitch]="customerSurveyJson?.electricVehicle">
+                          <img src="assets/images/gauge-01.svg" alt="graph-1" />
+                          <p class="bold">{{'N/A' | translate}}</p>
+                        </div>
+                      </li>
+                      <li>
+                        <p class="graph-heading">{{'Technical Features' | translate}}</p>
+                        <div class="img-box" *ngIf="surveyFilled && surveySent"
+                          [ngSwitch]="customerSurveyJson?.technicalFeature">
+                          <ng-container *ngSwitchCase="'1'">
+                            <img src="assets/images/gauge-01.svg" alt="graph-1" />
+                            <p class="bold">{{'Poor' | translate}}</p>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'2'">
+                            <img src="assets/images/gauge-02.svg" alt="graph-2" />
+                            <p class="bold">{{'Good' | translate}}</p>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'3'">
+                            <img src="assets/images/gauge-03.svg" alt="graph-3" />
+                            <p class="bold">{{'Average' | translate}}</p>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'4'">
+                            <img src="assets/images/gauge-04.svg" alt="graph-4" />
+                            <p class="bold">{{'Moderate' | translate}}</p>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'5'">
+                            <img src="assets/images/gauge-05.svg" alt="graph-5" />
+                            <p class="bold">{{'Expert' | translate}}</p>
+                          </ng-container>
+                          <ng-container *ngSwitchDefault>
+                            <img src="assets/images/gauge-01.svg" alt="graph-1" />
+                            <p class="bold">{{'Not Filled' | translate}}</p>
+                          </ng-container>
+                        </div>
+                        <div class="img-box" *ngIf="!surveyFilled||!surveySent"
+                          [ngSwitch]="customerSurveyJson?.electricVehicle">
+                          <img src="assets/images/gauge-01.svg" alt="graph-1" />
+                          <p class="bold">{{'N/A' | translate}}</p>
+                        </div>
+                      </li>
+                      <li>
+                        <p class="graph-heading">{{'Porsche Connect' | translate}}</p>
+                        <div class="img-box" *ngIf="surveyFilled && surveySent"
+                          [ngSwitch]="customerSurveyJson?.porscheConnect">
+                          <ng-container *ngSwitchCase="'1'">
+                            <img src="assets/images/gauge-01.svg" alt="graph-1" />
+                            <p class="bold">{{'Poor' | translate}}</p>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'2'">
+                            <img src="assets/images/gauge-02.svg" alt="graph-2" />
+                            <p class="bold">{{'Good' | translate}}</p>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'3'">
+                            <img src="assets/images/gauge-03.svg" alt="graph-3" />
+                            <p class="bold">{{'Average' | translate}}</p>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'4'">
+                            <img src="assets/images/gauge-04.svg" alt="graph-4" />
+                            <p class="bold">{{'Moderate' | translate}}</p>
+                          </ng-container>
+                          <ng-container *ngSwitchCase="'5'">
+                            <img src="assets/images/gauge-05.svg" alt="graph-5" />
+                            <p class="bold">{{'Expert' | translate}}</p>
+                          </ng-container>
+                          <ng-container *ngSwitchDefault>
+                            <img src="assets/images/gauge-01.svg" alt="graph-1" />
+                            <p class="bold">{{'Not Filled' | translate}}</p>
+                          </ng-container>
+                        </div>
+                        <div class="img-box" *ngIf="!surveyFilled||!surveySent"
+                          [ngSwitch]="customerSurveyJson?.electricVehicle">
+                          <img src="assets/images/gauge-01.svg" alt="graph-1" />
+                          <p class="bold">{{'N/A' | translate}}</p>
+                        </div>
+                      </li>
+                    </ul>
+                    <div class="info-header">
+                      <h2>{{'Vehicle usage' | translate}}</h2>
+                    </div>
+                    <ul class="vehicle-list">
+                      <li>
+                        <div class="vehicle-content">
+                          <div *ngIf="surveyFilled && surveySent" class="vehicle-info">
+                            <h2>{{customerSurveyJson?.dailyCommute ? customerSurveyJson?.dailyCommute : '-'}}</h2>
+                            <div class="rating-box">
+                              <img *ngIf="customerSurveyJson?.dailyCommute"
+                                src="assets/images/compelete-vehicle-tick.svg" alt="complete-tick" />
+                              <img *ngIf="!customerSurveyJson?.dailyCommute" src="assets/images/not-complete.png"
+                                alt="complete-tick" />
+                            </div>
+                          </div>
+                          <div *ngIf="!surveyFilled||!surveySent" class="vehicle-info">
+                            <h2>-</h2>
+                            <div class="rating-box">
+                              <img src="assets/images/not-complete.png" alt="complete-icon" />
+                            </div>
+                          </div>
+                          <p>{{'Used for daily commute' | translate}}</p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="vehicle-content">
+                          <div *ngIf="surveyFilled && surveySent" class="vehicle-info">
+                            <h2>{{customerSurveyJson?.farDailyCommute ? customerSurveyJson?.farDailyCommute+'km' : '-'}}
+                            </h2>
+                            <div class="rating-box">
+                              <div class="range-box">
+                                <div class="filled-line" [style.width.%]="customerSurveyJson?.farDailyCommute*0.5">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <div *ngIf="!surveyFilled||!surveySent" class="vehicle-info">
+                            <h2>-</h2>
+                            <div class="rating-box">
+                              <div class="range-box">
+                                <div class="filled-line" [style.width.%]="0">
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                          <p>{{'Daily commuting distance' | translate}}</p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="vehicle-content">
+                          <div *ngIf="surveyFilled && surveySent" class="vehicle-info">
+                            <h2>{{'Frequently' | translate}}</h2>
+                            <div class="rating-box">
+                              <div class="range-box">
+                                <div class="filled-line" [style.width.%]="customerSurveyJson?.trips*20"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <div *ngIf="!surveyFilled||!surveySent" class="vehicle-info">
+                            <h2>-</h2>
+                            <div class="rating-box">
+                              <div class="range-box">
+                                <div class="filled-line" [style.width.%]="0"></div>
+                              </div>
+                            </div>
+                          </div>
+                          <p>{{'Frequency of trips over 150 km' | translate}}</p>
+                        </div>
+                      </li>
+                    </ul>
+                    <ng-container>
+                      <div class="info-header">
+                        <h2> {{'Favorite radio stations' | translate}}</h2>
+                      </div>
+                      <ul class="vehicle-list">
+                        <li>
+                          <div class="vehicle-content">
+                            <p *ngIf="surveyFilled && surveySent">{{customerSurveyJson?.favouriteRadio ?
+                              customerSurveyJson?.favouriteRadio : '-'}}</p>
+                            <p *ngIf="!surveyFilled||!surveySent">-</p>
+                          </div>
+                        </li>
+                      </ul>
+                    </ng-container>
+
+                  </div>
+                </div>
+              </p-grid-item>
+            </p-grid>
+          </p-content-wrapper>
+        </div>
+        <div class="info-header-detail">
+          <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+            <p-grid class="example-grid">
+              <p-grid-item [size]="12">
+                <div class="main-box">
+                  <div class="box second">
+                    <div class="info-header home">
+                      <h2>{{'Home Charger' | translate}}</h2>
+                    </div>
+                  </div>
+                </div>
+                <div class="main-box">
+                  <div class="box listing">
+                    <ul class="questions right-align home-charger">
+                      <li>
+                        <div class="answer-box">
+                          <p><span class="bold">01. </span>{{'Access to a charger at home?' | translate}}
+                          </p>
+                          <p class="answer" [ngSwitch]="customerSurveyJson?.chargerHome">
+                            <span *ngSwitchCase="'Yes'">
+                              <img src="assets/images/question-tick.svg" alt="tick" />
+                            </span>
+                            <span *ngSwitchCase="'No'">
+                              <img src="/assets/images/content-close.svg" alt="close" />
+                            </span>
+                            <span *ngSwitchDefault>
+                              N/A
+                            </span>
+                          </p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="answer-box">
+                          <p><span class="bold">02. </span>{{'Requested more information?' | translate}}
+                          </p>
+                          <p class="answer" [ngSwitch]="customerSurveyJson?.porscheHome">
+                            <span *ngSwitchCase="'Yes'">
+                              <img src="assets/images/question-tick.svg" alt="tick" />
+                            </span>
+                            <span *ngSwitchCase="'No'">
+                              <img src="/assets/images/content-close.svg" alt="close" />
+                            </span>
+                            <span *ngSwitchDefault>
+                              N/A
+                            </span>
+                          </p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="answer-box">
+                          <p><span class="bold">03. </span>{{'Aware of the home check offer?'| translate}}
+                          </p>
+                          <p class="answer" [ngSwitch]="customerSurveyJson?.recieveInfoHome">
+                            <span *ngSwitchCase="'Yes'">
+                              <img src="assets/images/question-tick.svg" alt="tick" />
+                            </span>
+                            <span *ngSwitchCase="'No'">
+                              <img src="/assets/images/content-close.svg" alt="close" />
+                            </span>
+                            <span *ngSwitchDefault>
+                              N/A
+                            </span>
+                          </p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="answer-box">
+                          <p><span class="bold">04. </span>{{'Satisfied with home check?'| translate}}
+                          </p>
+                          <p class="answer" [ngSwitch]="customerSurveyJson?.satisfiedHomeCheck">
+                            <span *ngSwitchCase="'1'">
+                              <img src="assets/images/gauge-01.svg" alt="graph-1" />
+                            </span>
+                            <span *ngSwitchCase="'2'">
+                              <img src="assets/images/gauge-02.svg" alt="graph-1" />
+                            </span>
+                            <span *ngSwitchCase="'3'">
+                              <img src="assets/images/gauge-03.svg" alt="graph-1" />
+                            </span>
+                            <span *ngSwitchCase="'4'">
+                              <img src="assets/images/gauge-04.svg" alt="graph-1" />
+                            </span>
+                            <span *ngSwitchCase="'5'">
+                              <img src="assets/images/gauge-05.svg" alt="graph-1" />
+                            </span>
+                            <span *ngSwitchDefault>
+                              N/A
+                            </span>
+                          </p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </p-grid-item>
+            </p-grid>
+          </p-content-wrapper>
+        </div>
+
+        <div class="customer-info-box">
+          <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+            <p-grid class="example-grid">
+              <p-grid-item [size]="12">
+                <div class="main-box customer">
+                  <div class="box second">
+                    <div class="info-header">
+                      <h2>{{'Customer selected focus areas' | translate}} </h2>
+                    </div>
+                    <ul class="questions"
+                      *ngIf="surveyFilled && surveySent && customerSurveyJson?.areasToFocus?.length">
+                      <li *ngFor="let area of customerSurveyJson?.areasToFocus?.split('|')">
+                        <div class="answer-box">
+                          <p>{{area | translate}}</p>
+                          <p class="answer"><img src="assets/images/question-tick.svg" alt="tick" /></p>
+                        </div>
+                      </li>
+                      <li *ngIf="customerSurveyJson?.receiveInfo">
+                        <div class="answer-box">
+                          <p>{{customerSurveyJson?.receiveInfo | translate}}</p>
+                          <p class="answer"><img src="assets/images/question-tick.svg" alt="tick" /></p>
+                        </div>
+                      </li>
+
+                    </ul>
+                    <ul class="questions"
+                      *ngIf="!surveyFilled||!surveySent || !customerSurveyJson?.areasToFocus?.length">
+                      <li>
+                        <div class="answer-box">
+                          <p>-</p>
+                          <p class="answer"></p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="answer-box">
+                          <p>-</p>
+                          <p class="answer"></p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="answer-box">
+                          <p>-</p>
+                          <p class="answer"></p>
+                        </div>
+                      </li>
+                      <li>
+                        <div class="answer-box">
+                          <p>{{"Are you interested in receiving information about your Taycan's features and functions
+                            in advance?" | translate}}</p>
+                          <p class="answer">-</p>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                  <div class="box second right-align">
+                    <div class="info-header">
+                      <h2>{{'Customer comments' |translate}}</h2>
+                    </div>
+                    <p class="comment" *ngIf="surveyFilled && surveySent">{{customerSurveyJson?.customerComment ?
+                      customerSurveyJson?.customerComment : '-'}}</p>
+                    <p class="comment" *ngIf="!surveyFilled||!surveySent">-</p>
+                  </div>
+                </div>
+              </p-grid-item>
+            </p-grid>
+          </p-content-wrapper>
+        </div>
+        <div class="btn-container">
+          <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+            <p-grid class="example-grid">
+              <p-grid-item [size]="12">
+                <div class="content-box">
+                  <div class="left-part buttons">
+                    <a href="javascript:void(0);" (click)="printPdf(true)"><img src="assets/images/download.svg"
+                        alt="download" /></a>
+                    <a href="javascript:void(0);" (click)="printPdf(false)"><img src="assets/images/printer.svg"
+                        alt="printer" /></a>
+                  </div>
+                  <div class="right-part">
+                    <p-button [icon]="'close'" [variant]="'tertiary'" routerLink="/">{{'Cancel' | translate}}
+                    </p-button>
+                    <p-button (click)="nextStep()" *ngIf="rolePermissions?.isCreate || rolePermissions?.isEdit">{{'Move
+                      To Next Step' | translate}}</p-button>
+                  </div>
+                </div>
+              </p-grid-item>
+            </p-grid>
+          </p-content-wrapper>
+        </div>
+      </div>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [ngClass]="{'completed-tick':preDeliveryCheckListId}">{{'Pre
+          Delivery Checklist' |
+          translate}}</span>
+      </ng-template>
+      <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+        <p-grid class="example-grid">
+          <p-grid-item [size]="12">
+            <form class="pre-delivery-checklist-form">
+              <div class="outer-box scrollbar third">
+                <div class="box third">
+                  <p class="mandatory">{{'Fields marked with' | translate}} <span class="star">*</span> {{'are
+                    mandatory.' |translate}}</p>
+                  <ul class="pre-delivery-check-list">
+                    <li *ngFor="let delivery of deliveryChecklist.slice(0, 6);index as i">
+                      <!-- <span class="label" *ngIf="delivery?.question">{{(delivery?.question ||'') | translate}} <span
+                        class="star" *ngIf="delivery?.is_required">*</span> </span> -->
+                      <p-checkbox-wrapper [hideLabel]="false" [label]="(delivery?.question ||'') | translate"
+                        [ngClass]="disableMode?'disable-all':''">
+                        <input [type]="'checkbox'" [name]="delivery.name" [checked]="delivery.checked"
+                          (change)="updateDeliveryCheckBox(i,$event.target)"
+                          [required]="delivery?.is_required?true:false" />
+                      </p-checkbox-wrapper>
+                    </li>
+                  </ul>
+                  <a href="javascript:void(0);" class="watt cursor-auto" *ngIf="charger">{{charger}}</a>
+                </div>
+                <div class="box third">
+                  <p class="mandatory"> &nbsp;</p>
+                  <ul class="pre-delivery-check-list">
+                    <li *ngFor="let delivery of deliveryChecklist.slice(6, deliveryChecklist.length); index as i">
+                      <!--  <span class="label" *ngIf="delivery?.question">{{(delivery?.question ||'') | translate}} <span
+                        class="star" *ngIf="delivery?.is_required">*</span> </span> -->
+                      <p-checkbox-wrapper [hideLabel]="false" [label]="(delivery?.question ||'') | translate"
+                        [ngClass]="disableMode?'disable-all':''">
+                        <input [type]="'checkbox'" [name]="delivery.name" [checked]="delivery.checked"
+                          (change)="updateDeliveryCheckBox(i+6,$event.target)"
+                          [required]="delivery?.is_required?true:false" />
+                      </p-checkbox-wrapper>
+                    </li>
+                  </ul>
+                  <a href="javascript:void(0);" class="view" (click)="previousStep()">{{'View Info Sheet' |
+                    translate}}</a>
+                </div>
+                <div class="btn-container">
+                  <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+                    <p-grid class="example-grid">
+                      <p-grid-item [size]="12">
+                        <div class="content-box">
+                          <div class="left-part buttons">
+                            <p class="message-mandatory">{{'All mandatory options filled' | translate}}</p>
+                          </div>
+                          <div class="right-part">
+                            <p-button [icon]="'close'" [variant]="'tertiary'" routerLink="/">{{'Cancel' |
+                              translate}}</p-button>
+                            <p-button (click)="submitDeliveryCheckList()"
+                              *ngIf="rolePermissions?.isCreate || rolePermissions?.isEdit">{{'Mark As Complete' |
+                              translate}}</p-button>
+                          </div>
+                        </div>
+                      </p-grid-item>
+                    </p-grid>
+                  </p-content-wrapper>
+                </div>
+              </div>
+            </form>
+          </p-grid-item>
+        </p-grid>
+      </p-content-wrapper>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [ngClass]="{'completed-tick':checkListId}">{{'Delivery Checklist' | translate}}</span>
+      </ng-template>
+      <app-delivery-checklist *ngIf="checklistData && checklistData.length"
+        [totalTime]="customerSurveyJson?.deliveryTime" [checklistData]="checklistData"
+        (deliveryChecklist)="submitDeliveryCheckListSec($event)"></app-delivery-checklist>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [ngClass]="{'completed-tick':deliverData.deliveryStatus > 2}">{{'Customer Follow Up' |
+          translate}}</span>
+      </ng-template>
+      <app-second-delivery-checklist *ngIf="checklistData && checklistData.length" [checklistData]="checklistData"
+        (deliveryChecklist)="submitDeliveryCheckListSec($event)"></app-second-delivery-checklist>
+    </mat-tab>
+    <mat-tab>
+      <ng-template mat-tab-label>
+        <span [ngClass]="{'completed-tick':deliverData.deliveryStatus >2}">{{'Send Documents' |
+          translate}}</span>
+      </ng-template>
+      <app-documents *ngIf="checklistData && checklistData.length" [checklistData]="checklistData"
+        (sendDocuments)="sendDocuments($event)"></app-documents>
+    </mat-tab>
+  </mat-tab-group>
+</section>

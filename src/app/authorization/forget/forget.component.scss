@@ -1,0 +1,25 @@
+.forgot-form{
+    width: 100%;
+    max-width: 633px;
+    margin: 60px auto 60px auto;
+    h2{
+        margin-bottom: 0px;
+    }
+    p{
+        width:100%;
+        margin: 0px 0px 0px 0px;
+        &.last{
+            margin-bottom: 40px;
+        }
+    }
+    .btn-box{
+        width: 100%;
+        display: flex;
+        margin: 40px 0px;
+        p-button{
+            &:first-child{
+                margin-right: 16px;
+            }
+        }
+    }
+}

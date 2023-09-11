@@ -1,0 +1,17 @@
+<!-- Modal -->
+<h2>{{'Add Link' | translate}}</h2>
+<p>{{'Enter the link in the following field.' | translate}}</p>
+<div mat-dialog-content>
+  <form class="add-link-form" [formGroup]="form">
+    <p-text-field-wrapper label="Link" hide-label="false"
+      [message]="isSubmitted && form.controls.url.errors?.pattern ? ('Please enter a valid url.' | translate) : ('Please enter url.' | translate)"
+      [state]="isSubmitted && form.controls.url.errors? 'error' : 'none'">
+      <input type="text" placeholder="https://" formControlName="url" id="url" name="some-name" autocomplete="one-time-code" />
+    </p-text-field-wrapper>
+  </form>
+</div>
+<div mat-dialog-actions>
+  <p-button variant="tertiary" mat-dialog-close>{{'Close' | translate}}</p-button>
+  <p-button (click)="onSave()">{{'Save Link' | translate}}</p-button>
+</div>
+<!--/ Modal -->

@@ -1,0 +1,563 @@
+<section class="delivery-dashboard">
+  <div class="tab-box">
+    <div class="date-box today" *ngIf="activeTab == 0">
+      <!-- <button type="button" class="arrow"><img src="assets/images/left-arrow.svg" alt="arrow" /></button> -->
+      <p>{{ today.format("DD MMMM YYYY") }}</p>
+      <!-- <button type="button" class="arrow"><img src="assets/images/right-arrow.svg" alt="arrow" /></button> -->
+    </div>
+    <div class="date-box" *ngIf="activeTab == 1">
+      <button type="button" class="arrow" (click)="changeWeek('prev')">
+        <img src="assets/images/left-arrow.svg" alt="arrow" />
+      </button>
+      <p>{{ selectedWeek }}</p>
+      <button type="button" class="arrow" (click)="changeWeek('next')">
+        <img src="assets/images/right-arrow.svg" alt="arrow" />
+      </button>
+    </div>
+    <div class="date-box" *ngIf="activeTab == 2">
+      <button type="button" class="arrow" (click)="changeMonth('prev')">
+        <img src="assets/images/left-arrow.svg" alt="arrow" />
+      </button>
+      <p>{{ calender.currentDate.format("MMMM YYYY") }}</p>
+      <button type="button" class="arrow" (click)="changeMonth('next')">
+        <img src="assets/images/right-arrow.svg" alt="arrow" />
+      </button>
+    </div>
+    <mat-tab-group animationDuration="0ms" mat-align-tabs="center" [disableRipple]="true"
+      (selectedTabChange)="tabChanged($event)">
+      <mat-tab label="{{ 'Today' | translate }}">
+        <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+          <p-grid>
+            <p-grid-item [size]="12">
+              <div class="dashboard">
+                <div class="dashboard-header">
+                  <div class="left-content">
+                    <h3>{{ "Upcoming Deliveries" | translate }}</h3>
+                    <p class="sub-text">
+                      {{ "Today" | translate }}: {{ allDeliveries.length }}
+                    </p>
+                  </div>
+                  <div class="right-content">
+                    <div class="search-box">
+                      <button type="button" class="search-btn">
+                        <div class="search-container" [ngClass]="status ? 'show' : ''">
+                          <form>
+                            <input class="search expandright" id="searchright" type="search" name="q"
+                              [(ngModel)]="searchInToday"  autocomplete="one-time-code" placeholder="{{ 'Search' | translate }}" />
+                            <label class="button searchbutton" for="searchright"><span class="mglass">
+                                <p-icon name="search" aria-label="Search icon" (click)="clickEvent()"
+                                  class="search-icon"></p-icon>
+                                <p-icon name="close" aria-label="Close icon" (click)="clickEvent();clearValue()" class="close-icon">
+                                </p-icon>
+                              </span></label>
+                          </form>
+                        </div>
+                      </button>
+                    </div>
+                    <div class="divider" *ngIf="rolePermissions?.isCreate"></div>
+                    <p-button variant="primary" (click)="addDelivery()" *ngIf="rolePermissions?.isCreate">{{
+                      "Add New Delivery" | translate
+                      }}</p-button>
+                  </div>
+                </div>
+              </div>
+            </p-grid-item>
+          </p-grid>
+        </p-content-wrapper>
+        <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+          <p-grid>
+            <p-grid-item [size]="12">
+              <div class="car-list scrollbar">
+                <div class="car-box" *ngFor="let delivery of allDeliveries | filter: searchInToday">
+                  <div class="box" [routerLink]="['/survey',delivery.id]">
+                    <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation()"
+                      aria-label="Example icon-button with a menu" class="edit-btn" *ngIf="rolePermissions?.isEdit || rolePermissions?.isDelete">
+                      <span class="dots"></span>
+                      <span class="dots"></span>
+                      <span class="dots"></span>
+                    </button>
+                    <mat-menu #menu="matMenu">
+                      <button mat-menu-item (click)="editDelivery($event,delivery.id);$event.stopPropagation();" *ngIf="rolePermissions?.isEdit">
+                        <span>{{'Edit'| translate}}</span>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="14" viewBox="0 0 10 14">
+                          <g fill="none" fill-rule="evenodd">
+                            <g fill="#0061BD" fill-rule="nonzero">
+                              <g>
+                                <g>
+                                  <g>
+                                    <g>
+                                      <path d="M6.344 0L5.241 0 0 7 5.241 14 6.344 14 1.094 7z"
+                                        transform="translate(-464 -339) translate(373 291) translate(0 27) translate(0 7) matrix(-1 0 0 1 101 14)" />
+                                      <path d="M9.844 0L8.741 0 3.5 7 8.741 14 9.844 14 4.594 7z"
+                                        transform="translate(-464 -339) translate(373 291) translate(0 27) translate(0 7) matrix(-1 0 0 1 101 14)" />
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </svg>
+                      </button>
+                      <button mat-menu-item (click)="removeDelivery($event,delivery.id);$event.stopPropagation();" *ngIf="rolePermissions?.isDelete">
+                        <span>{{'Delete' | translate}}</span>
+
+                        <svg xmlns="http://www.w3.org/2000/svg" width="10" height="14" viewBox="0 0 10 14">
+                          <g fill="none" fill-rule="evenodd">
+                            <g fill="#0061BD" fill-rule="nonzero">
+                              <g>
+                                <g>
+                                  <g>
+                                    <g>
+                                      <path d="M6.344 0L5.241 0 0 7 5.241 14 6.344 14 1.094 7z"
+                                        transform="translate(-464 -339) translate(373 291) translate(0 27) translate(0 7) matrix(-1 0 0 1 101 14)" />
+                                      <path d="M9.844 0L8.741 0 3.5 7 8.741 14 9.844 14 4.594 7z"
+                                        transform="translate(-464 -339) translate(373 291) translate(0 27) translate(0 7) matrix(-1 0 0 1 101 14)" />
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </g>
+                          </g>
+                        </svg>
+                      </button>
+                    </mat-menu>
+                    <div class="img-box">
+                      <div class="left-side">
+                       <!--  <img src="/assets/images/{{ delivery?.model?.name }}.jpg" alt="{{ delivery?.model?.name }}" /> -->
+                        <img src="{{ delivery?.model?.imagePath }}" class="img-responsive" alt="{{ delivery?.model?.name }}" />
+                      </div>
+                      <div class="right-side">
+                        <h3>
+                          {{ delivery?.modelName[0] }}
+                          <span>{{ delivery?.modelName[1] }}
+                            {{ delivery?.modelName[2] || "" }}
+                          </span>
+                        </h3>
+                        <container-element [ngSwitch]="delivery?.deliveryStatus">
+                          <p class="checklist-text" *ngSwitchCase="'1'">
+                            {{ "Delivery Pending" | translate }}
+                          </p>
+                          <p class="checklist-text" *ngSwitchCase="'2'">
+                            {{ "Customer Follow-Up Pending" | translate }}
+                          </p>
+                          <p class="checklist-text" *ngSwitchCase="'3'">
+                            {{ "Delivery Done"| translate }}
+                          </p>
+                          <p class="checklist-text" *ngSwitchCase="'0'">
+                            {{
+                            (delivery?.isSurveySent
+                            ? "Customer Survey Sent"
+                            : "Customer Survey Not Sent"
+                            ) | translate
+                            }}
+                          </p>
+                        </container-element>
+
+                      </div>
+                    </div>
+                    <div class="content-box">
+                      <div class="info-content">
+                        <p class="label">{{ "Customer Name" | translate }}</p>
+                        <p class="customer">{{ delivery?.customerName }}</p>
+                      </div>
+                      <div class="info-content">
+                        <p class="label">{{ "Service Advisor" | translate }}</p>
+                        <p class="customer">
+                          {{ delivery?.serviceAdvisor?.name }}
+                        </p>
+                      </div>
+                      <div class="info-content">
+                        <p class="label">{{ "Porsche Pro" | translate }}</p>
+                        <p class="customer">{{ delivery?.porschePro?.name }}</p>
+                      </div>
+                      <div class="info-content">
+                        <p class="label">
+                          {{ "Sales Consultant" | translate }}
+                        </p>
+                        <p class="customer">
+                          {{ delivery?.salesConsultant?.name }}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </p-grid-item>
+          </p-grid>
+        </p-content-wrapper>
+      </mat-tab>
+      <mat-tab label="{{ 'Week' | translate }}">
+        <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+          <p-grid>
+            <p-grid-item [size]="12">
+              <div class="week-view">
+                <div class="week-calendar">
+                  <ul class="week-list">
+                    <li [ngClass]="{ active: day.selected }" *ngFor="let day of weekDays"
+                      (click)="selectWeekDay(day.mDate)">
+                      <h2 class="number">{{ day.mDate.format("DD") }}</h2>
+                      <p class="day">{{ day.mDate.format("ddd") }}</p>
+                    </li>
+                  </ul>
+                </div>
+                <div class="week-content">
+                  <div class="dashboard">
+                    <div class="dashboard-header">
+                      <div class="left-content">
+                        <h3>{{ "Upcoming Deliveries" | translate }}</h3>
+                        <div class="delivery-status">
+                          <p class="sub-text">
+                            {{ "Selected Week" | translate }}:
+                            {{ allDeliveries.length }}
+                          </p>
+                          <p class="sub-text">
+                            {{ "Selected Day" | translate }}:
+                            {{
+                            selectedWeekDate ? selectedDayDelivery.length : 0
+                            }}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="right-content">
+                        <div class="search-box">
+                          <button type="button" class="search-btn">
+                            <div class="search-container" [ngClass]="status ? 'show' : ''">
+                              <form>
+                                <input class="search expandright" id="searchright" type="search" name="q"
+                                  [(ngModel)]="searchInWeek"  autocomplete="one-time-code" placeholder="{{ 'Search' | translate }}" />
+                                <label class="button searchbutton" for="searchright"><span class="mglass">
+                                    <p-icon name="search" aria-label="Search icon" (click)="clickEvent()"
+                                      class="search-icon"></p-icon>
+                                    <p-icon name="close" aria-label="Close icon" (click)="clickEvent();clearValue()"
+                                      class="close-icon">
+                                    </p-icon>
+                                  </span></label>
+                              </form>
+                            </div>
+                          </button>
+                        </div>
+                        <div class="divider" *ngIf="rolePermissions?.isCreate"></div>
+                        <p-button variant="primary" (click)="addDelivery()" *ngIf="rolePermissions?.isCreate">{{
+                          "Add New Delivery" | translate
+                          }}</p-button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="car-list scrollbar">
+                    <div class="car-box" *ngFor="
+                        let delivery of selectedDayDelivery
+                          | filter: searchInWeek
+                      ">
+                      <div class="box" [routerLink]="['/survey',delivery.id]">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation();"
+                          aria-label="Example icon-button with a menu" class="edit-btn" *ngIf="rolePermissions?.isEdit || rolePermissions?.isDelete"> 
+                          <span class="dots"></span>
+                          <span class="dots"></span>
+                          <span class="dots"></span>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item (click)="editDelivery($event,delivery.id);$event.stopPropagation();" *ngIf="rolePermissions?.isEdit">
+                            <span>{{'Edit'| translate}}</span>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="14" viewBox="0 0 10 14">
+                              <g fill="none" fill-rule="evenodd">
+                                <g fill="#0061BD" fill-rule="nonzero">
+                                  <g>
+                                    <g>
+                                      <g>
+                                        <g>
+                                          <path d="M6.344 0L5.241 0 0 7 5.241 14 6.344 14 1.094 7z"
+                                            transform="translate(-464 -339) translate(373 291) translate(0 27) translate(0 7) matrix(-1 0 0 1 101 14)" />
+                                          <path d="M9.844 0L8.741 0 3.5 7 8.741 14 9.844 14 4.594 7z"
+                                            transform="translate(-464 -339) translate(373 291) translate(0 27) translate(0 7) matrix(-1 0 0 1 101 14)" />
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </svg>
+                          </button>
+                          <button mat-menu-item (click)="removeDelivery($event,delivery.id);$event.stopPropagation();" *ngIf="rolePermissions?.isDelete">
+                            <span>{{'Delete' | translate}}</span>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="14" viewBox="0 0 10 14">
+                              <g fill="none" fill-rule="evenodd">
+                                <g fill="#0061BD" fill-rule="nonzero">
+                                  <g>
+                                    <g>
+                                      <g>
+                                        <g>
+                                          <path d="M6.344 0L5.241 0 0 7 5.241 14 6.344 14 1.094 7z"
+                                            transform="translate(-464 -339) translate(373 291) translate(0 27) translate(0 7) matrix(-1 0 0 1 101 14)" />
+                                          <path d="M9.844 0L8.741 0 3.5 7 8.741 14 9.844 14 4.594 7z"
+                                            transform="translate(-464 -339) translate(373 291) translate(0 27) translate(0 7) matrix(-1 0 0 1 101 14)" />
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </svg>
+                          </button>
+                        </mat-menu>
+                        <div class="img-box">
+                          <div class="left-side">
+                            <!-- <img src="/assets/images/{{
+                              delivery?.model?.name
+                            }}.jpg" alt="{{ delivery?.model?.name }}" /> -->
+                            <img src="{{ delivery?.model?.imagePath }}" class="img-responsive" alt="{{ delivery?.model?.name }}" />
+                          </div>
+                          <div class="right-side">
+                            <h3>
+                              {{ delivery?.modelName[0] }}
+                              <span>{{ delivery?.modelName[1] }}
+                                {{ delivery?.modelName[2] || "" }}
+                              </span>
+                            </h3>
+                            <container-element [ngSwitch]="delivery?.deliveryStatus">
+                              <p class="checklist-text" *ngSwitchCase="'1'">
+                                {{ "Delivery Pending" | translate }}
+                              </p>
+                              <p class="checklist-text" *ngSwitchCase="'2'">
+                                {{ "Customer Follow-Up Pending" | translate }}
+                              </p>
+                              <p class="checklist-text" *ngSwitchCase="'3'">
+                                {{ "Delivery Done"| translate }}
+                              </p>
+                              <p class="checklist-text" *ngSwitchCase="'0'">
+                                {{
+                                (delivery?.isSurveySent
+                                ? "Customer Survey Sent"
+                                : "Customer Survey Not Sent"
+                                ) | translate
+                                }}
+                              </p>
+                            </container-element>
+                          </div>
+                        </div>
+                        <div class="content-box">
+                          <div class="info-content">
+                            <p class="label">
+                              {{ "Customer Name" | translate }}
+                            </p>
+                            <p class="customer">{{ delivery?.customerName }}</p>
+                          </div>
+                          <div class="info-content">
+                            <p class="label">
+                              {{ "Service Advisor" | translate }}
+                            </p>
+                            <p class="customer">
+                              {{ delivery?.serviceAdvisor?.name }}
+                            </p>
+                          </div>
+                          <div class="info-content">
+                            <p class="label">{{ "Porsche Pro" | translate }}</p>
+                            <p class="customer">
+                              {{ delivery?.porschePro?.name }}
+                            </p>
+                          </div>
+                          <div class="info-content">
+                            <p class="label">
+                              {{ "Sales Consultant" | translate }}
+                            </p>
+                            <p class="customer">
+                              {{ delivery?.salesConsultant?.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </p-grid-item>
+          </p-grid>
+        </p-content-wrapper>
+      </mat-tab>
+      <mat-tab label="{{ 'Month' | translate }}">
+        <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+          <p-grid>
+            <p-grid-item [size]="12">
+              <div class="month-view">
+                <div class="month-calendar">
+                  <app-calender (dateSelect)="getSelectedDayArray($event)"></app-calender>
+                </div>
+                <div class="month-content">
+                  <div class="dashboard">
+                    <div class="dashboard-header">
+                      <div class="left-content">
+                        <h3>{{ "Upcoming Deliveries" | translate }}</h3>
+                        <div class="delivery-status">
+                          <p class="sub-text">
+                            {{ "Selected Month" | translate }}:
+                            {{ allDeliveries.length }}
+                          </p>
+                          <p class="sub-text">
+                            {{ "Selected Day" | translate }}:
+                            {{
+                            selectedCalendarDate
+                            ? selectedDayDelivery.length
+                            : 0
+                            }}
+                          </p>
+                        </div>
+                      </div>
+                      <div class="right-content">
+                        <div class="search-box">
+                          <button type="button" class="search-btn">
+                            <div class="search-container" [ngClass]="status ? 'show' : ''">
+                              <form>
+                                <input class="search expandright" id="searchright" type="search" name="q"
+                                  [(ngModel)]="searchInMonth"  autocomplete="one-time-code" placeholder="{{ 'Search' | translate }}" />
+                                <label class="button searchbutton" for="searchright"><span class="mglass">
+                                    <p-icon name="search" aria-label="Search icon" (click)="clickEvent()"
+                                      class="search-icon"></p-icon>
+                                    <p-icon name="close" aria-label="Close icon" (click)="clickEvent();clearValue()"
+                                      class="close-icon">
+                                    </p-icon>
+                                  </span></label>
+                              </form>
+                            </div>
+                          </button>
+                        </div>
+                        <div class="divider" *ngIf="rolePermissions?.isCreate"></div>
+                        <p-button variant="primary" (click)="addDelivery()" *ngIf="rolePermissions?.isCreate">{{
+                          "Add New Delivery" | translate
+                          }}</p-button>
+                      </div>
+                    </div>
+                  </div>
+                  <div class="car-list scrollbar">
+                    <div class="car-box" *ngFor=" let delivery of selectedDayDelivery | filter: searchInMonth ">
+                      <div class="box" [routerLink]="['/survey',delivery.id]">
+                        <button mat-icon-button [matMenuTriggerFor]="menu" (click)="$event.stopPropagation();"
+                          aria-label="Example icon-button with a menu" class="edit-btn" *ngIf="rolePermissions?.isEdit || rolePermissions?.isDelete">
+                          <span class="dots"></span>
+                          <span class="dots"></span>
+                          <span class="dots"></span>
+                        </button>
+                        <mat-menu #menu="matMenu">
+                          <button mat-menu-item (click)="editDelivery($event,delivery.id);$event.stopPropagation();" *ngIf="rolePermissions?.isEdit">
+                            <span>{{'Edit'| translate}}</span>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="14" viewBox="0 0 10 14">
+                              <g fill="none" fill-rule="evenodd">
+                                <g fill="#0061BD" fill-rule="nonzero">
+                                  <g>
+                                    <g>
+                                      <g>
+                                        <g>
+                                          <path d="M6.344 0L5.241 0 0 7 5.241 14 6.344 14 1.094 7z"
+                                            transform="translate(-464 -339) translate(373 291) translate(0 27) translate(0 7) matrix(-1 0 0 1 101 14)" />
+                                          <path d="M9.844 0L8.741 0 3.5 7 8.741 14 9.844 14 4.594 7z"
+                                            transform="translate(-464 -339) translate(373 291) translate(0 27) translate(0 7) matrix(-1 0 0 1 101 14)" />
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </svg>
+                          </button>
+                          <button mat-menu-item (click)="removeDelivery($event,delivery.id);$event.stopPropagation();" *ngIf="rolePermissions?.isDelete">
+                            <span>{{'Delete' | translate}}</span>
+
+                            <svg xmlns="http://www.w3.org/2000/svg" width="10" height="14" viewBox="0 0 10 14">
+                              <g fill="none" fill-rule="evenodd">
+                                <g fill="#0061BD" fill-rule="nonzero">
+                                  <g>
+                                    <g>
+                                      <g>
+                                        <g>
+                                          <path d="M6.344 0L5.241 0 0 7 5.241 14 6.344 14 1.094 7z"
+                                            transform="translate(-464 -339) translate(373 291) translate(0 27) translate(0 7) matrix(-1 0 0 1 101 14)" />
+                                          <path d="M9.844 0L8.741 0 3.5 7 8.741 14 9.844 14 4.594 7z"
+                                            transform="translate(-464 -339) translate(373 291) translate(0 27) translate(0 7) matrix(-1 0 0 1 101 14)" />
+                                        </g>
+                                      </g>
+                                    </g>
+                                  </g>
+                                </g>
+                              </g>
+                            </svg>
+                          </button>
+                        </mat-menu>
+                        <div class="img-box">
+                          <div class="left-side">
+                            <!-- <img src="/assets/images/{{
+                                delivery?.model?.name
+                              }}-big.jpg" alt="{{ delivery?.model?.name }}" /> -->
+                              <img src="{{ delivery?.model?.imagePath }}" class="img-responsive" alt="{{ delivery?.model?.name }}" />
+                          </div>
+                          <div class="right-side">
+                            <h3>
+                              {{ delivery?.modelName[0] }}
+                              <span>{{ delivery?.modelName[1] }}
+                                {{ delivery?.modelName[2] || "" }}
+                              </span>
+                            </h3>
+                            <container-element [ngSwitch]="delivery?.deliveryStatus">
+                              <p class="checklist-text" *ngSwitchCase="'1'">
+                                {{ "Delivery Pending" | translate }}
+                              </p>
+                              <p class="checklist-text" *ngSwitchCase="'2'">
+                                {{ "Customer Follow-Up Pending" | translate }}
+                              </p>
+                              <p class="checklist-text" *ngSwitchCase="'3'">
+                                {{ "Delivery Done"| translate }}
+                              </p>
+                              <p class="checklist-text" *ngSwitchCase="'0'"> 
+                                {{
+                                (delivery?.isSurveySent
+                                ? "Customer Survey Sent"
+                                : "Customer Survey Not Sent"
+                                ) | translate
+                                }}
+                              </p>
+                            </container-element>
+                          </div>
+                        </div>
+                        <div class="content-box">
+                          <div class="info-content">
+                            <p class="label">
+                              {{ "Customer Name" | translate }}
+                            </p>
+                            <p class="customer">{{ delivery?.customerName }}</p>
+                          </div>
+                          <div class="info-content">
+                            <p class="label">
+                              {{ "Service Advisor" | translate }}
+                            </p>
+                            <p class="customer">
+                              {{ delivery?.serviceAdvisor?.name }}
+                            </p>
+                          </div>
+                          <div class="info-content">
+                            <p class="label">{{ "Porsche Pro" | translate }}</p>
+                            <p class="customer">
+                              {{ delivery?.porschePro?.name }}
+                            </p>
+                          </div>
+                          <div class="info-content">
+                            <p class="label">
+                              {{ "Sales Consultant" | translate }}
+                            </p>
+                            <p class="customer">
+                              {{ delivery?.salesConsultant?.name }}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </p-grid-item>
+          </p-grid>
+        </p-content-wrapper>
+      </mat-tab>
+    </mat-tab-group>
+  </div>
+</section>

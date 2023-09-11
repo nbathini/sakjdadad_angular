@@ -1,0 +1,6 @@
+<div [ngClass]="{'lang-french':currentLang == 'fr','lang-english':currentLang == 'en'}">
+	<router-outlet></router-outlet>
+</div>
+<div class="loader-box" *ngIf="show">
+	<div class="loading"></div>
+</div>

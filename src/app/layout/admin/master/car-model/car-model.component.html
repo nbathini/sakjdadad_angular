@@ -1,0 +1,91 @@
+<section class="dealer-listing">
+    <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+      <p-grid class="example-grid">
+        <p-grid-item [size]="12">
+          <div class="dealer">
+            <div class="dealer-header">
+              <h2>{{'Car Models' | translate}}</h2>
+              <div class="btn-container">
+                <div class="search-box">
+                  <button type="button" class="search-btn">
+                    <div class="search-container" [ngClass]="status ? 'show' : ''">
+                      <form>
+                        <input class="search expandright" id="searchright" type="search" name="q"
+                          [(ngModel)]="searchModel" autocomplete="one-time-code" (keyup)="applyFilter()" placeholder="{{'Search'| translate}}">
+                        <label class="button searchbutton" for="searchright"><span class="mglass">
+                            <p-icon name="search" aria-label="Search icon" (click)="clickEvent()" class="search-icon">
+                            </p-icon>
+                            <p-icon name="close" aria-label="Close icon" (click)="clickEvent()" class="close-icon">
+                            </p-icon>
+                          </span></label>
+                      </form>
+                    </div>
+                  </button>
+                </div>
+                <div class="divider" *ngIf="rolePermissions?.isCreate"></div>
+                <p-button variant="primary" routerLink="/admin/master/car-model/create"  *ngIf="rolePermissions?.isCreate">{{'Add Car Model' |
+                  translate}}</p-button>
+              </div>
+  
+            </div>
+            <div class="table-container scrollbar hyperlink-table" infiniteScroll [infiniteScrollDistance]="2"
+              [infiniteScrollThrottle]="50" (scrolled)="onScroll()" [infiniteScrollDisabled]="isFullListDisplayed"
+              [scrollWindow]="false"  *ngIf="tableLoad">
+              <table mat-table [dataSource]="dataSource" class="mat-elevation-z8 car-model-table" >
+  
+                <!-- Name Column -->
+                <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef> {{'Model' | translate}} </th>
+                  <td mat-cell *matCellDef="let element" (click)="tabDetails(element.id)">
+                    <p class="semi-bold">{{element.name}}</p>
+                  </td>
+                </ng-container>
+  
+                <!-- Email Column -->
+                <ng-container matColumnDef="imagePath">
+                  <th mat-header-cell *matHeaderCellDef> {{'Image' | translate}} </th>
+                  <td mat-cell *matCellDef="let element" (click)="tabDetails(element.id)">
+                    <p *ngIf="element.imagePath">
+                      <img  [src]="sanitizeImageUrl(element.imagePath)" width="150"/>
+                    </p>
+                  </td>
+                </ng-container>
+  
+                <!-- Contact Column -->
+                <ng-container matColumnDef="description">
+                  <th mat-header-cell *matHeaderCellDef> {{'Description' | translate}} </th>
+                  <td mat-cell *matCellDef="let element" (click)="tabDetails(element.id)">
+                    <p>{{element.description}}</p>
+                  </td>
+                </ng-container> 
+  
+                <!-- Actions Column -->
+                <ng-container matColumnDef="actions" *ngIf="rolePermissions?.isEdit || rolePermissions?.isDelete">
+                  <th mat-header-cell *matHeaderCellDef> {{'Actions' | translate}} </th>
+                  <td mat-cell *matCellDef="let element">
+  
+                    <div class="btn-container">
+                      <p-button-pure (click)="editTab(element.id)" *ngIf="rolePermissions?.isEdit">{{'Edit' | translate}}</p-button-pure>
+                      <p-button-pure (click)="confirmActivate(element.id, !element.isActive)" *ngIf="element.isActive && rolePermissions?.isDelete">{{'Inactivate' | translate}}</p-button-pure>
+                      <p-button-pure (click)="confirmActivate(element.id, !element.isActive)" *ngIf="!element.isActive && (rolePermissions?.isEdit || rolePermissions?.isDelete)">{{'Activate' | translate}}</p-button-pure>
+                    </div>
+  
+                  </td>
+                </ng-container>
+  
+                <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+                <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+              </table>
+              <div *ngIf="isLoading" class="loading-block">
+                <p-button-pure [loading]="true">{{'Loading..' | translate}}</p-button-pure>
+              </div>
+              <div *ngIf="!isLoading && !dataSource?.length">
+                <p class="text-center">{{'No record found!' | translate}}</p>
+              </div>
+            </div>
+          </div>
+  
+        </p-grid-item>
+      </p-grid>
+    </p-content-wrapper>
+  </section>

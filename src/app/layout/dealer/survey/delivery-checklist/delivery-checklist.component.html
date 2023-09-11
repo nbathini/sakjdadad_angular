@@ -1,0 +1,119 @@
+<div class="outer-box delivery-checklist">
+  <div class="time-aloted">
+    <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+      <p-grid>
+        <p-grid-item [size]="12">
+          <div class="time-box">
+            <div class="upper-part">
+              <h2>{{totalTime||'120'}}</h2>
+              <button type="button" class="info-btn tooltip">
+                <img src="assets/images/info-icon.svg" alt="info" />
+                <div class="left">
+                  <ul class="tooltip-list">
+                    <li>
+                      <div class="tooltip-content">
+                        <div class="left-part">
+                          <div class="img-box">
+                            <img src="assets/images/tooltip-tick.svg" alt="tick" />
+                          </div>
+                          <p>{{checklistData[selectedIndex]?.Label | translate}}</p>
+                        </div>
+                        <div class="right-part">
+                          <p>{{checklistData[selectedIndex]?.AllocatedTime}}</p>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                  <i></i>
+                </div>
+              </button>
+            </div>
+            <p>{{'Total Demo time'| translate}}</p>
+          </div>
+        </p-grid-item>
+      </p-grid>
+    </p-content-wrapper>
+  </div>
+
+
+  <mat-tab-group animationDuration="0ms" class="sub-tab-group" [selectedIndex]="selectedIndex" (selectedTabChange)="tabChanged($event)">
+    <mat-tab *ngFor="let tab of checklistData; index as i" [label]="tab?.Label | translate">
+      <ng-template matTabContent>
+        <div class="info-header-detail">
+          <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+            <p-grid class="example-grid">
+              <p-grid-item [size]="12">
+                <form class="delivery-checklist-form">
+                  <div class="info-header">
+                    <h2>{{tab?.AllocatedTime}}</h2>
+                    <p>{{'Time allocated by customer'| translate}}</p>
+                  </div>
+                  <div class="send-documents">
+                    <h2>{{tab?.Info | translate}}</h2>
+                  </div>
+                  <div class="questions-content" *ngFor="let field of tab.Fields; index as j">
+                    <div class="question-header">
+                      <h3>{{field.Label | translate}}</h3>
+                      <p (click)="markAllComplete(i,j)" *ngIf=""rolePermissions?.isCreate || rolePermissions?.isEdit>{{'Mark As Complete' | translate}}</p>
+                    </div>
+                    <div class="answers-content" *ngFor="let ques of field.Questions; index as k">
+                      <div class="answers">
+                        <div class="left-part">
+                          <p>{{ques.Label | translate}}</p>
+                          <div class="download-icons" *ngIf="ques?.Documents?.length">
+                            <ng-container *ngFor="let doc of ques?.Documents;">
+                              <button type="button" class="download-btn" (click)="openDocument(doc)">
+                                <img src="assets/images/photo-icon.svg" alt="document"
+                                  *ngIf="doc?.FileType?.includes('image')" />
+                                <img src="assets/images/video-icon.svg" alt="document"
+                                  *ngIf="doc?.FileType?.includes('video')" />
+                                <img src="assets/images/document-icon.svg" alt="document"
+                                  *ngIf="!doc?.FileType?.includes('video') && !doc?.FileType?.includes('image')" />
+                                {{doc?.FileName}}
+                              </button>
+                            </ng-container>
+                          </div>
+                          <div class="link-box" *ngIf="ques?.Links?.length">
+                            <a href="javascript:void(0);" *ngFor="let link of ques.Links;" href="{{link?.Link}}"
+                              target="_blank">{{link?.Link}}</a>
+                          </div>
+                        </div>
+                        <div class="right-part">
+                          <p-button-pure class="move-to-followup" (click)="moveToCustomer(i,j,k,true)"
+                            *ngIf="!ques?.MoveToFollowUp && (rolePermissions?.isCreate || rolePermissions?.isEdit)">{{ 'Move to Customer Follow-up' |
+                            translate}}</p-button-pure> 
+                          <p-button-pure class="remove-from-followup" (click)="moveToCustomer(i,j,k,false)" icon="close"
+                            *ngIf="ques?.MoveToFollowUp && (rolePermissions?.isCreate || rolePermissions?.isEdit)">{{ 'Remove from Customer Follow-up' |
+                            translate}}</p-button-pure>
+                          <p-checkbox-wrapper hide-label="false" *ngIf="!ques?.MoveToFollowUp && (rolePermissions?.isCreate || rolePermissions?.isEdit)">
+                            <span slot="label" id="some-label-id" class="delivery-question-heading"></span>
+                            <input type="checkbox" name="some-name" aria-labelledby="some-label-id"
+                              aria-describedby="some-message-id" [checked]="ques?.Answer == 'true'"
+                              (click)="markComplete($event.target,i,j,k)">
+                          </p-checkbox-wrapper>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </p-grid-item>
+            </p-grid>
+          </p-content-wrapper>
+        </div>
+      </ng-template>
+    </mat-tab>
+  </mat-tab-group>
+  <div class="btn-container">
+    <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+      <p-grid class="example-grid">
+        <p-grid-item [size]="12">
+          <div class="content-part">
+            <p-button [icon]="'close'" [variant]="'tertiary'" routerLink="/">{{'Cancel' | translate}}
+            </p-button>
+            <p-button (click)="submitChecklist()" class="ml-3" *ngIf="rolePermissions?.isCreate || rolePermissions?.isEdit">{{'Move To Next Step' | translate}}</p-button>
+          </div>
+        </p-grid-item>
+      </p-grid>
+    </p-content-wrapper>
+  </div>
+</div>

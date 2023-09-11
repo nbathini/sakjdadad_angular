@@ -1,0 +1,192 @@
+<section class="delivery-dashboard scrollbar">
+  <p-content-wrapper class="hydrated p-content-wrapper" width="extended">
+    <p-grid>
+      <p-grid-item [size]="12">
+        <form novalidate="novalidate" class="delivery-form" [formGroup]="deliveryForm" (ngSubmit)="onSubmit()">
+          <h2>{{(deliveryId ? 'Edit Delivery' :'Add New Delivery') | translate}}</h2>
+          <p>{{'Please enter delivery details in the following fields.' | translate}}</p>
+          <p class="last">{{'Mandatory fields are marked with an asterisk' | translate}} (<span class="star">*</span>).
+          </p>
+          <p-flex class="form-grid-item-container p-flex hydrated">
+            <p-flex-item [width]="'full'" class="form-grid-item p-flex__item p-flex__item--width-full hydrated">
+              <p-text-field-wrapper class="hydrated"
+                [message]="isSubmitted && dForm.customerName.errors ? ('Please enter customer name.' | translate):''"
+                [state]="isSubmitted && dForm.customerName.errors ? 'error' : 'none'">
+                <span slot="label">{{'Customer Name' | translate}} </span>
+                <input type="text" name="customerName" required="required" formControlName="customerName"
+                  (blur)="trim('customerName')" (keyup)="$event.keyCode === 13 && onSubmit()" />
+              </p-text-field-wrapper>
+            </p-flex-item>
+          </p-flex>
+          <p-flex class="form-grid-item-container p-flex hydrated">
+            <p-flex-item [width]="'full'"
+              class="form-row-spacing form-grid-item p-flex__item p-flex__item--width-full hydrated">
+              <p-text-field-wrapper class="hydrated"
+                [message]="(isSubmitted || isEmailTouched) && dForm.customerEmail.errors  ? ( dForm.customerEmail.errors?.pattern ? ('Please enter a valid email.' | translate): ('Please enter customer email address.' | translate) ): ''"
+                [state]="(isSubmitted || isEmailTouched) && dForm.customerEmail.errors? 'error' : 'none'">
+                <span slot="label">{{'Customer Email' | translate}} </span>
+                <input type="email" name="customerEmail" required="required" formControlName="customerEmail"
+                  (keyup)="$event.keyCode === 13 && onSubmit()" (keydown)="errorNull('contactNumber')"
+                  (blur)="trim('customerEmail');validateControl('customerEmail')" />
+              </p-text-field-wrapper>
+            </p-flex-item>
+          </p-flex>
+          <div class="select-row">
+            <div class="box">
+              <p-flex class="form-grid-item-container p-flex hydrated">
+                <p-flex-item [width]="'full'"
+                  class="form-row-spacing form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                  <p-select-wrapper hide-label="false"
+                    [message]="isSubmitted && dForm.model.errors ? ('Please select Porsche model' | translate):''"
+                    [state]="isSubmitted && dForm.model.errors ? 'error' : 'none'">
+                    <span slot="label">{{'Model' | translate}} </span>
+                    <select name="model" formControlName="model" required="required">
+                      <option value='' disabled>{{'Select Porsche Model'| translate}}</option>
+                      <option [ngValue]="car" *ngFor="let car of porscheModels"
+                        [selected]="car?.id == deliverData?.model?.id">{{car.name}}</option>
+                    </select>
+                  </p-select-wrapper>
+                </p-flex-item>
+              </p-flex>
+            </div>
+            <div class="box">
+              <p-flex class="form-grid-item-container p-flex hydrated">
+                <p-flex-item [width]="'full'"
+                  class="form-row-spacing form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                  <p-text-field-wrapper hide-label="false"
+                    [message]="isSubmitted && dForm.deliveryDate.errors ? ('Please select delivery date'| translate):''"
+                    [state]="isSubmitted && dForm.deliveryDate.errors ? 'error' : 'none'">
+                    <span slot="label">{{'Delivery Date' | translate}} </span>
+                    <input type="text" matInput [matDatepicker]="picker1" formControlName="deliveryDate" [min]="today"
+                      (dateChange)="checkMinDate()" onkeydown="return false">
+                    <mat-datepicker-toggle matSuffix [for]="picker1" [disableRipple]="true"></mat-datepicker-toggle>
+                    <mat-datepicker #picker1></mat-datepicker>
+                  </p-text-field-wrapper>
+                </p-flex-item>
+              </p-flex>
+            </div>
+            <div class="box">
+              <p-flex class="form-grid-item-container p-flex hydrated">
+                <p-flex-item [width]="'full'"
+                  class="form-row-spacing form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                  <p-text-field-wrapper hide-label="false"
+                    [message]="isSubmitted && dForm.deliveryTime.errors ? ('Please select delivery time' | translate):''"
+                    [state]="isSubmitted && dForm.deliveryTime.errors ? 'error' : 'none'">
+                    <span slot="label">{{'Delivery Time' | translate}} </span>
+                    <input type="text" name="deliveryTime" required="required" autocomplete="one-time-code"
+                      formControlName="deliveryTime" aria-label="Delivery Time" [ngxTimepicker]="toggleTimepicker"
+                      [min]="minTime" onkeydown="return false" />
+                    <ngx-material-timepicker-toggle [for]="toggleTimepicker" [disableRipple]="true">
+                    </ngx-material-timepicker-toggle>
+                    <ngx-material-timepicker #toggleTimepicker></ngx-material-timepicker>
+                    <ngx-material-timepicker #default></ngx-material-timepicker>
+                  </p-text-field-wrapper>
+                </p-flex-item>
+              </p-flex>
+            </div>
+          </div>
+          <p-flex class="form-grid-item-container p-flex hydrated  contact-input">
+
+            <p-flex-item [width]="'full'"
+              class="form-row-spacing form-grid-item p-flex__item p-flex__item--width-full hydrated">
+              <p-text-field-wrapper class="hydrated"
+                [message]="(isSubmitted || isContactTouched) && dForm.contactNumber.errors ? (dForm.contactNumber.errors?.pattern ?( 'Please enter a valid number' | translate) : ('Please enter contact number' |translate)):''"
+                [state]="(isSubmitted || isContactTouched) && dForm.contactNumber.errors ? 'error' : 'none'">
+                <span slot="label" class="label-block">{{'Contact Number' | translate}} </span>
+                <span class="input-number"> + 1 </span>
+                <input type="tel" name="contactNumber" id="phoneNumberInput" required="required"
+                  formControlName="contactNumber" aria-label="Contact Number" maxlength="20"
+                  (keyup)="$event.keyCode === 13 && onSubmit()" (keydown)="errorNull('contactNumber')"
+                  (blur)="validateControl('contactNumber');formatPhoneNumber()" />
+
+              </p-text-field-wrapper>
+            </p-flex-item>
+          </p-flex> 
+          <p-flex class="form-grid-item-container p-flex hydrated">
+            <p-flex-item [width]="'full'"
+              class="form-row-spacing form-grid-item p-flex__item p-flex__item--width-full hydrated">
+              <p-select-wrapper hide-label="false"
+                [message]="isSubmitted && dForm.porschePro.errors ? ('Please enter Porsche professional' | translate):''"
+                [state]="isSubmitted && dForm.porschePro.errors ? 'error' : 'none'">
+                <span slot="label">{{'Porsche Pro' | translate}} </span>
+                <select name="porschePro" formControlName="porschePro" required="required">
+                  <option value='' disabled>{{'Select Porsche Pro'| translate}}</option>
+                  <option [ngValue]="option.name" *ngFor="let option of porschePros"
+                    [selected]="option?.id == deliverData?.porschePro?.id">{{option.name}}</option>
+                </select>
+              </p-select-wrapper>
+            </p-flex-item>
+          </p-flex>
+          <div class="sales-box">
+            <div class="box"> 
+              <p-flex class="form-grid-item-container p-flex hydrated">
+                <p-flex-item [width]="'full'"
+                  class="form-row-spacing form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                  <p-select-wrapper hide-label="false"
+                    [message]="isSubmitted && dForm.salesConsultant.errors ? ('Please enter sales consultant name' | translate):''"
+                    [state]="isSubmitted && dForm.salesConsultant.errors ? 'error' : 'none'">
+                    <span slot="label">{{'Sales Consultant' | translate}} </span>
+                    <select name="salesConsultant" formControlName="salesConsultant" required="required">
+                      <option value='' disabled>{{'Select Sales Consultant'| translate}}</option>
+                      <option [ngValue]="option.name" *ngFor="let option of consultants"
+                        [selected]="option?.id == deliverData?.salesConsultant?.id">{{option.name}}</option>
+                    </select>
+                  </p-select-wrapper>
+                </p-flex-item>
+              </p-flex>
+            </div>
+            <div class="box"> 
+              <p-flex class="form-grid-item-container p-flex hydrated">
+                <p-flex-item [width]="'full'"
+                  class="form-row-spacing form-grid-item p-flex__item p-flex__item--width-full hydrated">
+                  <p-select-wrapper hide-label="false"
+                    [message]="isSubmitted && dForm.serviceAdvisor.errors ? ('Please enter service advisor name' | translate):''"
+                    [state]="isSubmitted && dForm.serviceAdvisor.errors ? 'error' : 'none'">
+                    <span slot="label">{{'Service Advisor' | translate}} </span>
+                    <select name="serviceAdvisor" formControlName="serviceAdvisor" required="required">
+                      <option value='' disabled>{{'Select Service Advisor'| translate}}</option>
+                      <option [ngValue]="option.name" *ngFor="let option of advisors"
+                        [selected]="option?.id == deliverData?.serviceAdvisor?.id">{{option.name}}</option>
+                    </select>
+                  </p-select-wrapper>
+                </p-flex-item>
+              </p-flex>
+            </div>
+          </div>
+          <p-flex class="form-grid-item-container p-flex hydrated">
+            <p-flex-item [width]="'full'"
+              class="form-row-spacing form-grid-item p-flex__item p-flex__item--width-full hydrated">
+              <p-select-wrapper hide-label="false"
+                [message]="isSubmitted && dForm.deliveryType.errors ? ('Please select delivery type' | translate):''"
+                [state]="isSubmitted && dForm.deliveryType.errors ? 'error' : 'none'">
+                <span slot="label">{{'Delivery Type' | translate}} </span>
+                <select name="deliveryType" formControlName="deliveryType" required="required">
+                  <option value='' disabled>{{'Select Delivery Type'| translate}}</option>
+                  <option [ngValue]="del" *ngFor="let del of deliverTypes"
+                    [selected]="del?.id == deliverData?.deliveryType?.id">{{del.name | translate}}</option>
+                </select>
+              </p-select-wrapper>
+            </p-flex-item>
+          </p-flex>
+          <p-flex class="form-grid-item-container p-flex hydrated">
+            <p-flex-item [width]="'full'"
+              class="form-row-spacing form-grid-item p-flex__item p-flex__item--width-full hydrated checkbox-spacing">
+              <p-checkbox-wrapper [hideLabel]="false" class="hydrated">
+                <span slot="label">{{'Skip Survey' | translate}}</span>
+                <input type="checkbox" name="skipSurvey" [checked]="dForm.skipSurvey.value" formControlName="skipSurvey"
+                  (change)="updateSkipSurvey($event.target)" />
+              </p-checkbox-wrapper>
+            </p-flex-item>
+          </p-flex>
+          <div class="btn-box">
+            <p-button [icon]="'close'" [variant]="'tertiary'" routerLink="/">{{'Cancel' | translate}}</p-button>
+            <p-button variant="primary" type="submit" [loading]="isLoading"
+              [disabled]="deliveryId && !deliveryForm.valid">{{(deliveryId ? 'Update Delivery' :'Add
+              New Delivery') | translate}}
+            </p-button>
+          </div>
+        </form>
+      </p-grid-item>
+    </p-grid>
+  </p-content-wrapper>
+</section>

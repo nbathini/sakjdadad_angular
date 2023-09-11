@@ -1,0 +1,82 @@
+section.delivery-dashboard {
+    width: 100%;
+    height: 100%;
+    max-height: calc(100vh - 70px);
+    overflow-y: auto;
+    .p-content-wrapper {
+        padding: 0px 50px;
+    }
+}
+
+.delivery-form {
+    width: 100%;
+    max-width: 1300px;
+    margin: 25px auto 60px auto;
+    h2 {
+        margin-bottom: 0px;
+    }
+    p {
+        width: 100%;
+        margin: 0px 0px 0px 0px;
+        &.last {
+            margin-bottom: 40px;
+        }
+    }
+    .select-row {
+        width: 100%;
+        display: flex;
+        .box {
+            width: 100%;
+            max-width: calc(33.3% - 8px);
+            margin: 0px 8px;
+            &:first-child {
+                margin-left: 0px;
+            }
+            &:last-child {
+                margin-right: 0px;
+            }
+        }
+    }
+    .sales-box {
+        width: 100%;
+        display: flex;
+        .box {
+            width: 100%;
+            max-width: calc(50% - 8px);
+            margin: 0px 8px;
+            &:first-child {
+                margin-left: 0px;
+            }
+            &:last-child {
+                margin-right: 0px;
+            }
+        }
+    }
+    .btn-box {
+        width: 100%;
+        display: flex;
+        margin: 40px 0px 140px;
+        p-button {
+            &:first-child {
+                margin-right: 16px;
+            }
+        }
+    }
+}
+.checkbox-spacing {
+    margin-top: 36px !important;
+}
+.section-row {
+    display: flex;
+    .section-row-block {
+        width: calc(100% - 100px);
+    }
+}
+.section-box-list {
+    display: flex;
+    padding: 0px;
+    li {
+        list-style-type: none;
+        margin-left: 25px;
+    }
+}
